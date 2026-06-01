@@ -29,8 +29,8 @@ import javax.annotation.Nullable;
 public class BlockDecorativeLeaves extends Block implements IColoredBlock, IShearable {
 	private final ForestryLeafType type;
 
-	public BlockDecorativeLeaves(ForestryLeafType type) {
-		super(Properties.of()
+	public BlockDecorativeLeaves(Properties properties, ForestryLeafType type) {
+		super(properties
 			.strength(0.2f)
 			.sound(SoundType.GRASS)
 			.noOcclusion()

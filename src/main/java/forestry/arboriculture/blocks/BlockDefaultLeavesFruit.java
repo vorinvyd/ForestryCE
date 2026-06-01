@@ -37,7 +37,8 @@ import java.util.List;
 public class BlockDefaultLeavesFruit extends BlockAbstractLeaves {
 	private final ForestryLeafType type;
 
-	public BlockDefaultLeavesFruit(ForestryLeafType type) {
+	public BlockDefaultLeavesFruit(Block.Properties properties, ForestryLeafType type) {
+		super(properties);
 		this.type = type;
 	}
 

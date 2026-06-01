@@ -6,12 +6,13 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import java.util.List;
 
 public class WorktableBlock extends BlockBase<WorktableBlockType> {
-	public WorktableBlock(WorktableBlockType blockType) {
-		super(Properties.of().sound(SoundType.WOOD), blockType);
+	public WorktableBlock(BlockBehaviour.Properties properties, WorktableBlockType blockType) {
+		super(properties.sound(SoundType.WOOD), blockType);
 	}
 
 	@Override

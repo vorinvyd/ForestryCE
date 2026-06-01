@@ -41,8 +41,8 @@ public class BlockGeneticFilter extends BlockForestry implements EntityBlock {
 	private static final AABB BOX_EAST = new AABB(0.6875, 0.25, 0.25, 1, 0.75, 0.75);
 	private static final AABB[] BOX_FACES = {BOX_DOWN, BOX_UP, BOX_NORTH, BOX_SOUTH, BOX_WEST, BOX_EAST};
 
-	public BlockGeneticFilter() {
-		super(Block.Properties.of()
+	public BlockGeneticFilter(Block.Properties properties) {
+		super(properties
 				.strength(0.25f, 3.0f)
 				.dynamicShape()
 				.noOcclusion(),

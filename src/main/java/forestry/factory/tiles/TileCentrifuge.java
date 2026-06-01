@@ -12,6 +12,7 @@ import forestry.core.inventory.IInventoryAdapter;
 import forestry.core.inventory.InventoryAdapter;
 import forestry.core.tiles.IItemStackDisplay;
 import forestry.core.tiles.TilePowered;
+import forestry.core.tiles.TileUtil;
 import forestry.core.utils.InventoryUtil;
 import forestry.core.utils.RecipeUtils;
 import forestry.factory.features.FactoryTiles;
@@ -63,16 +64,8 @@ public class TileCentrifuge extends TilePowered implements ISocketable, WorldlyC
 
 		this.sockets.write(compound, registries);
 
-		ListTag nbttaglist = new ListTag();
 		ItemStack[] offspring = this.pendingProducts.toArray(new ItemStack[0]);
-		for (int i = 0; i < offspring.length; i++) {
-			if (offspring[i] != null) {
-				CompoundTag products = (CompoundTag) offspring[i].saveOptional(registries);
-				products.putByte("Slot", (byte) i);
-				nbttaglist.add(products);
-			}
-		}
-		compound.put("PendingProducts", nbttaglist);
+		compound.put("PendingProducts", TileUtil.saveItemsToList(registries, offspring));
 	}
 
 	@Override

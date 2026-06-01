@@ -33,8 +33,8 @@ public class BlockCocoon extends Block implements EntityBlock {
 	public static final VoxelShape BOUNDING_BOX = Block.box(5f, 5f, 5f, 11f, 16F, 11f);
 	public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 2);
 
-	public BlockCocoon() {
-		super(Block.Properties.of().randomTicks().sound(SoundType.GRAVEL));
+	public BlockCocoon(Block.Properties properties) {
+		super(properties.randomTicks().sound(SoundType.GRAVEL));
 		registerDefaultState(getStateDefinition().any().setValue(AGE, 0));
 	}
 

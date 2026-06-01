@@ -4,7 +4,9 @@ import forestry.api.core.IBlockSubtype;
 import forestry.api.core.IItemSubtype;
 import forestry.api.storage.EnumBackpackType;
 import forestry.api.storage.IBackpackDefinition;
+import forestry.core.utils.datastructures.TriFunction;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -19,6 +21,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.neoforge.network.IContainerFactory;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -36,11 +39,17 @@ public interface IFeatureRegistry {
 	@Nullable
 	<V> DeferredRegister<V> getRegistryNullable(ResourceKey<? extends Registry<V>> registry);
 
-	<B extends Block, I extends BlockItem> FeatureBlock<B, I> block(Supplier<B> constructor, String name);
+	<B extends Block, I extends BlockItem> FeatureBlock<B, I> block(Function<BlockBehaviour.Properties, B> constructor, String name);
 
-	<B extends Block, I extends BlockItem> FeatureBlock<B, I> block(Supplier<B> constructor, @Nullable Function<B, I> itemConstructor, String name);
+	<B extends Block, I extends BlockItem> FeatureBlock<B, I> block(Function<BlockBehaviour.Properties, B> constructor, @Nullable BiFunction<B, Item.Properties, I> itemConstructor, String name);
+
+	<B extends Block, I extends BlockItem> FeatureBlock<B, I> block(Function<BlockBehaviour.Properties, B> constructor, Supplier<BlockBehaviour.Properties> properties, @Nullable BiFunction<B, Item.Properties, I> itemConstructor, String name);
+
+	<B extends Block, I extends BlockItem> FeatureBlock<B, I> block(Function<BlockBehaviour.Properties, B> constructor, Supplier<BlockBehaviour.Properties> blockProperties, @Nullable BiFunction<B, Item.Properties, I> itemConstructor, Supplier<Item.Properties> itemProperties, String name);
 
 	<B extends Block, S extends IBlockSubtype> FeatureBlockGroup.Builder<B, S> blockGroup(Function<S, B> constructor, Collection<S> types);
+
+	<B extends Block, S extends IBlockSubtype> FeatureBlockGroup.Builder<B, S> blockGroup(BiFunction<BlockBehaviour.Properties, S, B> constructor, Collection<S> types);
 
 	<B extends Block, S extends IBlockSubtype> FeatureBlockGroup.Builder<B, S> blockGroup(Collection<S> types);
 
@@ -68,6 +77,8 @@ public interface IFeatureRegistry {
 
 	<B extends Block, R extends IBlockSubtype, C extends IBlockSubtype> FeatureBlockTable.Builder<B, R, C> blockTable(BiFunction<R, C, B> constructor, R[] rowTypes, C[] columnTypes);
 
+	<B extends Block, R extends IBlockSubtype, C extends IBlockSubtype> FeatureBlockTable.Builder<B, R, C> blockTable(TriFunction<BlockBehaviour.Properties, R, C, B> constructor, R[] rowTypes, C[] columnTypes);
+
 	FeatureFluid.Builder fluid(String identifier);
 
 	<R extends Recipe<?>> FeatureRecipeType<R> recipeType(String name, Supplier<RecipeSerializer<? extends R>> serializer);
@@ -93,4 +104,24 @@ public interface IFeatureRegistry {
 	Collection<IModFeature> getFeatures(ResourceKey<? extends Registry<?>> type);
 
 	ResourceLocation getModuleId();
+
+	static BlockBehaviour.Properties setBlockId(ResourceLocation id, BlockBehaviour.Properties properties) {
+		return setId(Registries.BLOCK, id, properties);
+	}
+
+	static Item.Properties setItemId(ResourceLocation id, Item.Properties properties) {
+		return setId(Registries.ITEM, id, properties);
+	}
+
+	@SuppressWarnings("unchecked")
+	private static <T, P> P setId(ResourceKey<? extends Registry<T>> registry, ResourceLocation id, P properties) {
+		try {
+			properties.getClass().getMethod("setId", ResourceKey.class).invoke(properties, ResourceKey.create((ResourceKey<? extends Registry<T>>) registry, id));
+		} catch (NoSuchMethodException ignored) {
+			// Minecraft 1.21.1 does not require registry keys on block/item properties.
+		} catch (ReflectiveOperationException exception) {
+			throw new IllegalStateException("Failed to set registry id " + id + " on " + properties.getClass().getName(), exception);
+		}
+		return properties;
+	}
 }

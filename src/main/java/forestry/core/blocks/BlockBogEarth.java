@@ -16,11 +16,12 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
  * bog earth, which becomes peat
  */
 public class BlockBogEarth extends Block {
-	private static final int maturityDelimiter = 3; //maturity at which bogEarth becomes peat
+	// maturity at which bogEarth becomes peat
+	private static final int maturityDelimiter = 3;
 	public static final IntegerProperty MATURITY = IntegerProperty.create("maturity", 0, maturityDelimiter);
 
-	public BlockBogEarth() {
-		super(Block.Properties.of()
+	public BlockBogEarth(Block.Properties properties) {
+		super(properties
 			.randomTicks()
 			.strength(0.5f)
 			.sound(SoundType.GRAVEL));

@@ -7,14 +7,10 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
 
-// todo this doesn't seem to be implemented ?
 public class DecorativeLogPileBlock extends RotatedPillarBlock {
-	public static final EnumProperty<Direction.Axis> AXIS = EnumProperty.create("axis", Direction.Axis.class);
-
-	public DecorativeLogPileBlock() {
-		super(Block.Properties.of()
+	public DecorativeLogPileBlock(Block.Properties properties) {
+		super(properties
 			.sound(SoundType.WOOD)
 			.strength(1.5f)
 			.noOcclusion());

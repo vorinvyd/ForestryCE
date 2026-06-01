@@ -23,11 +23,13 @@ public class FeatureBlockGroup<B extends Block, S extends IBlockSubtype> extends
 
 	@Override
 	protected FeatureBlock<B, BlockItem> createFeature(Builder<B, S> builder, S type) {
+		String identifier = builder.getIdentifier(type);
 		BlockBehaviour.Properties properties = builder.blockProperties != null ? builder.blockProperties.apply(BlockBehaviour.Properties.of(), type) : BlockBehaviour.Properties.of();
 		return builder.registry.block(
-			() -> builder.blockConstructor.apply(properties, type),
-			builder.itemConstructor != null ? (block) -> builder.itemConstructor.apply(block, new Item.Properties(), type) : null,
-			builder.getIdentifier(type)
+			(blockProperties) -> builder.blockConstructor.apply(blockProperties, type),
+			() -> properties,
+			builder.itemConstructor != null ? (block, itemProperties) -> builder.itemConstructor.apply(block, itemProperties, type) : null,
+			identifier
 		);
 	}
 

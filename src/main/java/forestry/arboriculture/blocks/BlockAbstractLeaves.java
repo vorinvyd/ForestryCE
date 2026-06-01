@@ -47,8 +47,8 @@ public abstract class BlockAbstractLeaves extends BlockExtendedLeaves implements
 	public static final int FOLIAGE_COLOR_INDEX = 0;
 	public static final int FRUIT_COLOR_INDEX = 2;
 
-	public BlockAbstractLeaves() {
-		super(Block.Properties.of()
+	public BlockAbstractLeaves(Block.Properties properties) {
+		super(properties
 			.strength(0.2f)
 			.sound(SoundType.GRASS)
 			.randomTicks()

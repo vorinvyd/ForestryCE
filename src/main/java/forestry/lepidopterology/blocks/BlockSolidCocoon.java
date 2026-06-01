@@ -23,8 +23,8 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class BlockSolidCocoon extends Block implements EntityBlock {
-	public BlockSolidCocoon() {
-		super(Block.Properties.of()
+	public BlockSolidCocoon(Block.Properties properties) {
+		super(properties
 			.strength(0.5F)
 			.randomTicks()
 			.sound(SoundType.GRAVEL));

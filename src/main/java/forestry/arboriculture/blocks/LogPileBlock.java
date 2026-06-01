@@ -34,8 +34,8 @@ public class LogPileBlock extends Block {
 	public static final int RANDOM_TICK = 160;
 	public static final int TICK_RATE = 960;
 
-	public LogPileBlock() {
-		super(Block.Properties.of().strength(1.5f).sound(SoundType.WOOD).noOcclusion());
+	public LogPileBlock(Block.Properties properties) {
+		super(properties.strength(1.5f).sound(SoundType.WOOD).noOcclusion());
 		registerDefaultState(getStateDefinition().any().setValue(AGE, 0).setValue(IS_ACTIVE, false));
 	}
 

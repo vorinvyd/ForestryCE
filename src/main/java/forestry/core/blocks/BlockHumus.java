@@ -18,8 +18,8 @@ public class BlockHumus extends Block {
 
 	public static final IntegerProperty DEGRADE = IntegerProperty.create("degrade", 0, DEGRADE_STEPS);
 
-	public BlockHumus() {
-		super(Block.Properties.of().randomTicks().strength(0.5f).sound(SoundType.GRAVEL));
+	public BlockHumus(Block.Properties properties) {
+		super(properties.randomTicks().strength(0.5f).sound(SoundType.GRAVEL));
 
 		registerDefaultState(this.getStateDefinition().any().setValue(DEGRADE, 0));
 	}

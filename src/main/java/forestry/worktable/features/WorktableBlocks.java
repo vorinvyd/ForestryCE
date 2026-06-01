@@ -13,5 +13,5 @@ import forestry.worktable.blocks.WorktableBlockType;
 public class WorktableBlocks {
 	private static final IFeatureRegistry REGISTRY = ModFeatureRegistry.get(ForestryModuleIds.WORKTABLE);
 
-	public static final IBlockFeature<WorktableBlock, ItemBlockForestry<?>> WORKTABLE = REGISTRY.block(() -> new WorktableBlock(WorktableBlockType.WORKTABLE), ItemBlockForestry::new, "worktable");
+	public static final IBlockFeature<WorktableBlock, ItemBlockForestry<?>> WORKTABLE = REGISTRY.block((properties) -> new WorktableBlock(properties, WorktableBlockType.WORKTABLE), ItemBlockForestry::new, "worktable");
 }

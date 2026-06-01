@@ -13,6 +13,7 @@ import forestry.apiculture.hives.HiveDefinitionSwarmer;
 import forestry.apiculture.inventory.InventorySwarmer;
 import forestry.core.inventory.IInventoryAdapter;
 import forestry.core.tiles.IActivatable;
+import forestry.core.tiles.TileUtil;
 import forestry.core.utils.SpeciesUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -148,16 +149,8 @@ public class TileAlvearySwarmer extends TileAlveary implements WorldlyContainer,
 	public void saveAdditional(CompoundTag compoundNBT, HolderLookup.Provider registries) {
 		super.saveAdditional(compoundNBT, registries);
 
-		ListTag nbttaglist = new ListTag();
 		ItemStack[] offspring = this.pendingSpawns.toArray(new ItemStack[0]);
-		for (int i = 0; i < offspring.length; i++) {
-			if (offspring[i] != null) {
-				CompoundTag compoundNBT1 = (CompoundTag) offspring[i].saveOptional(registries);
-				compoundNBT1.putByte("Slot", (byte) i);
-				nbttaglist.add(compoundNBT1);
-			}
-		}
-		compoundNBT.put("PendingSpawns", nbttaglist);
+        compoundNBT.put("PendingSpawns", TileUtil.saveItemsToList(registries, offspring));
 	}
 
 	@Override

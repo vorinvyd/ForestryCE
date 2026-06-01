@@ -33,6 +33,10 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class BlockForestryLeaves extends BlockAbstractLeaves implements BonemealableBlock, EntityBlock {
+	public BlockForestryLeaves(Properties properties) {
+		super(properties);
+	}
+
 	@Override
 	protected ITree getTree(BlockGetter world, BlockPos pos) {
 		TileLeaves leaves = TileUtil.getTile(world, pos, TileLeaves.class);

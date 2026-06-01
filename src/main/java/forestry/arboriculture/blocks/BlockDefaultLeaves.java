@@ -11,6 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.neoforged.api.distmarker.Dist;
@@ -26,7 +27,8 @@ import java.util.List;
 public class BlockDefaultLeaves extends BlockAbstractLeaves {
 	private final ForestryLeafType type;
 
-	public BlockDefaultLeaves(ForestryLeafType type) {
+	public BlockDefaultLeaves(Block.Properties properties, ForestryLeafType type) {
+		super(properties);
 		this.type = type;
 	}
 

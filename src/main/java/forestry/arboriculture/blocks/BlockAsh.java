@@ -10,8 +10,8 @@ import net.minecraft.world.level.material.PushReaction;
 public class BlockAsh extends Block {
 	public static final IntegerProperty AMOUNT = IntegerProperty.create("amount", 0, 63);
 
-	public BlockAsh() {
-		super(Block.Properties.of().sound(SoundType.SAND).strength(0.6F));
+	public BlockAsh(Block.Properties properties) {
+		super(properties.sound(SoundType.SAND).strength(0.6F));
 	}
 
 	@Override

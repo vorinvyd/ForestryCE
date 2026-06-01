@@ -31,7 +31,7 @@ public class FeatureFluid extends ModFeature implements IFluidFeature {
 
 	public FeatureFluid(Builder builder) {
 		super(builder.moduleId, builder.identifier);
-		this.block = builder.registry.block(() -> new BlockForestryFluid(this), "fluid_" + builder.identifier);
+		this.block = builder.registry.block((properties) -> new BlockForestryFluid(properties, this), "fluid_" + builder.identifier);
 		this.properties = new FluidProperties(builder);
 		DeferredHolder<FluidType, FluidType> attributes = builder.registry.getRegistry(NeoForgeRegistries.Keys.FLUID_TYPES).register(this.name, () -> new ForestryFluidType(this.properties, FluidType.Properties.create()
 			.density(this.properties.density)

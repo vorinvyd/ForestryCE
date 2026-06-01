@@ -188,6 +188,10 @@ public abstract class TilePowered extends TileBase implements IRenderableTile, I
 		this.powerMultiplier -= powerChange;
 		this.outputMultiplier /= outputChange;
 		this.workCounter = 0;
+
+		if (Float.isNaN((float) this.outputMultiplier)) {
+			this.outputMultiplier = 1.0f;
+		}
 	}
 
 	/* IRenderableTile */

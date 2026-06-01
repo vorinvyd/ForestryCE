@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.phys.AABB;
 
 public class BlockForestryFluid extends LiquidBlock {
@@ -26,8 +27,8 @@ public class BlockForestryFluid extends LiquidBlock {
 	private final float explosionPower;
 	private final boolean explodes;
 
-	public BlockForestryFluid(FeatureFluid feature) {
-		super(feature.fluid(), Block.Properties.of().liquid().noCollission().noLootTable().replaceable());
+	public BlockForestryFluid(BlockBehaviour.Properties blockProperties, FeatureFluid feature) {
+		super(feature.fluid(), blockProperties.liquid().noCollission().noLootTable().replaceable());
 		FluidProperties properties = feature.properties();
 		this.flammability = properties.flammability;
 		this.spreadsFire = properties.spreadsFire;

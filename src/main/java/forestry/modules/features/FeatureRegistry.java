@@ -8,6 +8,7 @@ import forestry.api.storage.EnumBackpackType;
 import forestry.api.storage.IBackpackDefinition;
 import forestry.core.items.ItemForestry;
 import forestry.core.utils.ModUtil;
+import forestry.core.utils.datastructures.TriFunction;
 import forestry.storage.ModuleStorage;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
@@ -71,21 +72,36 @@ public class FeatureRegistry implements IFeatureRegistry {
 		return this.registries.get(registry);
 	}
 
-	public <B extends Block, I extends BlockItem> FeatureBlock<B, I> block(Supplier<B> constructor, String name) {
+	public <B extends Block, I extends BlockItem> FeatureBlock<B, I> block(Function<BlockBehaviour.Properties, B> constructor, String name) {
 		return block(constructor, null, name);
 	}
 
-	public <B extends Block, I extends BlockItem> FeatureBlock<B, I> block(Supplier<B> constructor, @Nullable Function<B, I> itemConstructor, String name) {
-		return register(new FeatureBlock<>(this, this.moduleId, name, constructor, itemConstructor));
+	public <B extends Block, I extends BlockItem> FeatureBlock<B, I> block(Function<BlockBehaviour.Properties, B> constructor, @Nullable BiFunction<B, Item.Properties, I> itemConstructor, String name) {
+		return block(constructor, BlockBehaviour.Properties::of, itemConstructor, Item.Properties::new, name);
+	}
+
+	public <B extends Block, I extends BlockItem> FeatureBlock<B, I> block(Function<BlockBehaviour.Properties, B> constructor, Supplier<BlockBehaviour.Properties> blockProperties, @Nullable BiFunction<B, Item.Properties, I> itemConstructor, String name) {
+		return block(constructor, blockProperties, itemConstructor, Item.Properties::new, name);
+	}
+
+	public <B extends Block, I extends BlockItem> FeatureBlock<B, I> block(Function<BlockBehaviour.Properties, B> constructor, Supplier<BlockBehaviour.Properties> blockProperties, @Nullable BiFunction<B, Item.Properties, I> itemConstructor, Supplier<Item.Properties> itemProperties, String name) {
+		ResourceLocation id = this.moduleId.withPath(name);
+		Supplier<B> blockSupplier = () -> constructor.apply(IFeatureRegistry.setBlockId(id, blockProperties.get()));
+		Function<B, I> itemFunction = itemConstructor == null ? null : (block) -> itemConstructor.apply(block, IFeatureRegistry.setItemId(id, itemProperties.get()));
+		return register(new FeatureBlock<>(this, this.moduleId, name, blockSupplier, itemFunction));
 	}
 
 	public <B extends Block, S extends IBlockSubtype> FeatureBlockGroup.Builder<B, S> blockGroup(Function<S, B> constructor, Collection<S> types) {
-		return (FeatureBlockGroup.Builder<B, S>) new FeatureBlockGroup.Builder<>(this, types, (properties, type) -> constructor.apply(type));
+		return blockGroup((properties, type) -> constructor.apply(type), types);
 	}
 
+	public <B extends Block, S extends IBlockSubtype> FeatureBlockGroup.Builder<B, S> blockGroup(BiFunction<BlockBehaviour.Properties, S, B> constructor, Collection<S> types) {
+		return new FeatureBlockGroup.Builder<>(this, types, constructor);
+	}
+
+	@SuppressWarnings("unchecked")
 	public <B extends Block, S extends IBlockSubtype> FeatureBlockGroup.Builder<B, S> blockGroup(Collection<S> types) {
-		// todo
-		return null;
+		return (FeatureBlockGroup.Builder<B, S>) new FeatureBlockGroup.Builder<>(this, types, (properties, type) -> new Block(properties));
 	}
 
 	public <B extends Block, S extends IBlockSubtype> FeatureBlockGroup.Builder<B, S> blockGroup(S[] types) {
@@ -133,6 +149,10 @@ public class FeatureRegistry implements IFeatureRegistry {
 	}
 
 	public <B extends Block, R extends IBlockSubtype, C extends IBlockSubtype> FeatureBlockTable.Builder<B, R, C> blockTable(BiFunction<R, C, B> constructor, R[] rowTypes, C[] columnTypes) {
+		return blockTable((properties, rowType, columnType) -> constructor.apply(rowType, columnType), rowTypes, columnTypes);
+	}
+
+	public <B extends Block, R extends IBlockSubtype, C extends IBlockSubtype> FeatureBlockTable.Builder<B, R, C> blockTable(TriFunction<BlockBehaviour.Properties, R, C, B> constructor, R[] rowTypes, C[] columnTypes) {
 		return (FeatureBlockTable.Builder<B, R, C>) new FeatureBlockTable.Builder<>(this, constructor).rowTypes(rowTypes).columnTypes(columnTypes);
 	}
 

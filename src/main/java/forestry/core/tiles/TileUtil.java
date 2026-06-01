@@ -2,9 +2,13 @@ package forestry.core.tiles;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.world.Container;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -96,4 +100,18 @@ public abstract class TileUtil {
 	public static <T, C> Optional<T> getInterface(Level world, BlockPos pos, BlockCapability<T, C> capability, @Nullable C context) {
 		return Optional.ofNullable(world.getCapability(capability, pos, context));
 	}
+
+    public static ListTag saveItemsToList(HolderLookup.Provider registries, ItemStack[] offspring) {
+        ListTag listTag = new ListTag();
+
+        for (int i = 0; i < offspring.length; i++) {
+            if (offspring[i] != null) {
+                CompoundTag products = (CompoundTag) offspring[i].saveOptional(registries);
+                products.putByte("Slot", (byte) i);
+                listTag.add(products);
+            }
+        }
+
+        return listTag;
+    }
 }
