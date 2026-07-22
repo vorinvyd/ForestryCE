@@ -9,7 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import java.util.List;
 import java.util.Map;
 
-public interface ISpecies<I extends IIndividual> extends IRegistryAlleleValue {
+public interface ISpecies<I extends IIndividual> {
 	/**
 	 * @return The translation key for the human-readable name of this species.
 	 */
@@ -84,7 +84,7 @@ public interface ISpecies<I extends IIndividual> extends IRegistryAlleleValue {
 	 * @param alleles A map of alleles to set on this individual upon creation. Any missing chromosomes use default alleles.
 	 * @return An individual along with any specified alleles.
 	 */
-	I createIndividual(Map<IChromosome<?>, IAllele> alleles);
+	I createIndividual(Map<IChromosome<?>, Allele<?>> alleles);
 
 	I createIndividualFromPairs(Map<IChromosome<?>, AllelePair<?>> allelePairs);
 
@@ -116,7 +116,6 @@ public interface ISpecies<I extends IIndividual> extends IRegistryAlleleValue {
 	/**
 	 * @return Whether the allele for this species is dominant or recessive.
 	 */
-	@Override
 	boolean isDominant();
 
 	String getAuthority();

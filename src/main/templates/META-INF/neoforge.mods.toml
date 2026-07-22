@@ -25,14 +25,14 @@ side = "BOTH"
 
 [[dependencies.forestry]]
 modId = "patchouli"
-mandatory = true
+type = "REQUIRED"
 versionRange = "${patchouliVersionRange}"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.forestry]]
 modId = "jei"
-mandatory = false
+type = "OPTIONAL"
 versionRange = "${jeiVersionRange}"
 ordering = "NONE"
 side = "CLIENT"

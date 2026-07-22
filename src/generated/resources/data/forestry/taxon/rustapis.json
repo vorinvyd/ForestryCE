@@ -1,0 +1,22 @@
+{
+  "type": "forestry:bee_species",
+  "parent": "apidae",
+  "alleles": {
+    "forestry:flower_type": {
+      "value": "forestry:flower_type_wheat"
+    },
+    "forestry:lifespan": {
+      "dominant": true,
+      "value": 20
+    },
+    "forestry:pollination": {
+      "value": 30
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.6
+    }
+  },
+  "name": "rustapis",
+  "rank": "genus"
+}

@@ -1,0 +1,51 @@
+{
+  "authority": "EnderiumSmith",
+  "dominant": true,
+  "genome": {
+    "forestry:activity": {
+      "value": "forestry:activity_cathemeral"
+    },
+    "forestry:fertility": {
+      "dominant": true,
+      "value": 2
+    },
+    "forestry:flower_type": {
+      "value": "forestry:flower_type_sea"
+    },
+    "forestry:lifespan": {
+      "dominant": true,
+      "value": 20
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.6
+    },
+    "forestry:temperature_tolerance": {
+      "dominant": true,
+      "value": "BOTH_1"
+    }
+  },
+  "genus": "spongiforma",
+  "outline": 4153435,
+  "products": [
+    {
+      "chance": 0.2,
+      "item": "forestry:spongy_comb"
+    }
+  ],
+  "specialties": [
+    {
+      "chance": 0.15,
+      "item": "minecraft:gold_nugget"
+    },
+    {
+      "chance": 0.02,
+      "item": "minecraft:lapis_lazuli"
+    },
+    {
+      "chance": 0.005,
+      "item": "minecraft:emerald"
+    }
+  ],
+  "species": "pirata"
+}

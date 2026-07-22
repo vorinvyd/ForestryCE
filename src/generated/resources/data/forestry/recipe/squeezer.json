@@ -6,10 +6,10 @@
       "tag": "c:glass_blocks/colorless"
     },
     "X": {
-      "tag": "forge:ingots/tin"
+      "tag": "c:ingots/tin"
     },
     "Y": {
-      "item": "forestry:sturdy_machine"
+      "item": "forestry:sturdy_casing"
     }
   },
   "pattern": [

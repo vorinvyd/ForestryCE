@@ -2,7 +2,7 @@
   "values": [
     "forestry:larch_trapdoor",
     "forestry:teak_trapdoor",
-    "forestry:acacia_desert_trapdoor",
+    "forestry:camelthorn_trapdoor",
     "forestry:lime_trapdoor",
     "forestry:chestnut_trapdoor",
     "forestry:wenge_trapdoor",
@@ -16,7 +16,7 @@
     "forestry:willow_trapdoor",
     "forestry:walnut_trapdoor",
     "forestry:greenheart_trapdoor",
-    "forestry:hill_cherry_trapdoor",
+    "forestry:sour_cherry_trapdoor",
     "forestry:mahoe_trapdoor",
     "forestry:poplar_trapdoor",
     "forestry:palm_trapdoor",
@@ -24,8 +24,8 @@
     "forestry:pine_trapdoor",
     "forestry:plum_trapdoor",
     "forestry:maple_trapdoor",
-    "forestry:citrus_trapdoor",
-    "forestry:giganteum_trapdoor",
+    "forestry:lemon_trapdoor",
+    "forestry:giant_sequoia_trapdoor",
     "forestry:ipe_trapdoor",
     "forestry:padauk_trapdoor",
     "forestry:cocobolo_trapdoor",
@@ -42,6 +42,6 @@
     "forestry:orange_trapdoor",
     "forestry:pear_trapdoor",
     "forestry:kauri_trapdoor",
-    "forestry:zebrawood_trapdoor"
+    "forestry:zebrano_trapdoor"
   ]
 }

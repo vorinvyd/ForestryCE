@@ -76,7 +76,7 @@ public abstract class NonStackingBeeEffect implements IBeeEffect {
 					IIndividual queen = IIndividualHandlerItem.getIndividual(queenStack);
 					IGenome genome = queen.getGenome();
 
-					if (genome.getActiveValue(BeeChromosomes.EFFECT) == this || genome.getInactiveValue(BeeChromosomes.EFFECT) == this) {
+					if (genome.resolveActive(BeeChromosomes.EFFECT) == this || genome.resolveInactive(BeeChromosomes.EFFECT) == this) {
 						IBeeModifier modifier = IForestryApi.INSTANCE.getHiveManager().createBeeHousingModifier(housing);
 						Vec3i territory = Bee.getAdjustedTerritory(genome, modifier);
 

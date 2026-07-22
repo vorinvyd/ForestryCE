@@ -1,15 +1,19 @@
 package forestry.core.genetics;
 
-import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import forestry.api.genetics.IGenome;
 import forestry.api.genetics.ISpecies;
-import forestry.api.genetics.alleles.*;
+import forestry.api.genetics.alleles.Allele;
+import forestry.api.genetics.alleles.AllelePair;
+import forestry.api.genetics.alleles.IChromosome;
+import forestry.api.genetics.alleles.IKaryotype;
 import forestry.api.plugin.IGenomeBuilder;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.IdentityHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public final class Genome implements IGenome {
 	final ImmutableMap<IChromosome<?>, AllelePair<?>> chromosomes;
@@ -23,28 +27,25 @@ public final class Genome implements IGenome {
 		this.chromosomes = chromosomes;
 	}
 
-	// Used by codec to sort alleles properly and populate missing chromosomes
+	// Used by codec to sort alleles properly and populate missing chromosomes.
 	public static IGenome sanitizeAlleles(Karyotype karyotype, Map<IChromosome<?>, AllelePair<?>> map) {
 		ImmutableMap.Builder<IChromosome<?>, AllelePair<?>> sorted = ImmutableMap.builderWithExpectedSize(map.size());
 		for (IChromosome<?> chromosome : karyotype.getChromosomes()) {
-			// Fix missing chromosomes for backwards compatibility
+			// Fix missing chromosomes for backwards compatibility.
 			AllelePair<?> pair = map.get(chromosome);
 			if (pair == null) {
-				ISpecies<?> species;
-
+				ResourceLocation speciesId;
 				AllelePair<?> speciesPair = map.get(karyotype.getSpeciesChromosome());
 				if (speciesPair == null) {
-					// If species was added/removed, revert to default
-					species = karyotype.getSpeciesChromosome().get(karyotype.getDefaultSpecies());
+					// If the stored species was added/removed, revert to the default species.
+					speciesId = karyotype.getDefaultSpecies();
 				} else {
-					species = speciesPair.active()
-						.<IRegistryAllele<ISpecies<?>>>cast()
-						.value();
+					speciesId = (ResourceLocation) speciesPair.active().value();
 				}
 
-				pair = species
-					.getDefaultGenome()
-					.getAllelePair(chromosome);
+				IChromosome.IReferenceResolver<?> speciesResolver = Objects.requireNonNull(karyotype.getSpeciesChromosome().resolver(), "Species chromosome has no resolver");
+				ISpecies<?> species = (ISpecies<?>) speciesResolver.get(speciesId);
+				pair = species.getDefaultGenome().getAllelePair(chromosome);
 			}
 
 			sorted.put(chromosome, pair);
@@ -62,18 +63,18 @@ public final class Genome implements IGenome {
 		return this.karyotype;
 	}
 
-	@Override
 	@SuppressWarnings("unchecked")
-	public <A extends IAllele> AllelePair<A> getAllelePair(IChromosome<A> chromosomeType) {
-		return (AllelePair<A>) this.chromosomes.get(chromosomeType);
+	@Override
+	public <V> AllelePair<V> getAllelePair(IChromosome<V> chromosome) {
+		return (AllelePair<V>) this.chromosomes.get(chromosome);
 	}
 
 	@Override
 	public boolean isDefaultGenome() {
 		if (!this.hasCachedDefaultGenome) {
-			Genome defaultGenome = (Genome) getActiveValue(this.karyotype.getSpeciesChromosome()).getDefaultGenome();
+			Genome defaultGenome = (Genome) this.<ISpecies<?>>getActiveSpecies().getDefaultGenome();
 
-			this.isDefaultGenome = this == defaultGenome || (isSameAlleles(defaultGenome));
+			this.isDefaultGenome = this == defaultGenome || isSameAlleles(defaultGenome);
 			this.hasCachedDefaultGenome = true;
 		}
 
@@ -90,31 +91,23 @@ public final class Genome implements IGenome {
 		if (alleles.isEmpty()) {
 			return this;
 		} else {
-			Genome.Builder builder = new Genome.Builder(getKaryotype());
-			// avoid duplicate instances of default genome
+			Genome.Builder builder = new Genome.Builder(this.karyotype);
 			boolean isDefault = true;
 
-			// copy over allele map or default allele
 			for (Map.Entry<IChromosome<?>, AllelePair<?>> entry : this.chromosomes.entrySet()) {
 				IChromosome<?> chromosome = entry.getKey();
 				AllelePair<?> pair = entry.getValue();
-				AllelePair<?> allele = alleles.get(chromosome);
+				AllelePair<?> override = alleles.get(chromosome);
 
-				if (allele == null || allele.equals(pair)) {
-					// copy default allele if missing or equal
+				if (override == null || override.equals(pair)) {
 					builder.setUnchecked(chromosome, pair);
 				} else {
-					// mark not default when there are non-default alleles
-					builder.setUnchecked(chromosome, allele);
+					builder.setUnchecked(chromosome, override);
 					isDefault = false;
 				}
 			}
 
-			if (isDefault) {
-				return this;
-			} else {
-				return builder.build();
-			}
+			return isDefault ? this : builder.build();
 		}
 	}
 
@@ -131,13 +124,8 @@ public final class Genome implements IGenome {
 		if (o == null || getClass() != o.getClass()) {
 			return false;
 		}
-
 		Genome genome = (Genome) o;
-
-		if (!this.chromosomes.equals(genome.chromosomes)) {
-			return false;
-		}
-		return this.karyotype.equals(genome.karyotype);
+		return this.chromosomes.equals(genome.chromosomes) && this.karyotype.equals(genome.karyotype);
 	}
 
 	@Override
@@ -149,93 +137,84 @@ public final class Genome implements IGenome {
 
 	public static class Builder implements IGenomeBuilder {
 		private final IKaryotype karyotype;
-		private final IdentityHashMap<IChromosome<?>, IAllele> active = new IdentityHashMap<>();
-		private final IdentityHashMap<IChromosome<?>, IAllele> inactive = new IdentityHashMap<>();
+		private final IdentityHashMap<IChromosome<?>, Allele<?>> active = new IdentityHashMap<>();
+		private final IdentityHashMap<IChromosome<?>, Allele<?>> inactive = new IdentityHashMap<>();
 
 		public Builder(IKaryotype karyotype) {
-			Preconditions.checkNotNull(karyotype);
-
 			this.karyotype = karyotype;
 		}
 
 		@Override
-		public <A extends IAllele> void set(IChromosome<A> chromosome, A allele) {
-			if (this.karyotype.isAlleleValid(chromosome, allele)) {
-				this.active.put(chromosome, allele);
-				this.inactive.put(chromosome, allele);
-			} else {
-				throw new IllegalArgumentException("Allele " + allele.alleleId() + " is not a valid value for chromosome " + chromosome.id() + " in the karyotype with species chromosome " + this.karyotype.getSpeciesChromosome().id());
-			}
+		public <V> void set(IChromosome<V> chromosome, Allele<V> allele) {
+			this.active.put(chromosome, allele);
+			this.inactive.put(chromosome, allele);
 		}
 
 		@Override
-		public <A extends IAllele> void setActive(IChromosome<A> chromosome, A allele) {
-			if (this.karyotype.isAlleleValid(chromosome, allele)) {
-				this.active.put(chromosome, allele);
-			} else {
-				throw new IllegalArgumentException("Invalid allele " + allele.alleleId() + " for chromosome " + chromosome.id());
-			}
+		public void set(IChromosome<ResourceLocation> chromosome, ResourceLocation id) {
+			IChromosome.IReferenceResolver<?> resolver = Objects.requireNonNull(chromosome.resolver(), () -> "Not a reference chromosome: " + chromosome.id());
+			Allele<ResourceLocation> allele = new Allele<>(id, resolver.isDominant(id));
+			this.active.put(chromosome, allele);
+			this.inactive.put(chromosome, allele);
 		}
 
 		@Override
-		public <A extends IAllele> void setInactive(IChromosome<A> chromosome, A allele) {
-			if (this.karyotype.isAlleleValid(chromosome, allele)) {
-				this.inactive.put(chromosome, allele);
-			}
+		public <V> void setActive(IChromosome<V> chromosome, Allele<V> allele) {
+			this.active.put(chromosome, allele);
+		}
+
+		@Override
+		public <V> void setInactive(IChromosome<V> chromosome, Allele<V> allele) {
+			this.inactive.put(chromosome, allele);
 		}
 
 		@Override
 		public boolean isEmpty() {
-			return this.inactive.isEmpty() && this.active.isEmpty();
+			return this.active.isEmpty() && this.inactive.isEmpty();
 		}
 
 		@Override
 		public void setRemainingDefault() {
-			for (Map.Entry<IChromosome<?>, ? extends IAllele> entry : this.karyotype.getDefaultAlleles().entrySet()) {
-				IChromosome<?> chromosome = entry.getKey();
-				IAllele defaultAllele = entry.getValue();
-
+			for (IChromosome<?> chromosome : this.karyotype.getChromosomes()) {
+				Allele<?> def = null;
 				if (!this.active.containsKey(chromosome)) {
-					this.active.put(chromosome, defaultAllele);
+					def = this.karyotype.getDefaultAllele(chromosome);
+					this.active.put(chromosome, def);
 				}
 				if (!this.inactive.containsKey(chromosome)) {
-					this.inactive.put(chromosome, defaultAllele);
+					if (def == null) {
+						def = this.karyotype.getDefaultAllele(chromosome);
+					}
+					this.inactive.put(chromosome, def);
 				}
 			}
 		}
 
 		@Override
+		@SuppressWarnings({"unchecked", "rawtypes"})
 		public IGenome build() {
-			// Check for missing chromosomes and display which ones are missing
 			if (this.karyotype.size() != this.active.size()) {
 				StringBuilder msg = new StringBuilder("Tried to build genome, but the following chromosomes are missing from the karyotype: { ");
-
 				for (IChromosome<?> chromosome : this.karyotype.getChromosomes()) {
 					if (!this.active.containsKey(chromosome)) {
-						msg.append(chromosome.id());
-						msg.append(' ');
+						msg.append(chromosome.id()).append(' ');
 					}
 				}
 				msg.append('}');
-
 				throw new IllegalStateException(msg.toString());
-			} else {
-				ImmutableMap.Builder<IChromosome<?>, AllelePair<?>> genome = new ImmutableMap.Builder<>();
-
-				for (IChromosome<?> chromosome : this.karyotype.getChromosomes()) {
-					IAllele active = this.active.get(chromosome);
-					IAllele inactive = this.inactive.get(chromosome);
-
-					// Check for incomplete pairs
-					if (active == null || inactive == null) {
-						throw new IllegalStateException("Tried to build genome, but the allele pair was incomplete for the following chromosome: " + chromosome.id());
-					} else {
-						genome.put(chromosome, new AllelePair<>(active, inactive));
-					}
-				}
-
-				return new Genome(this.karyotype, genome.build());
 			}
+
+			ImmutableMap.Builder<IChromosome<?>, AllelePair<?>> genome = new ImmutableMap.Builder<>();
+			for (IChromosome<?> chromosome : this.karyotype.getChromosomes()) {
+				Allele<?> activeAllele = this.active.get(chromosome);
+				Allele<?> inactiveAllele = this.inactive.get(chromosome);
+				if (activeAllele == null || inactiveAllele == null) {
+					throw new IllegalStateException("Tried to build genome, but the allele pair was incomplete for the chromosome: " + chromosome.id());
+				}
+				genome.put(chromosome, new AllelePair(activeAllele, inactiveAllele));
+			}
+
+			return new Genome(this.karyotype, genome.build());
 		}
 	}
 }

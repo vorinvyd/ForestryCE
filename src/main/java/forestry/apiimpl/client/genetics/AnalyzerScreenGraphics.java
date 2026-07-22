@@ -15,6 +15,7 @@ import forestry.core.ForestryColors;
 import forestry.core.genetics.mutations.EnumMutateChance;
 import forestry.core.gui.GuiUtil;
 import forestry.core.gui.PortableAnalyzerScreen;
+import forestry.core.utils.GeneticsUtil;
 import forestry.core.utils.Translator;
 import it.unimi.dsi.fastutil.objects.ObjectOpenCustomHashSet;
 import net.minecraft.client.Minecraft;
@@ -68,19 +69,19 @@ public class AnalyzerScreenGraphics<S extends ISpecies<I>, I extends IIndividual
 	}
 
 	@Override
-	public <C extends IChromosome<A>, A extends IAllele> void drawChromosomeRow(C chromosome, @Nullable IChromosomeRowOptions<C, A> options) {
+	public <V> void drawChromosomeRow(IChromosome<V> chromosome, @Nullable IChromosomeRowOptions<V> options) {
 		// chromosome label
-		AllelePair<A> pair = this.genome.getAllelePair(chromosome);
-		A active = pair.active();
-		A inactive = pair.inactive();
+		AllelePair<V> pair = this.genome.getAllelePair(chromosome);
+		Allele<V> active = pair.active();
+		Allele<V> inactive = pair.inactive();
 
 		ISplitLineOptions newOptions = (right, existing, text) -> {
-			A allele = right ? inactive : active;
+			Allele<V> allele = right ? inactive : active;
 			existing.setColor(PortableAnalyzerScreen.getColorCoding(allele.dominant()));
-			return options == null ? text : options.apply(!right, chromosome, allele, existing, text);
+			return options == null ? text : options.apply(!right, chromosome, allele.value(), existing, text);
 		};
 
-		drawSplitLine(chromosome.getChromosomeDisplayName(), chromosome.getDisplayName(active), chromosome.getDisplayName(inactive), !this.haploid, newOptions);
+		drawSplitLine(GeneticsUtil.getChromosomeName(chromosome), GeneticsUtil.getName(chromosome, active.value()), GeneticsUtil.getName(chromosome, inactive.value()), !this.haploid, newOptions);
 	}
 
 	public void drawSplitLine(Component label, Component left, Component right, boolean showRight, @Nullable ISplitLineOptions options) {
@@ -134,12 +135,12 @@ public class AnalyzerScreenGraphics<S extends ISpecies<I>, I extends IIndividual
 	}
 
 	@Override
-	public void drawFertilityRow(IIntegerChromosome chromosome, ResourceLocation offspringSprite) {
+	public void drawFertilityRow(IChromosome<Integer> chromosome, ResourceLocation offspringSprite) {
 		TextureAtlasSprite sprite = IForestryClientApi.INSTANCE.getTextureManager().getSprite(offspringSprite);
 
-		drawChromosomeRow(chromosome, (active, c, a, options, text) -> {
-			if (a.value() == 0) {
-				return Component.translatable("allele.forestry.fertility.0i");
+		drawChromosomeRow(chromosome, (active, c, value, options, text) -> {
+			if (value == 0) {
+				return Component.translatable(chromosome.translationKey(value));
 			} else {
 				Component newText = text.copy().append(" x ");
 
@@ -154,20 +155,20 @@ public class AnalyzerScreenGraphics<S extends ISpecies<I>, I extends IIndividual
 	}
 
 	@Override
-	public void drawClimatePreferences(IValueChromosome<ToleranceType> temperatureTolerance, IValueChromosome<ToleranceType> humidityTolerance) {
+	public void drawClimatePreferences(IChromosome<ToleranceType> temperatureTolerance, IChromosome<ToleranceType> humidityTolerance) {
 		if (this.individual.getSpecies() instanceof IClimateSensitive active && this.individual.getInactiveSpecies() instanceof IClimateSensitive inactive) {
 			drawClimatePreferencesSection(temperatureTolerance, species -> ClimateHelper.toDisplay(species.getTemperature()), active, inactive);
 			drawClimatePreferencesSection(humidityTolerance, species -> ClimateHelper.toDisplay(species.getHumidity()), active, inactive);
 		}
 	}
 
-	private void drawClimatePreferencesSection(IValueChromosome<ToleranceType> tolerance, Function<IClimateSensitive, Component> preference, IClimateSensitive active, IClimateSensitive inactive) {
+	private void drawClimatePreferencesSection(IChromosome<ToleranceType> tolerance, Function<IClimateSensitive, Component> preference, IClimateSensitive active, IClimateSensitive inactive) {
 		// draw first line with preferences
 		{
 			Component activeText = preference.apply(active);
 			Component inactiveText = preference.apply(inactive);
 
-			drawSplitLine(tolerance.getChromosomeDisplayName(), activeText, inactiveText, !this.haploid, (right, options, text) -> {
+			drawSplitLine(GeneticsUtil.getChromosomeName(tolerance), activeText, inactiveText, !this.haploid, (right, options, text) -> {
 				options.setColor(ForestryColors.RECESSIVE_BLUE);
 				return text;
 			});
@@ -176,10 +177,10 @@ public class AnalyzerScreenGraphics<S extends ISpecies<I>, I extends IIndividual
 		// draw second line with tolerances
 		{
 			this.currentX += 8;
-			IValueAllele<ToleranceType> activeTolerance = this.genome.getActiveAllele(tolerance);
-			IValueAllele<ToleranceType> inactiveTolerance = this.genome.getInactiveAllele(tolerance);
-			Component activeText = tolerance.getDisplayName(activeTolerance);
-			Component inactiveText = tolerance.getDisplayName(inactiveTolerance);
+			Allele<ToleranceType> activeTolerance = this.genome.getActiveAllele(tolerance);
+			Allele<ToleranceType> inactiveTolerance = this.genome.getInactiveAllele(tolerance);
+			Component activeText = GeneticsUtil.getName(tolerance, activeTolerance.value());
+			Component inactiveText = GeneticsUtil.getName(tolerance, inactiveTolerance.value());
 
 			drawSplitLine(Component.translatable("for.gui.tolerance"), activeText, inactiveText, !this.haploid, (right, options, text) -> {
 				if (!right) {
@@ -187,7 +188,7 @@ public class AnalyzerScreenGraphics<S extends ISpecies<I>, I extends IIndividual
 				}
 
 				// draw icon
-				IValueAllele<ToleranceType> allele = (right ? inactiveTolerance : activeTolerance);
+				Allele<ToleranceType> allele = (right ? inactiveTolerance : activeTolerance);
 				TextureAtlasSprite sprite = IForestryClientApi.INSTANCE.getTextureManager().getSprite(switch (allele.value()) {
 					case BOTH_1, BOTH_2, BOTH_3, BOTH_4, BOTH_5 -> ForestrySprites.ANALYZER_TOLERANCE_BOTH;
 					case DOWN_1, DOWN_2, DOWN_3, DOWN_4, DOWN_5 -> ForestrySprites.ANALYZER_TOLERANCE_DOWN;

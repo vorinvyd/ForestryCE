@@ -1,0 +1,26 @@
+{
+  "authority": "MysteriousAges",
+  "dominant": true,
+  "genome": {
+    "forestry:activity": {
+      "value": "forestry:activity_metaturnal"
+    },
+    "forestry:fertility": {
+      "value": 4
+    },
+    "forestry:tolerates_rain": {
+      "dominant": true,
+      "value": true
+    }
+  },
+  "genus": "paludapis",
+  "humidity": "damp",
+  "outline": 9613122,
+  "products": [
+    {
+      "chance": 0.36,
+      "item": "forestry:mossy_comb"
+    }
+  ],
+  "species": "humidium"
+}

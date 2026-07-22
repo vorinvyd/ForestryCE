@@ -1,0 +1,29 @@
+{
+  "type": "forestry:carpenter",
+  "box": {
+    "item": "forestry:crate"
+  },
+  "id": "forestry:carpenter/crates/pack/forestry/crystalline_pollen_cluster",
+  "liquid": {
+    "amount": 100,
+    "id": "minecraft:water"
+  },
+  "recipe": {
+    "category": "misc",
+    "key": {
+      "#": {
+        "item": "forestry:crystalline_pollen_cluster"
+      }
+    },
+    "pattern": [
+      "###",
+      "###",
+      "###"
+    ],
+    "result": {
+      "count": 1,
+      "id": "forestry:crated_pollen_cluster_crystalline"
+    }
+  },
+  "time": 5
+}

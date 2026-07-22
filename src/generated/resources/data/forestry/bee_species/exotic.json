@@ -1,0 +1,22 @@
+{
+  "dominant": true,
+  "genome": {
+    "forestry:lifespan": {
+      "value": 50
+    },
+    "forestry:speed": {
+      "value": 1.0
+    }
+  },
+  "genus": "caldapis",
+  "humidity": "damp",
+  "outline": 3164419,
+  "products": [
+    {
+      "chance": 0.3,
+      "item": "forestry:silky_comb"
+    }
+  ],
+  "species": "darwini",
+  "temperature": "warm"
+}

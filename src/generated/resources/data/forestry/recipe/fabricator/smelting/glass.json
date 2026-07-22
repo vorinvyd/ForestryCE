@@ -4,7 +4,7 @@
   "melting": 1000,
   "product": {
     "amount": 1000,
-    "id": "forestry:glass"
+    "id": "forestry:liquid_glass"
   },
   "resource": {
     "item": "minecraft:glass"

@@ -1,0 +1,25 @@
+{
+  "authority": "Spear",
+  "dominant": true,
+  "escritoire_color": 5207311,
+  "genome": {
+    "forestry:fruits": {
+      "value": "forestry:fruit_coconut"
+    },
+    "forestry:height": {
+      "value": 1.25
+    },
+    "forestry:maturation": {
+      "value": 3
+    },
+    "forestry:sappiness": {
+      "dominant": true,
+      "value": 0.4
+    },
+    "forestry:yield": {
+      "value": 0.3
+    }
+  },
+  "genus": "cocos",
+  "species": "nucifera"
+}

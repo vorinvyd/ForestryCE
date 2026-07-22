@@ -2,7 +2,7 @@
   "type": "forestry:squeezer_container",
   "container": {
     "count": 1,
-    "id": "forestry:refractory"
+    "id": "forestry:refractory_capsule"
   },
   "id": "forestry:squeezer/container/refractory",
   "remnants": {

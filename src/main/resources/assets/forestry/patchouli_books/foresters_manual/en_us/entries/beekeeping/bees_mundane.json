@@ -1,7 +1,7 @@
 {
   "name": "for.gui.book.patchouli.entry.beekeeping.mundane",
   "category": "forestry:beekeeping",
-  "icon": "forestry:beehive_forest",
+  "icon": "forestry:forest_hive",
   "pages": [
     {
       "type": "patchouli:text",

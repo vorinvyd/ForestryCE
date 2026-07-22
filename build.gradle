@@ -54,13 +54,38 @@ neoForge {
 			data()
 			programArguments.addAll('--mod', 'forestry', '--all', '--output', file('src/generated/resources/').absolutePath, '--existing', file('src/main/resources/').absolutePath)
 		}
+
+		// Multiblock inventory-conservation GameTest suite. Runs ONLY via `gradlew runGameTestServer`; the
+		// enabled-namespaces property is what makes NeoForge execute the @GameTestHolder("forestry") classes, so the
+		// tests are completely inert in normal client/server play.
+		gameTestServer {
+			type = "gameTestServer"
+			gameDirectory.set(project.layout.projectDirectory.dir('run/gametest'))
+			systemProperty 'neoforge.enabledGameTestNamespaces', 'forestry'
+			// Forwards `-Pforestry.genomeBaseline=generate` to the forked gametest JVM so GenomeBaselineTest
+			// can (re)generate its golden-master snapshot. Empty/absent => assert mode.
+			systemProperty 'forestry.genomeBaseline', providers.gradleProperty('forestry.genomeBaseline').getOrElse('')
+		}
 	}
 
 	mods {
 		forestry {
 			sourceSet sourceSets.main
+			// GameTest suite lives in src/test (forestry.gametest). It is part of the forestry mod so the
+			// gameTestServer run loads it, but stays out of the published jar (jar/apiJar use main only).
+			sourceSet sourceSets.test
 		}
 	}
+
+	// src/test has no Minecraft/NeoForge on its classpath by default — moddev only wires that into source sets
+	// it's told about. Without this the gametest sources won't compile.
+	addModdingDependenciesTo sourceSets.test
+}
+
+// The test source set holds GameTests (run via runGameTestServer), not JUnit tests, so the standard `test` task
+// discovers nothing. Gradle 9 fails the build on no-discovered-tests by default; opt out so `./gradlew build` is green.
+tasks.named('test', Test) {
+	failOnNoDiscoveredTests = false
 }
 
 repositories {
@@ -98,6 +123,11 @@ repositories {
 		url = 'https://cursemaven.com'
 		content { includeGroup 'curse.maven' }
 	}
+	maven { url = "https://maven.createmod.net" }
+	maven {
+		name = 'Ponder'
+		url = 'https://raw.githubusercontent.com/Fuzss/modresources/main/maven/'
+	}
 	maven {
 		name = 'ModKit'
 		url = 'https://jitpack.io'
@@ -118,11 +148,13 @@ dependencies {
 	implementation "dev.latvian.mods:kubejs-neoforge:${kubejsVersion}"
 	// Curios Optional
 	implementation "top.theillusivec4.curios:curios-neoforge:${curiosVersion}+${minecraftVersion}"
+	// Ponder OPTIONAL
+	implementation("net.createmod.ponder:ponder-neoforge:${ponderVersion}+mc${minecraftVersion}")
 	// PATCHOULI REQUIRED
 	compileOnly "vazkii.patchouli:Patchouli:$patchouliVersion-NEOFORGE:api"
 	runtimeOnly "vazkii.patchouli:Patchouli:$patchouliVersion-NEOFORGE"
 	// ModKit DEV ONLY
-	implementation 'com.github.thedarkcolour:ModKit:0cfafa780c'
+	implementation 'com.github.thedarkcolour:ModKit:51b8760'
 }
 
 var generateModMetadata = tasks.register('generateModMetadata', ProcessResources) {

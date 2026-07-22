@@ -1,0 +1,18 @@
+{
+  "type": "forestry:carpenter",
+  "box": [],
+  "id": "forestry:carpenter/crates/unpack/forestry/tin_ingot",
+  "recipe": {
+    "category": "misc",
+    "ingredients": [
+      {
+        "item": "forestry:crated_tin"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "forestry:tin_ingot"
+    }
+  },
+  "time": 5
+}

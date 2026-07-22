@@ -1,7 +1,7 @@
 {
   "name": "for.gui.book.patchouli.entry.beekeeping.genes",
   "category": "forestry:beekeeping",
-  "icon": "forestry:bee_larvae_ge",
+  "icon": "forestry:larvae_bee",
   "pages": [
     {
       "type": "patchouli:text",

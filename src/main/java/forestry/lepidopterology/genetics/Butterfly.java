@@ -11,7 +11,6 @@ import forestry.api.genetics.ClimateHelper;
 import forestry.api.genetics.IGenome;
 import forestry.api.genetics.alleles.AllelePair;
 import forestry.api.genetics.alleles.ButterflyChromosomes;
-import forestry.api.genetics.alleles.IIntegerChromosome;
 import forestry.api.lepidopterology.IButterflyCocoon;
 import forestry.api.lepidopterology.IButterflyNursery;
 import forestry.api.lepidopterology.IEntityButterfly;
@@ -36,6 +35,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import forestry.api.genetics.alleles.IChromosome;
 
 public class Butterfly extends IndividualLiving<IButterflySpecies, IButterfly, IButterflySpeciesType> implements IButterfly {
 	private static final RandomSource rand = RandomSource.create();
@@ -68,7 +68,7 @@ public class Butterfly extends IndividualLiving<IButterflySpecies, IButterfly, I
 
 		BlockPos pos = BlockPos.containing(x, y, z);
 		Holder<Biome> biome = level.getBiome(pos);
-		IButterflySpecies species = getGenome().getActiveValue(ButterflyChromosomes.SPECIES);
+		IButterflySpecies species = getGenome().resolveActive(ButterflyChromosomes.SPECIES);
 		return (species.getSpawnBiomes() == null || biome.is(species.getSpawnBiomes())) && isAcceptedEnvironment(level, pos);
 	}
 
@@ -87,8 +87,8 @@ public class Butterfly extends IndividualLiving<IButterflySpecies, IButterfly, I
 		TemperatureType biomeTemperature = IForestryApi.INSTANCE.getClimateManager().getTemperature(biome);
 		HumidityType biomeHumidity = IForestryApi.INSTANCE.getClimateManager().getHumidity(biome);
 		return ClimateHelper.isWithinLimits(biomeTemperature, biomeHumidity,
-			getGenome().getActiveValue(ButterflyChromosomes.SPECIES).getTemperature(), getGenome().getActiveValue(ButterflyChromosomes.TEMPERATURE_TOLERANCE),
-			getGenome().getActiveValue(ButterflyChromosomes.SPECIES).getHumidity(), getGenome().getActiveValue(ButterflyChromosomes.HUMIDITY_TOLERANCE));
+			this.species.getTemperature(), getGenome().getActiveValue(ButterflyChromosomes.TEMPERATURE_TOLERANCE),
+			this.species.getHumidity(), getGenome().getActiveValue(ButterflyChromosomes.HUMIDITY_TOLERANCE));
 	}
 
 	@Nullable
@@ -113,11 +113,11 @@ public class Butterfly extends IndividualLiving<IButterflySpecies, IButterfly, I
 			return true;
 		}
 
-		return isDayTime != getGenome().getActiveValue(ButterflyChromosomes.SPECIES).isNocturnal();
+		return isDayTime != this.species.isNocturnal();
 	}
 
 	@Override
-	protected IIntegerChromosome getLifespanChromosome() {
+	protected IChromosome<Integer> getLifespanChromosome() {
 		return ButterflyChromosomes.LIFESPAN;
 	}
 
@@ -143,7 +143,7 @@ public class Butterfly extends IndividualLiving<IButterflySpecies, IButterfly, I
 	public List<ItemStack> getCaterpillarDrop(IButterflyNursery nursery, boolean playerKill, int lootLevel) {
 		ArrayList<ItemStack> drop = new ArrayList<>();
 		float metabolism = (float) getGenome().getActiveValue(ButterflyChromosomes.METABOLISM) / 10;
-		List<IProduct> products = getGenome().getActiveValue(ButterflyChromosomes.SPECIES).getCaterpillarProducts();
+		List<IProduct> products = this.species.getCaterpillarProducts();
 
 		for (IProduct product : products) {
 			if (rand.nextFloat() < product.chance() * metabolism) {

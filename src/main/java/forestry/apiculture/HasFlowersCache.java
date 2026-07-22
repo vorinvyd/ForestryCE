@@ -53,7 +53,7 @@ public class HasFlowersCache implements INbtWritable, INbtReadable {
 		public Iterator<BlockPos.MutableBlockPos> areaIterator;
 
 		public FlowerData(IBee queen, IBeeHousing housing) {
-			this.flowerType = queen.getGenome().getActiveValue(BeeChromosomes.FLOWER_TYPE);
+			this.flowerType = queen.getGenome().resolveActive(BeeChromosomes.FLOWER_TYPE);
 			this.territory = queen.getGenome().getActiveValue(BeeChromosomes.TERRITORY);
 			this.areaIterator = queen.getAreaIterator(housing);
 		}
@@ -112,7 +112,7 @@ public class HasFlowersCache implements INbtWritable, INbtReadable {
 	public void onNewQueen(IBee queen, IBeeHousing housing) {
 		if (this.flowerData != null) {
 			IGenome genome = queen.getGenome();
-			IFlowerType flowerType = genome.getActiveValue(BeeChromosomes.FLOWER_TYPE);
+			IFlowerType flowerType = genome.resolveActive(BeeChromosomes.FLOWER_TYPE);
 			if (this.flowerData.flowerType != flowerType || !this.flowerData.territory.equals(genome.getActiveValue(BeeChromosomes.TERRITORY))) {
                 this.flowerData = new FlowerData(queen, housing);
                 this.flowerCoords.clear();

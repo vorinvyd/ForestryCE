@@ -1,0 +1,23 @@
+{
+  "genome": {
+    "forestry:lifespan": {
+      "dominant": true,
+      "value": 30
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.6
+    }
+  },
+  "genus": "modapis",
+  "humidity": "arid",
+  "outline": 12959366,
+  "products": [
+    {
+      "chance": 0.2,
+      "item": "forestry:parched_comb"
+    }
+  ],
+  "species": "modicus",
+  "temperature": "hot"
+}

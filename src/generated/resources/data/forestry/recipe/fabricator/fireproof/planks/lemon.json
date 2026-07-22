@@ -1,0 +1,28 @@
+{
+  "type": "forestry:fabricator",
+  "id": "forestry:fabricator/fireproof/planks/lemon",
+  "molten": {
+    "amount": 500,
+    "id": "forestry:liquid_glass"
+  },
+  "recipe": {
+    "category": "building",
+    "key": {
+      "#": {
+        "item": "forestry:refractory_wax"
+      },
+      "X": {
+        "item": "forestry:lemon_planks"
+      }
+    },
+    "pattern": [
+      "XXX",
+      "X#X",
+      "XXX"
+    ],
+    "result": {
+      "count": 8,
+      "id": "forestry:lemon_fireproof_planks"
+    }
+  }
+}

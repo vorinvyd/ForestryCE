@@ -2,6 +2,6 @@
   "name": "for.gui.book.patchouli.category.core.engines.title",
   "parent": "forestry:core",
   "description": "for.gui.book.patchouli.category.core.engines.desc",
-  "icon": "forestry:engine_biogas",
+  "icon": "forestry:biogas_engine",
   "sortnum": 1
 }

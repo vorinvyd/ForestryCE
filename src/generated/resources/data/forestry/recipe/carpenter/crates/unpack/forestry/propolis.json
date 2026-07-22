@@ -1,0 +1,18 @@
+{
+  "type": "forestry:carpenter",
+  "box": [],
+  "id": "forestry:carpenter/crates/unpack/forestry/propolis",
+  "recipe": {
+    "category": "misc",
+    "ingredients": [
+      {
+        "item": "forestry:crated_propolis"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "forestry:propolis"
+    }
+  },
+  "time": 5
+}

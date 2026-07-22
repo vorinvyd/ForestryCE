@@ -1,0 +1,24 @@
+{
+  "genome": {
+    "forestry:bee_effect": {
+      "value": "forestry:bee_effect_heroic"
+    },
+    "forestry:lifespan": {
+      "value": 50
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.8
+    }
+  },
+  "genus": "herapis",
+  "glint": true,
+  "outline": 11785700,
+  "products": [
+    {
+      "chance": 0.4,
+      "item": "forestry:cocoa_comb"
+    }
+  ],
+  "species": "kraphti"
+}

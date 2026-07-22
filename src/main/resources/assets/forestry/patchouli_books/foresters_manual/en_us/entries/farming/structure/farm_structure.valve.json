@@ -1,5 +1,5 @@
 {
-  "icon": "forestry:farm_valve_brick",
+  "icon": "forestry:brick_farm_valve",
   "name": "for.gui.book.patchouli.entry.farming.structure.farm_structure.valve",
   "category": "forestry:structure",
   "pages": [
@@ -9,7 +9,7 @@
     },
     {
       "type": "crafting",
-      "recipe": "forestry:farm_valve_brick"
+      "recipe": "forestry:brick_farm_valve"
     }
   ]
 }

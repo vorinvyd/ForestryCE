@@ -2,5 +2,5 @@
   "name": "for.gui.book.patchouli.category.farming.structure.title",
   "parent": "forestry:farming",
   "description": "for.gui.book.patchouli.category.farming.structure.desc",
-  "icon": "forestry:farm_plain_brick"
+  "icon": "forestry:brick_farm_plain"
 }

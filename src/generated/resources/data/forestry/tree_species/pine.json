@@ -1,0 +1,21 @@
+{
+  "dominant": true,
+  "escritoire_color": 16711567,
+  "genome": {
+    "forestry:height": {
+      "value": 1.25
+    },
+    "forestry:saplings": {
+      "dominant": true,
+      "value": 0.035
+    },
+    "forestry:sappiness": {
+      "dominant": true,
+      "value": 0.2
+    }
+  },
+  "genus": "picea",
+  "rarity": 0.0025,
+  "species": "ponderosa",
+  "temperature": "cold"
+}

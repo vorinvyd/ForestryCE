@@ -3,8 +3,10 @@
   "chance": 0.02,
   "id": "forestry:squeezer/fruit/chestnut",
   "output": {
-    "amount": 80,
-    "id": "forestry:seed_oil"
+    "stack": {
+      "amount": 80,
+      "id": "forestry:seed_oil"
+    }
   },
   "remnant": {
     "count": 1,
@@ -12,7 +14,7 @@
   },
   "resources": [
     {
-      "tag": "forge:fruits/chestnut"
+      "tag": "c:fruits/chestnut"
     }
   ],
   "time": 70

@@ -1,0 +1,21 @@
+{
+  "type": "forestry:resurrect",
+  "entries": [
+    {
+      "entity": "minecraft:skeleton",
+      "item": "minecraft:bone"
+    },
+    {
+      "entity": "minecraft:skeleton",
+      "item": "minecraft:arrow"
+    },
+    {
+      "entity": "minecraft:zombie",
+      "item": "minecraft:rotten_flesh"
+    },
+    {
+      "entity": "minecraft:blaze",
+      "item": "minecraft:blaze_rod"
+    }
+  ]
+}

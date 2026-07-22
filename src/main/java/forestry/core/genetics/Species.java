@@ -9,6 +9,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,7 +40,14 @@ public abstract class Species<T extends ISpeciesType<? extends ISpecies<I>, I>, 
 		this.dominant = builder.isDominant();
 		this.authority = builder.getAuthority();
 		this.species = builder.getSpecies();
-		this.genus = IForestryApi.INSTANCE.getGeneticManager().getTaxon(builder.getGenus());
+		ITaxon genus = IForestryApi.INSTANCE.getGeneticManager().getTaxonSafe(builder.getGenus());
+		if (genus == null) {
+			// The genus was never registered (e.g. a datapack taxon that failed to load). Rather than crash the whole
+			// reload over cosmetic classification, fall back to a display-only genus with no ancestry so the species
+			// still registers; the analyzer's taxonomy walk stops at the null parent.
+			genus = new Taxon(builder.getGenus(), TaxonomicRank.GENUS, null, new IdentityHashMap<>());
+		}
+		this.genus = genus;
 		this.binomial = createBinomial(this.genus.name(), this.species);
 		this.translationKey = GeneticsUtil.createTranslationKey("allele", speciesType.id(), id);
 	}
@@ -124,7 +132,7 @@ public abstract class Species<T extends ISpeciesType<? extends ISpecies<I>, I>, 
 	}
 
 	@Override
-	public I createIndividual(Map<IChromosome<?>, IAllele> alleles) {
+	public I createIndividual(Map<IChromosome<?>, Allele<?>> alleles) {
 		return createIndividual(this.defaultGenome.copyWith(alleles));
 	}
 
@@ -137,11 +145,11 @@ public abstract class Species<T extends ISpeciesType<? extends ISpecies<I>, I>, 
 		tooltip.add(Component.literal("<").append(Component.translatable("for.gui.unknown")).append(">").withStyle(ChatFormatting.GRAY));
 	}
 
-	protected <S extends ISpecies<?>> void addHybridTooltip(List<Component> tooltip, IGenome genome, IRegistryChromosome<S> species, String hybridKey) {
-		AllelePair<IValueAllele<S>> speciesPair = genome.getAllelePair(species);
-		S primary = speciesPair.active().value();
-		S secondary = speciesPair.inactive().value();
+	protected <S extends ISpecies<?>> void addHybridTooltip(List<Component> tooltip, IGenome genome, IChromosome<ResourceLocation> species, String hybridKey) {
+		AllelePair<ResourceLocation> speciesPair = genome.getAllelePair(species);
 		if (!speciesPair.isSameAlleles()) {
+			S primary = genome.resolveActive(species);
+			S secondary = genome.resolveInactive(species);
 			tooltip.add(Component.translatable(hybridKey, primary.getDisplayName(), secondary.getDisplayName()).withStyle(ChatFormatting.BLUE));
 		}
 	}

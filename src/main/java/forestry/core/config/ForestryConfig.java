@@ -101,7 +101,7 @@ public class ForestryConfig {
 				.defineInRange("wild_hive_spawn_rate", 1.0, 0.0, 1000.0);
 			this.useHaploidDrones = builder
 				.comment("In real life, drone bees are haploid, which means they only carry one set of chromosomes. If this option is enabled, only a drone's active alleles will be used for inheritance, making drones effectively haploid. This CHANGES Forestry's bee breeding mechanics.")
-				.define("use_haploid_drones", false);
+				.define("use_haploid_drones", true);
 			builder.pop();
 
 			// Farming

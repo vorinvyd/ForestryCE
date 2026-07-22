@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "P": [
+      {
+        "item": "forestry:giant_sequoia_planks"
+      },
+      {
+        "item": "forestry:giant_sequoia_fireproof_planks"
+      }
+    ]
+  },
+  "pattern": [
+    "PP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "forestry:giant_sequoia_pressure_plate"
+  }
+}

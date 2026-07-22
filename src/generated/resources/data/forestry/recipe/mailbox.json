@@ -3,13 +3,13 @@
   "category": "misc",
   "key": {
     "#": {
-      "tag": "forge:ingots/tin"
+      "tag": "c:ingots/tin"
     },
     "X": {
       "tag": "c:chests/wooden"
     },
     "Y": {
-      "item": "forestry:sturdy_machine"
+      "item": "forestry:sturdy_casing"
     }
   },
   "pattern": [

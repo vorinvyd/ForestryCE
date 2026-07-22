@@ -1,31 +1,26 @@
 package forestry.core.multiblock;
 
 import forestry.api.ForestryConstants;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.chunk.ChunkAccess;
-import net.neoforged.neoforge.event.level.ChunkEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 
 /**
- * In your mod, subscribe this on both the client and server sides side to handle chunk
- * load events for your multiblock machines.
- * Chunks can load asynchronously in environments like MCPC+, so we cannot
- * process any blocks that are in chunks which are still loading.
+ * Per-level lifecycle cleanup for the new declarative engine (plan Task 2.5; spec §7.1). Replaces the
+ * deleted heavyweight {@code MultiblockEventHandler}/{@code MultiblockWorldRegistry.onWorldUnloaded}
+ * pair: the new engine has no global registry, flood-fill, or tick loop, so the only per-level state to
+ * release on unload is the {@link MultiblockIndex} lookup map.
+ *
+ * <p>Registered on the game event bus ({@link EventBusSubscriber}); runs on the main thread for both
+ * the server and client levels (each is a distinct {@code MultiblockIndex} key, spec §9).
  */
 @EventBusSubscriber(modid = ForestryConstants.MOD_ID)
 public class MultiblockEventHandler {
 	@SubscribeEvent
-	public static void onChunkLoad(ChunkEvent.Load loadEvent) {
-		ChunkAccess chunk = loadEvent.getChunk();
-		LevelAccessor world = loadEvent.getLevel();
-		MultiblockRegistry.onChunkLoaded(world, chunk.getPos().x, chunk.getPos().z);
-	}
-
-	// Cleanup, for nice memory usageness
-	@SubscribeEvent
-	public static void onWorldUnload(LevelEvent.Unload unloadEvent) {
-		MultiblockRegistry.onWorldUnloaded(unloadEvent.getLevel());
+	public static void onLevelUnload(LevelEvent.Unload event) {
+		// Drop all controller tracking for the unloaded level so deactivated/abandoned controllers don't
+		// accumulate across world reloads (the old MultiblockWorldRegistry.onWorldUnloaded cleared the same
+		// in-memory state; MultiblockIndex.clear covers all of it — there is no flood-fill/orphan/dead state).
+		MultiblockIndex.clear(event.getLevel());
 	}
 }

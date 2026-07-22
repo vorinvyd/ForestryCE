@@ -1,0 +1,22 @@
+{
+  "dominant": true,
+  "genome": {
+    "forestry:lifespan": {
+      "dominant": true,
+      "value": 10
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 1.2
+    }
+  },
+  "genus": "apis",
+  "outline": 5715180,
+  "products": [
+    {
+      "chance": 0.4,
+      "item": "forestry:honey_comb"
+    }
+  ],
+  "species": "mellifera"
+}

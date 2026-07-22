@@ -1,0 +1,25 @@
+{
+  "authority": "Spear",
+  "dominant": true,
+  "escritoire_color": 5745983,
+  "genome": {
+    "forestry:fruits": {
+      "value": "forestry:fruit_orange"
+    },
+    "forestry:height": {
+      "value": 0.5
+    },
+    "forestry:maturation": {
+      "value": 4
+    },
+    "forestry:sappiness": {
+      "dominant": true,
+      "value": 0.3
+    },
+    "forestry:yield": {
+      "value": 0.3
+    }
+  },
+  "genus": "citrus",
+  "species": "sinensis"
+}

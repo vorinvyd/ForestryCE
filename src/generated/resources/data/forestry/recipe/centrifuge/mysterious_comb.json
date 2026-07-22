@@ -2,12 +2,12 @@
   "type": "forestry:centrifuge",
   "id": "forestry:centrifuge/mysterious_comb",
   "input": {
-    "item": "forestry:bee_comb_mysterious"
+    "item": "forestry:mysterious_comb"
   },
   "products": [
     {
       "chance": 1.0,
-      "item": "forestry:propolis_pulsating"
+      "item": "forestry:pulsating_propolis"
     },
     {
       "chance": 0.4,

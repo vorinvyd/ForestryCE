@@ -65,7 +65,7 @@ public class ForestryItemTagsProvider {
 		tags.copy(BlockTags.DOORS, ItemTags.DOORS);
 		tags.copy(BlockTags.WOODEN_DOORS, ItemTags.WOODEN_DOORS);
 
-		tags.tag(ItemTags.SAPLINGS).add(ArboricultureItems.SAPLING.get());
+		tags.tag(ItemTags.SAPLINGS).add(ArboricultureItems.TREE_SAPLING.get());
 		tags.copy(BlockTags.LEAVES, ItemTags.LEAVES);
 		tags.copy(Tags.Blocks.ORES, Tags.Items.ORES);
 		tags.copy(ForestryTags.Blocks.ORES_TIN, ForestryTags.Items.ORES_TIN);
@@ -100,7 +100,7 @@ public class ForestryItemTagsProvider {
 
 		tags.tag(Tags.Items.RAW_MATERIALS).addTag(ForestryTags.Items.RAW_MATERIALS_TIN);
 
-		tags.tag(ItemTags.SAPLINGS).add(ArboricultureItems.SAPLING.item());
+		tags.tag(ItemTags.SAPLINGS).add(ArboricultureItems.TREE_SAPLING.item());
 		tags.tag(ForestryTags.Items.BEE_COMBS).add(ApicultureItems.BEE_COMBS.itemArray());
 		tags.tag(ForestryTags.Items.VILLAGE_COMBS).add(ApicultureItems.BEE_COMBS.itemArray());
 		tags.tag(ForestryTags.Items.PROPOLIS).add(ApicultureItems.PROPOLIS.itemArray());

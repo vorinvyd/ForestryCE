@@ -1,8 +1,8 @@
 {
   "values": [
-    "forestry:bee_drone_ge",
-    "forestry:bee_princess_ge",
-    "forestry:bee_queen_ge",
-    "forestry:bee_larvae_ge"
+    "forestry:drone_bee",
+    "forestry:princess_bee",
+    "forestry:queen_bee",
+    "forestry:larvae_bee"
   ]
 }

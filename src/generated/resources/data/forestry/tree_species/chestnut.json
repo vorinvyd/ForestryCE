@@ -1,0 +1,25 @@
+{
+  "dominant": true,
+  "escritoire_color": 8293965,
+  "genome": {
+    "forestry:fruits": {
+      "value": "forestry:fruit_chestnut"
+    },
+    "forestry:girth": {
+      "value": 2
+    },
+    "forestry:height": {
+      "value": 1.25
+    },
+    "forestry:sappiness": {
+      "dominant": true,
+      "value": 0.2
+    },
+    "forestry:yield": {
+      "dominant": true,
+      "value": 0.2
+    }
+  },
+  "genus": "castanea",
+  "species": "sativa"
+}

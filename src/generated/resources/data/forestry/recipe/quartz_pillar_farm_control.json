@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:quartz_pillar"
+    },
+    "T": {
+      "item": "forestry:golden_electron_tube"
+    },
+    "X": {
+      "tag": "c:dusts/redstone"
+    }
+  },
+  "pattern": [
+    " # ",
+    "XTX"
+  ],
+  "result": {
+    "count": 1,
+    "id": "forestry:quartz_pillar_farm_control"
+  }
+}

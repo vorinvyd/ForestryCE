@@ -3,8 +3,10 @@
   "chance": 0.2,
   "id": "forestry:squeezer/fruit/feijoa",
   "output": {
-    "amount": 100,
-    "id": "forestry:juice"
+    "stack": {
+      "amount": 100,
+      "id": "forestry:fruit_juice"
+    }
   },
   "remnant": {
     "count": 1,
@@ -12,7 +14,7 @@
   },
   "resources": [
     {
-      "tag": "forge:fruits/feijoa"
+      "tag": "c:fruits/feijoa"
     }
   ],
   "time": 10

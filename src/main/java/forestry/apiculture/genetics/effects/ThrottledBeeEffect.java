@@ -17,15 +17,20 @@ import net.minecraft.world.phys.AABB;
 import java.util.List;
 
 public abstract class ThrottledBeeEffect extends DummyBeeEffect implements IBeeEffect {
-	private final boolean isCombinable;
-	private final int throttle;
-	private final boolean requiresWorkingQueen;
+	private final ThrottleSettings settings;
 
+	protected ThrottledBeeEffect(ThrottleSettings settings) {
+		super(settings.dominant());
+		this.settings = settings;
+	}
+
+	/** Kept for the bespoke code-only subclasses, which have no codec and so no reason to name the record. */
 	protected ThrottledBeeEffect(boolean dominant, int throttle, boolean requiresWorking, boolean isCombinable) {
-		super(dominant);
-		this.throttle = throttle;
-		this.isCombinable = isCombinable;
-		this.requiresWorkingQueen = requiresWorking;
+		this(new ThrottleSettings(dominant, throttle, requiresWorking, isCombinable));
+	}
+
+	public ThrottleSettings settings() {
+		return this.settings;
 	}
 
 	public static AABB getBounding(IBeeHousing housing, IGenome genome) {
@@ -43,9 +48,13 @@ public abstract class ThrottledBeeEffect extends DummyBeeEffect implements IBeeE
 		return housing.getWorldObj().getEntitiesOfClass(entityClass, boundingBox);
 	}
 
+	public int getThrottle() {
+		return this.settings.throttle();
+	}
+
 	@Override
 	public boolean isCombinable() {
-		return this.isCombinable;
+		return this.settings.combinable();
 	}
 
 	@Override
@@ -66,7 +75,7 @@ public abstract class ThrottledBeeEffect extends DummyBeeEffect implements IBeeE
 	}
 
 	private boolean isThrottled(IEffectData storedData, IBeeHousing housing) {
-		if (this.requiresWorkingQueen && housing.getErrorLogic().hasErrors()) {
+		if (this.settings.requiresWorking() && housing.getErrorLogic().hasErrors()) {
 			return true;
 		}
 
@@ -74,7 +83,7 @@ public abstract class ThrottledBeeEffect extends DummyBeeEffect implements IBeeE
 		time++;
 		storedData.setInteger(0, time);
 
-		if (time < this.throttle) {
+		if (time < this.settings.throttle()) {
 			return true;
 		}
 

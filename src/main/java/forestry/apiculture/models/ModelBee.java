@@ -4,13 +4,11 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import forestry.api.apiculture.genetics.BeeLifeStage;
-import forestry.api.apiculture.genetics.IBeeSpecies;
 import forestry.api.client.IForestryClientApi;
 import forestry.api.client.apiculture.IBeeClientManager;
 import forestry.api.genetics.IIndividual;
 import forestry.api.genetics.ILifeStage;
 import forestry.api.genetics.capability.IIndividualHandlerItem;
-import forestry.core.utils.SpeciesUtil;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
@@ -28,7 +26,7 @@ import net.neoforged.neoforge.client.model.geometry.IGeometryLoader;
 import net.neoforged.neoforge.client.model.geometry.IUnbakedGeometry;
 
 import javax.annotation.Nullable;
-import java.util.IdentityHashMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -47,19 +45,17 @@ public class ModelBee implements IUnbakedGeometry<ModelBee> {
 	@Override
 	public BakedModel bake(IGeometryBakingContext context, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides overrides) {
 		IBeeClientManager manager = IForestryClientApi.INSTANCE.getBeeManager();
-		Map<IBeeSpecies, ResourceLocation> models = manager.getBeeModels(this.stage);
-		IdentityHashMap<IBeeSpecies, BakedModel> itemModels = new IdentityHashMap<>();
+		Map<ResourceLocation, BakedModel> bakedModels = new HashMap<>();
 
-		for (IBeeSpecies species : SpeciesUtil.getAllBeeSpecies()) {
-			ResourceLocation location = models.get(species);
+		for (ResourceLocation location : manager.getAllModelLocations(this.stage)) {
 			BakedModel model = baker.bake(location, BlockModelRotation.X0_Y0, spriteGetter);
 
 			if (model != null) {
-				itemModels.put(species, model);
+				bakedModels.put(location, model);
 			}
 		}
 
-		return new ModelBee.Baked(itemModels);
+		return new ModelBee.Baked(this.stage, manager, bakedModels);
 	}
 
 	public static class Loader implements IGeometryLoader<ModelBee> {
@@ -80,10 +76,14 @@ public class ModelBee implements IUnbakedGeometry<ModelBee> {
 	}
 
 	private static class Baked implements BakedModel {
-		private final IdentityHashMap<IBeeSpecies, BakedModel> itemModels;
+		private final ILifeStage stage;
+		private final IBeeClientManager manager;
+		private final Map<ResourceLocation, BakedModel> bakedModels;
 
-		public Baked(IdentityHashMap<IBeeSpecies, BakedModel> itemModels) {
-			this.itemModels = itemModels;
+		public Baked(ILifeStage stage, IBeeClientManager manager, Map<ResourceLocation, BakedModel> bakedModels) {
+			this.stage = stage;
+			this.manager = manager;
+			this.bakedModels = bakedModels;
 		}
 
 		@Override
@@ -127,9 +127,19 @@ public class ModelBee implements IUnbakedGeometry<ModelBee> {
 				IIndividual individual = IIndividualHandlerItem.getIndividual(stack);
 				if (individual == null) {
 					return model;
-				} else {
-					return Baked.this.itemModels.getOrDefault(individual.getSpecies(), model);
 				}
+
+				ResourceLocation speciesId = individual.getSpecies().id();
+				ResourceLocation location = Baked.this.manager.getModelLocation(Baked.this.stage, speciesId);
+				BakedModel resolved = Baked.this.bakedModels.get(location);
+
+				if (resolved != null) {
+					return resolved;
+				}
+
+				// Fall back to the default model for this life stage, then the vanilla-provided model.
+				ResourceLocation defaultLocation = Baked.this.manager.getDefaultModelLocation(Baked.this.stage);
+				return Baked.this.bakedModels.getOrDefault(defaultLocation, model);
 			}
 		}
 	}

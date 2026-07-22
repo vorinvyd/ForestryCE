@@ -1,10 +1,11 @@
 package forestry.api.plugin;
 
 import forestry.api.apiculture.IActivityType;
+import forestry.api.apiculture.IBeeJubilance;
 import forestry.api.apiculture.IFlowerType;
 import forestry.api.apiculture.genetics.IBeeEffect;
 import forestry.api.apiculture.hives.IHiveDefinition;
-import forestry.api.genetics.alleles.IAllele;
+import forestry.api.genetics.alleles.Allele;
 import forestry.api.genetics.alleles.IChromosome;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceLocation;
@@ -48,7 +49,7 @@ public interface IApicultureRegistration {
 	 * @param rare      If true, this bee goes into the "rare" village bee pool, which is chosen 25% of the time instead of the "common" pool.
 	 * @param alleles   Map of non-default alleles. Example is the rare Tolerant Flyer variant of the Forest species.
 	 */
-	void addVillageBee(ResourceLocation speciesId, boolean rare, Map<IChromosome<?>, IAllele> alleles);
+	void addVillageBee(ResourceLocation speciesId, boolean rare, Map<IChromosome<?>, Allele<?>> alleles);
 
 	/**
 	 * Shorthand for adding a village bee that uses the default genome.
@@ -85,6 +86,8 @@ public interface IApicultureRegistration {
 	void registerFlowerType(ResourceLocation id, IFlowerType type);
 
 	void registerBeeEffect(ResourceLocation id, IBeeEffect effect);
+
+	void registerBeeJubilance(ResourceLocation id, IBeeJubilance jubilance);
 
 	/**
 	 * Register an activity type, which defines activity periods for a bee.

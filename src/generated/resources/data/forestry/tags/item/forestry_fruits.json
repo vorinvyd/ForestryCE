@@ -1,16 +1,16 @@
 {
   "values": [
-    "forestry:fruit_cherry",
-    "forestry:fruit_walnut",
-    "forestry:fruit_chestnut",
-    "forestry:fruit_lemon",
-    "forestry:fruit_plum",
-    "forestry:fruit_dates",
-    "forestry:fruit_papaya",
-    "forestry:fruit_pear",
-    "forestry:fruit_orange",
-    "forestry:fruit_coconut",
-    "forestry:fruit_olive",
-    "forestry:fruit_feijoa"
+    "forestry:cherry",
+    "forestry:walnut",
+    "forestry:chestnut",
+    "forestry:lemon",
+    "forestry:plum",
+    "forestry:date",
+    "forestry:papaya",
+    "forestry:pear",
+    "forestry:orange",
+    "forestry:coconut",
+    "forestry:olive",
+    "forestry:feijoa"
   ]
 }

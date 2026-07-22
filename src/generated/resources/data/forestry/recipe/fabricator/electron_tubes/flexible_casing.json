@@ -3,13 +3,13 @@
   "id": "forestry:fabricator/electron_tubes/flexible_casing",
   "molten": {
     "amount": 500,
-    "id": "forestry:glass"
+    "id": "forestry:liquid_glass"
   },
   "recipe": {
     "category": "misc",
     "key": {
       "#": {
-        "tag": "forge:ingots/bronze"
+        "tag": "c:ingots/bronze"
       },
       "B": {
         "tag": "c:slimeballs"

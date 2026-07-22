@@ -16,7 +16,7 @@ public class FactoryTiles {
 	public static final FeatureTileType<TileBottler> BOTTLER = REGISTRY.tile(TileBottler::new, "bottler", () -> FactoryBlocks.TESR.get(BlockTypeFactoryTesr.BOTTLER).collect());
 	public static final FeatureTileType<TileCarpenter> CARPENTER = REGISTRY.tile(TileCarpenter::new, "carpenter", () -> FactoryBlocks.TESR.get(BlockTypeFactoryTesr.CARPENTER).collect());
 	public static final FeatureTileType<TileCentrifuge> CENTRIFUGE = REGISTRY.tile(TileCentrifuge::new, "centrifuge", () -> FactoryBlocks.TESR.get(BlockTypeFactoryTesr.CENTRIFUGE).collect());
-	public static final FeatureTileType<TileFabricator> FABRICATOR = REGISTRY.tile(TileFabricator::new, "fabricator", () -> FactoryBlocks.PLAIN.get(BlockTypeFactoryPlain.FABRICATOR).collect());
+	public static final FeatureTileType<TileFabricator> FABRICATOR = REGISTRY.tile(TileFabricator::new, "thermionic_fabricator", () -> FactoryBlocks.PLAIN.get(BlockTypeFactoryPlain.FABRICATOR).collect());
 	public static final FeatureTileType<TileFermenter> FERMENTER = REGISTRY.tile(TileFermenter::new, "fermenter", () -> FactoryBlocks.TESR.get(BlockTypeFactoryTesr.FERMENTER).collect());
 	public static final FeatureTileType<TileMillRainmaker> RAINMAKER = REGISTRY.tile(TileMillRainmaker::new, "rainmaker", () -> FactoryBlocks.TESR.get(BlockTypeFactoryTesr.RAINMAKER).collect());
 	public static final FeatureTileType<TileMoistener> MOISTENER = REGISTRY.tile(TileMoistener::new, "moistener", () -> FactoryBlocks.TESR.get(BlockTypeFactoryTesr.MOISTENER).collect());

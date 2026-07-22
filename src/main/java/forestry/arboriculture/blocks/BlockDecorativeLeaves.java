@@ -96,7 +96,7 @@ public class BlockDecorativeLeaves extends Block implements IColoredBlock, IShea
 		ITree individual = this.type.getIndividual();
 
 		if (tintIndex == BlockAbstractLeaves.FRUIT_COLOR_INDEX) {
-			IFruit fruitProvider = individual.getGenome().getActiveValue(TreeChromosomes.FRUIT);
+			IFruit fruitProvider = individual.getGenome().resolveActive(TreeChromosomes.FRUIT);
 			return fruitProvider.getDecorativeColor();
 		}
 		return IForestryClientApi.INSTANCE.getTreeManager().getTint(individual.getSpecies()).get(level, pos);

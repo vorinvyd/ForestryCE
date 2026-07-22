@@ -1,13 +1,18 @@
 package forestry.core.utils;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -15,12 +20,17 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 import forestry.api.ForestryCapabilities;
+import forestry.api.IForestryApi;
 import forestry.api.apiculture.genetics.IBeeSpecies;
 import forestry.api.arboriculture.ITreeSpecies;
 import forestry.api.core.ISpectacleVision;
+import forestry.api.genetics.IGenome;
 import forestry.api.genetics.IIndividual;
 import forestry.api.genetics.ILifeStage;
 import forestry.api.genetics.IMutation;
+import forestry.api.genetics.alleles.Allele;
+import forestry.api.genetics.alleles.AllelePair;
+import forestry.api.genetics.alleles.IChromosome;
 import forestry.api.genetics.IMutationManager;
 import forestry.api.genetics.ISpecies;
 import forestry.api.genetics.ISpeciesType;
@@ -135,7 +145,7 @@ public class GeneticsUtil {
 	 *     <li>If {@code typeId} and {@code objectId} have different namespaces, the format is: <br> {@code TYPE.TYPENAMESPACE.TYPEPATH.OBJECTNAMESPACE.OBJECTPATH}</li>
 	 * </ul>
 	 * For example, the Austere bee species from Forestry has the translation key: <br> {@code species.forestry.bee.austere} <br>
-	 * and the Creeper bee species from Binnie's Extra Bees has the translation key: <br> {@code species.forestry.bee.extrabees.creeper}
+	 * and a bee species contributed by an add-on under its own namespace has the translation key: <br> {@code species.forestry.bee.myaddon.mybee}
 	 *
 	 * @param type     The first part of the translation key that describes the type of object this is. Can be empty.
 	 * @param typeId   The ID of the type. An example would be the ID of the species type.
@@ -160,13 +170,77 @@ public class GeneticsUtil {
 			translationKey.append(objectId.getPath());
 		} else {
 			// if species type is from another mod, use this format instead:
-			// species.forestry.bee.extrabees.creeper
+			// species.forestry.bee.myaddon.mybee
 			translationKey.append(speciesNamespace);
 			translationKey.append('.');
 			translationKey.append(objectId.getPath());
 		}
 
 		return translationKey.toString();
+	}
+
+	/**
+	 * Builds the display name for the active allele value of a chromosome. Components are built here, at the UI render
+	 * edge, from the chromosome's translation key; the genetics model itself stores no {@link Component}.
+	 */
+	public static <V> MutableComponent getActiveName(IGenome genome, IChromosome<V> chromosome) {
+		return getName(chromosome, genome.getActiveValue(chromosome));
+	}
+
+	/**
+	 * Builds the display name for the inactive allele value of a chromosome.
+	 */
+	public static <V> MutableComponent getInactiveName(IGenome genome, IChromosome<V> chromosome) {
+		return getName(chromosome, genome.getInactiveValue(chromosome));
+	}
+
+	/**
+	 * Builds the display name for a chromosome value, falling back to the raw value if its translation key is unset.
+	 */
+	public static <V> MutableComponent getName(IChromosome<V> chromosome, V value) {
+		return Component.translatableWithFallback(chromosome.translationKey(value), String.valueOf(value));
+	}
+
+	/**
+	 * Builds the display name of a chromosome itself (e.g. "Speed", "Flower Type").
+	 */
+	public static MutableComponent getChromosomeName(IChromosome<?> chromosome) {
+		return Component.translatable(chromosome.chromosomeTranslationKey());
+	}
+
+	/**
+	 * Collects the distinct alleles that appear (active or inactive) for the given chromosome across the default genomes
+	 * of all registered species, sorted by their value's string form. Replaces the old karyotype allele whitelist; used
+	 * by debug commands to enumerate candidate alleles.
+	 */
+	public static <V> List<Allele<V>> getKnownAlleles(IChromosome<V> chromosome) {
+		LinkedHashSet<Allele<V>> set = new LinkedHashSet<>();
+		for (ISpeciesType<?, ?> type : IForestryApi.INSTANCE.getGeneticManager().getSpeciesTypes()) {
+			if (!type.getKaryotype().contains(chromosome)) {
+				continue;
+			}
+			for (ISpecies<?> species : type.getAllSpecies()) {
+				AllelePair<V> pair = species.getDefaultGenome().getAllelePair(chromosome);
+				set.add(pair.active());
+				set.add(pair.inactive());
+			}
+		}
+		List<Allele<V>> list = new ArrayList<>(set);
+		list.sort(Comparator.comparing(allele -> String.valueOf(allele.value())));
+		return list;
+	}
+
+	/**
+	 * @return A stable, whitespace-free string key identifying an allele value, used by debug commands for suggestions
+	 * and matching. {@link Vec3i#toString} contains spaces, so it is rendered as {@code x_y_z}; all other built-in
+	 * value types ({@code Float}/{@code Integer}/{@code Boolean}/enum/{@link ResourceLocation}) are already space-free.
+	 */
+	public static String alleleKey(Allele<?> allele) {
+		Object value = allele.value();
+		if (value instanceof Vec3i vec) {
+			return vec.getX() + "_" + vec.getY() + "_" + vec.getZ();
+		}
+		return String.valueOf(value);
 	}
 
 	public static IdentityHashMap<ISpecies<?>, ItemStack> getIconStacks(ILifeStage stage, ISpeciesType<?, ?> type) {

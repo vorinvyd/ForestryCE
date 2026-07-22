@@ -1,0 +1,39 @@
+{
+  "authority": "MysteriousAges",
+  "dominant": true,
+  "genome": {
+    "forestry:activity": {
+      "value": "forestry:activity_metaturnal"
+    },
+    "forestry:bee_effect": {
+      "value": "forestry:bee_effect_mycophilic"
+    },
+    "forestry:territory": {
+      "value": [
+        13,
+        12,
+        13
+      ]
+    },
+    "forestry:tolerates_rain": {
+      "dominant": true,
+      "value": true
+    }
+  },
+  "genus": "paludapis",
+  "humidity": "damp",
+  "outline": 6916424,
+  "products": [
+    {
+      "chance": 0.39,
+      "item": "forestry:mossy_comb"
+    }
+  ],
+  "specialties": [
+    {
+      "chance": 0.08,
+      "item": "forestry:peat"
+    }
+  ],
+  "species": "paluster"
+}

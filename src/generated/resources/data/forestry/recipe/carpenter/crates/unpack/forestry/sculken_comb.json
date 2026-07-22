@@ -1,0 +1,18 @@
+{
+  "type": "forestry:carpenter",
+  "box": [],
+  "id": "forestry:carpenter/crates/unpack/forestry/sculken_comb",
+  "recipe": {
+    "category": "misc",
+    "ingredients": [
+      {
+        "item": "forestry:crated_sculken_comb"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "forestry:sculken_comb"
+    }
+  },
+  "time": 5
+}

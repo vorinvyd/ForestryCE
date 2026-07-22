@@ -1,0 +1,18 @@
+{
+  "dominant": true,
+  "genome": {
+    "forestry:pollination": {
+      "value": 35
+    }
+  },
+  "genus": "monapis",
+  "jubilance": "forestry:hermit",
+  "outline": 8087092,
+  "specialties": [
+    {
+      "chance": 0.2,
+      "item": "forestry:mellow_comb"
+    }
+  ],
+  "species": "contractus"
+}

@@ -2,7 +2,7 @@
   "values": [
     "forestry:larch_button",
     "forestry:teak_button",
-    "forestry:acacia_desert_button",
+    "forestry:camelthorn_button",
     "forestry:lime_button",
     "forestry:chestnut_button",
     "forestry:wenge_button",
@@ -16,7 +16,7 @@
     "forestry:willow_button",
     "forestry:walnut_button",
     "forestry:greenheart_button",
-    "forestry:hill_cherry_button",
+    "forestry:sour_cherry_button",
     "forestry:mahoe_button",
     "forestry:poplar_button",
     "forestry:palm_button",
@@ -24,8 +24,8 @@
     "forestry:pine_button",
     "forestry:plum_button",
     "forestry:maple_button",
-    "forestry:citrus_button",
-    "forestry:giganteum_button",
+    "forestry:lemon_button",
+    "forestry:giant_sequoia_button",
     "forestry:ipe_button",
     "forestry:padauk_button",
     "forestry:cocobolo_button",
@@ -42,6 +42,6 @@
     "forestry:orange_button",
     "forestry:pear_button",
     "forestry:kauri_button",
-    "forestry:zebrawood_button"
+    "forestry:zebrano_button"
   ]
 }

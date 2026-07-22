@@ -1,6 +1,6 @@
 {
   "values": [
-    "#forge:ores/tin",
-    "#forge:ores/apatite"
+    "#c:ores/tin",
+    "#c:ores/apatite"
   ]
 }

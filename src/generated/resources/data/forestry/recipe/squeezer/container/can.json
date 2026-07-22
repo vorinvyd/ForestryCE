@@ -7,7 +7,7 @@
   "id": "forestry:squeezer/container/can",
   "remnants": {
     "count": 1,
-    "id": "forestry:ingot_tin"
+    "id": "forestry:tin_ingot"
   },
   "remnantsChance": 0.05,
   "time": 10

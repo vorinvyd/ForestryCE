@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "tag": "minecraft:wool"
+    },
+    "V": {
+      "tag": "c:rods/wooden"
+    },
+    "X": {
+      "tag": "c:strings"
+    },
+    "Y": {
+      "item": "forestry:lepidopterists_chest"
+    }
+  },
+  "pattern": [
+    "X#X",
+    "VYV",
+    "X#X"
+  ],
+  "result": {
+    "count": 1,
+    "id": "forestry:lepidopterists_backpack"
+  }
+}

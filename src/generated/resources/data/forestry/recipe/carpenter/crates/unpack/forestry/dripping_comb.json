@@ -1,0 +1,18 @@
+{
+  "type": "forestry:carpenter",
+  "box": [],
+  "id": "forestry:carpenter/crates/unpack/forestry/dripping_comb",
+  "recipe": {
+    "category": "misc",
+    "ingredients": [
+      {
+        "item": "forestry:crated_dripping_comb"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "forestry:dripping_comb"
+    }
+  },
+  "time": 5
+}

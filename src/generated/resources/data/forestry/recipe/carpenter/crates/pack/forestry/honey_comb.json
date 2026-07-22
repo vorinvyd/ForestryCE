@@ -1,0 +1,29 @@
+{
+  "type": "forestry:carpenter",
+  "box": {
+    "item": "forestry:crate"
+  },
+  "id": "forestry:carpenter/crates/pack/forestry/honey_comb",
+  "liquid": {
+    "amount": 100,
+    "id": "minecraft:water"
+  },
+  "recipe": {
+    "category": "misc",
+    "key": {
+      "#": {
+        "item": "forestry:honey_comb"
+      }
+    },
+    "pattern": [
+      "###",
+      "###",
+      "###"
+    ],
+    "result": {
+      "count": 1,
+      "id": "forestry:crated_honey_comb"
+    }
+  },
+  "time": 5
+}

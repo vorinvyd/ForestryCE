@@ -70,7 +70,7 @@ public class TileCocoon extends BlockEntity {
 				BlockState blockState = getBlockState().setValue(BlockCocoon.AGE, age + 1);
                 this.level.setBlock(this.worldPosition, blockState, Block.UPDATE_NEIGHBORS | Block.UPDATE_CLIENTS);
 			} else if (this.caterpillar.canTakeFlight(this.level, getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ())) {
-				List<ItemStack> cocoonDrops = this.caterpillar.getCocoonDrop(this.isSolid, this.caterpillar.getGenome().getActiveValue(ButterflyChromosomes.COCOON));
+				List<ItemStack> cocoonDrops = this.caterpillar.getCocoonDrop(this.isSolid, this.caterpillar.getGenome().resolveActive(ButterflyChromosomes.COCOON));
 				for (ItemStack drop : cocoonDrops) {
 					ItemStackUtil.dropItemStackAsEntity(drop, this.level, this.worldPosition);
 				}
@@ -94,7 +94,7 @@ public class TileCocoon extends BlockEntity {
 	}
 
 	public List<ItemStack> getCocoonDrops() {
-		return this.caterpillar.getCocoonDrop(this.isSolid, this.caterpillar.getGenome().getActiveValue(ButterflyChromosomes.COCOON));
+		return this.caterpillar.getCocoonDrop(this.isSolid, this.caterpillar.getGenome().resolveActive(ButterflyChromosomes.COCOON));
 	}
 
 	private HolderLookup.Provider getRegistries() {

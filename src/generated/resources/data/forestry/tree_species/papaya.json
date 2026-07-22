@@ -1,0 +1,25 @@
+{
+  "dominant": true,
+  "escritoire_color": 7647781,
+  "genome": {
+    "forestry:fruits": {
+      "value": "forestry:fruit_papaya"
+    },
+    "forestry:height": {
+      "value": 1.0
+    },
+    "forestry:saplings": {
+      "dominant": true,
+      "value": 0.025
+    },
+    "forestry:sappiness": {
+      "dominant": true,
+      "value": 0.2
+    }
+  },
+  "genus": "carica",
+  "humidity": "damp",
+  "rarity": 0.005,
+  "species": "papaya",
+  "temperature": "warm"
+}

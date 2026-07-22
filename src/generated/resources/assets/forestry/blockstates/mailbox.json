@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "forestry:block/mailbox",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "forestry:block/mailbox"
+    },
+    "facing=south": {
+      "model": "forestry:block/mailbox",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "forestry:block/mailbox",
+      "y": 270
+    }
+  }
+}

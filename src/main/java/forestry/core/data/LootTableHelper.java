@@ -236,8 +236,11 @@ public class LootTableHelper {
 	}
 
 	private LootPoolSingletonContainer.Builder<?> saplingLoot(TreeLifeStage type, ResourceLocation species) {
+		// Reference the species by id (the tag-in-recipe pattern) rather than materializing a live species only to
+		// read back the id we already hold; the OrganismFunction JSON is identical either way (fromDefinition just
+		// forwards type.id()/species.id() to fromId), and this needs no live species type in memory at datagen time.
 		return LootItem.lootTableItem(saplingItem(type))
-			.apply(OrganismFunction.fromDefinition(SpeciesUtil.TREE_TYPE.get(), SpeciesUtil.getTreeSpecies(species)));
+			.apply(OrganismFunction.fromId(SpeciesUtil.TREE_TYPE.get().id(), species));
 	}
 
 	public static LootPoolSingletonContainer.Builder<?> beeLoot(ResourceLocation species) {
@@ -245,14 +248,17 @@ public class LootTableHelper {
 	}
 
 	public static LootPoolSingletonContainer.Builder<?> beeLoot(BeeLifeStage type, ResourceLocation species) {
+		// Reference the species by id (see saplingLoot). Bees are data-driven and absent from memory during a
+		// standalone datagen run, so a fromDefinition lookup would need the seeded live species type; fromId writes
+		// the id directly and defers resolution to load time, producing byte-identical loot JSON.
 		return LootItem.lootTableItem(beeItem(type))
-			.apply(OrganismFunction.fromDefinition(SpeciesUtil.BEE_TYPE.get(), SpeciesUtil.getBeeSpecies(species)));
+			.apply(OrganismFunction.fromId(SpeciesUtil.BEE_TYPE.get().id(), species));
 	}
 
 	private static Item saplingItem(TreeLifeStage type) {
 		return switch (type) {
-			case POLLEN -> ArboricultureItems.POLLEN_FERTILE.item();
-			case SAPLING -> ArboricultureItems.SAPLING.item();
+			case POLLEN -> ArboricultureItems.TREE_POLLEN.item();
+			case SAPLING -> ArboricultureItems.TREE_SAPLING.item();
 		};
 	}
 

@@ -3,13 +3,13 @@
   "category": "misc",
   "key": {
     "#": {
-      "tag": "forge:dusts/ash"
+      "tag": "c:dusts/ash"
     },
     "X": {
       "item": "forestry:peat"
     },
     "Y": {
-      "item": "forestry:propolis_normal"
+      "item": "forestry:propolis"
     }
   },
   "pattern": [

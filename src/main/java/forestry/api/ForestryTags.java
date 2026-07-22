@@ -21,22 +21,22 @@ public class ForestryTags {
 		// Blocks that can be used as farmland bases for multiblock farms
 		public static final TagKey<Block> VALID_FARM_BASE = blockTag("valid_farm_base");
 
-		public static final TagKey<Block> CHARCOAL_BLOCK = forgeTag("storage_blocks/charcoal");
+		public static final TagKey<Block> CHARCOAL_BLOCK = commonTag("storage_blocks/charcoal");
 
-		public static final TagKey<Block> STORAGE_BLOCKS_APATITE = forgeTag("storage_blocks/apatite");
-		public static final TagKey<Block> STORAGE_BLOCKS_TIN = forgeTag("storage_blocks/tin");
-		public static final TagKey<Block> STORAGE_BLOCKS_BRONZE = forgeTag("storage_blocks/bronze");
-		public static final TagKey<Block> STORAGE_BLOCKS_AMBER = forgeTag("storage_blocks/amber");
+		public static final TagKey<Block> STORAGE_BLOCKS_APATITE = commonTag("storage_blocks/apatite");
+		public static final TagKey<Block> STORAGE_BLOCKS_TIN = commonTag("storage_blocks/tin");
+		public static final TagKey<Block> STORAGE_BLOCKS_BRONZE = commonTag("storage_blocks/bronze");
+		public static final TagKey<Block> STORAGE_BLOCKS_AMBER = commonTag("storage_blocks/amber");
 
-		public static final TagKey<Block> ORES_TIN = forgeTag("ores/tin");
-		public static final TagKey<Block> ORES_APATITE = forgeTag("ores/apatite");
+		public static final TagKey<Block> ORES_TIN = commonTag("ores/tin");
+		public static final TagKey<Block> ORES_APATITE = commonTag("ores/apatite");
 
-		public static final TagKey<Block> STORAGE_BLOCKS_RAW_TIN = forgeTag("storage_blocks/raw_tin");
+		public static final TagKey<Block> STORAGE_BLOCKS_RAW_TIN = commonTag("storage_blocks/raw_tin");
 
 		// todo remove in favor of directly using IWoodAccess
 		public static final TagKey<Block> LARCH_LOGS = ForestryWoodType.LARCH.blockTag;
 		public static final TagKey<Block> TEAK_LOGS = ForestryWoodType.TEAK.blockTag;
-		public static final TagKey<Block> ACACIA_DESERT_LOGS = ForestryWoodType.ACACIA_DESERT.blockTag;
+		public static final TagKey<Block> ACACIA_DESERT_LOGS = ForestryWoodType.CAMELTHORN.blockTag;
 		public static final TagKey<Block> LIME_LOGS = ForestryWoodType.LIME.blockTag;
 		public static final TagKey<Block> CHESTNUT_LOGS = ForestryWoodType.CHESTNUT.blockTag;
 		public static final TagKey<Block> WENGE_LOGS = ForestryWoodType.WENGE.blockTag;
@@ -56,12 +56,12 @@ public class ForestryTags {
 		public static final TagKey<Block> PINE_LOGS = ForestryWoodType.PINE.blockTag;
 		public static final TagKey<Block> PLUM_LOGS = ForestryWoodType.PLUM.blockTag;
 		public static final TagKey<Block> MAPLE_LOGS = ForestryWoodType.MAPLE.blockTag;
-		public static final TagKey<Block> CITRUS_LOGS = ForestryWoodType.CITRUS.blockTag;
-		public static final TagKey<Block> GIGANTEUM_LOGS = ForestryWoodType.GIGANTEUM.blockTag;
+		public static final TagKey<Block> CITRUS_LOGS = ForestryWoodType.LEMON.blockTag;
+		public static final TagKey<Block> GIGANTEUM_LOGS = ForestryWoodType.GIANT_SEQUOIA.blockTag;
 		public static final TagKey<Block> IPE_LOGS = ForestryWoodType.IPE.blockTag;
 		public static final TagKey<Block> PADAUK_LOGS = ForestryWoodType.PADAUK.blockTag;
 		public static final TagKey<Block> COCOBOLO_LOGS = ForestryWoodType.COCOBOLO.blockTag;
-		public static final TagKey<Block> ZEBRANO_LOGS = ForestryWoodType.ZEBRAWOOD.blockTag;
+		public static final TagKey<Block> ZEBRANO_LOGS = ForestryWoodType.ZEBRANO.blockTag;
 		public static final TagKey<Block> ELM_LOGS = ForestryWoodType.ELM.blockTag;
 		public static final TagKey<Block> FIR_LOGS = ForestryWoodType.FIR.blockTag;
 		public static final TagKey<Block> COCONUT_LOGS = ForestryWoodType.COCONUT.blockTag;
@@ -107,48 +107,48 @@ public class ForestryTags {
 		// Blocks where the Alveary Swarmer can spawn hives on top of
 		public static final TagKey<Block> SWARM_BEE_GROUND = blockTag("hive_grounds/swarm");
 
-		private static TagKey<Block> forgeTag(String name) {
-			return BlockTags.create(ResourceLocation.fromNamespaceAndPath("forge", name));
+		private static TagKey<Block> commonTag(String name) {
+			return BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", name));
 		}
 	}
 
 	public static class Items {
-		public static final TagKey<Item> CHARCOAL_BLOCK = forgeTag("storage_blocks/charcoal");
+		public static final TagKey<Item> CHARCOAL_BLOCK = commonTag("storage_blocks/charcoal");
 
 		public static final TagKey<Item> VILLAGE_COMBS = itemTag("village_combs");
 		public static final TagKey<Item> BEE_COMBS = itemTag("combs");
 		public static final TagKey<Item> PROPOLIS = itemTag("propolis");
 		public static final TagKey<Item> DROP_HONEY = itemTag("drop_honey");
 
-		public static final TagKey<Item> INGOTS_BRONZE = forgeTag("ingots/bronze");
-		public static final TagKey<Item> INGOTS_TIN = forgeTag("ingots/tin");
+		public static final TagKey<Item> INGOTS_BRONZE = commonTag("ingots/bronze");
+		public static final TagKey<Item> INGOTS_TIN = commonTag("ingots/tin");
 
-		public static final TagKey<Item> GEARS = forgeTag("gears");
-		public static final TagKey<Item> GEARS_BRONZE = forgeTag("gears/bronze");
-		public static final TagKey<Item> GEARS_COPPER = forgeTag("gears/copper");
-		public static final TagKey<Item> GEARS_TIN = forgeTag("gears/tin");
-		public static final TagKey<Item> GEARS_STONE = forgeTag("gears/stone");
+		public static final TagKey<Item> GEARS = commonTag("gears");
+		public static final TagKey<Item> GEARS_BRONZE = commonTag("gears/bronze");
+		public static final TagKey<Item> GEARS_COPPER = commonTag("gears/copper");
+		public static final TagKey<Item> GEARS_TIN = commonTag("gears/tin");
+		public static final TagKey<Item> GEARS_STONE = commonTag("gears/stone");
 
-		public static final TagKey<Item> DUSTS_ASH = forgeTag("dusts/ash");
-		public static final TagKey<Item> SAWDUST = forgeTag("sawdust");
+		public static final TagKey<Item> DUSTS_ASH = commonTag("dusts/ash");
+		public static final TagKey<Item> SAWDUST = commonTag("sawdust");
 
-		public static final TagKey<Item> GEMS_APATITE = forgeTag("gems/apatite");
-		public static final TagKey<Item> GEMS_AMBER = forgeTag("gems/amber");
+		public static final TagKey<Item> GEMS_APATITE = commonTag("gems/apatite");
+		public static final TagKey<Item> GEMS_AMBER = commonTag("gems/amber");
 
-		public static final TagKey<Item> STORAGE_BLOCKS_APATITE = forgeTag("storage_blocks/apatite");
-		public static final TagKey<Item> STORAGE_BLOCKS_TIN = forgeTag("storage_blocks/tin");
-		public static final TagKey<Item> STORAGE_BLOCKS_BRONZE = forgeTag("storage_blocks/bronze");
-		public static final TagKey<Item> STORAGE_BLOCKS_AMBER = forgeTag("storage_blocks/amber");
+		public static final TagKey<Item> STORAGE_BLOCKS_APATITE = commonTag("storage_blocks/apatite");
+		public static final TagKey<Item> STORAGE_BLOCKS_TIN = commonTag("storage_blocks/tin");
+		public static final TagKey<Item> STORAGE_BLOCKS_BRONZE = commonTag("storage_blocks/bronze");
+		public static final TagKey<Item> STORAGE_BLOCKS_AMBER = commonTag("storage_blocks/amber");
 
-		public static final TagKey<Item> ORES_TIN = forgeTag("ores/tin");
-		public static final TagKey<Item> RAW_MATERIALS_TIN = forgeTag("raw_materials/tin");
-		public static final TagKey<Item> ORES_APATITE = forgeTag("ores/apatite");
+		public static final TagKey<Item> ORES_TIN = commonTag("ores/tin");
+		public static final TagKey<Item> RAW_MATERIALS_TIN = commonTag("raw_materials/tin");
+		public static final TagKey<Item> ORES_APATITE = commonTag("ores/apatite");
 
-		public static final TagKey<Item> STORAGE_BLOCKS_RAW_TIN = forgeTag("storage_blocks/raw_tin");
+		public static final TagKey<Item> STORAGE_BLOCKS_RAW_TIN = commonTag("storage_blocks/raw_tin");
 
 		public static final TagKey<Item> LARCH_LOGS = ForestryWoodType.LARCH.itemTag;
 		public static final TagKey<Item> TEAK_LOGS = ForestryWoodType.TEAK.itemTag;
-		public static final TagKey<Item> ACACIA_DESERT_LOGS = ForestryWoodType.ACACIA_DESERT.itemTag;
+		public static final TagKey<Item> ACACIA_DESERT_LOGS = ForestryWoodType.CAMELTHORN.itemTag;
 		public static final TagKey<Item> LIME_LOGS = ForestryWoodType.LIME.itemTag;
 		public static final TagKey<Item> CHESTNUT_LOGS = ForestryWoodType.CHESTNUT.itemTag;
 		public static final TagKey<Item> WENGE_LOGS = ForestryWoodType.WENGE.itemTag;
@@ -168,12 +168,12 @@ public class ForestryTags {
 		public static final TagKey<Item> PINE_LOGS = ForestryWoodType.PINE.itemTag;
 		public static final TagKey<Item> PLUM_LOGS = ForestryWoodType.PLUM.itemTag;
 		public static final TagKey<Item> MAPLE_LOGS = ForestryWoodType.MAPLE.itemTag;
-		public static final TagKey<Item> CITRUS_LOGS = ForestryWoodType.CITRUS.itemTag;
-		public static final TagKey<Item> GIGANTEUM_LOGS = ForestryWoodType.GIGANTEUM.itemTag;
+		public static final TagKey<Item> CITRUS_LOGS = ForestryWoodType.LEMON.itemTag;
+		public static final TagKey<Item> GIGANTEUM_LOGS = ForestryWoodType.GIANT_SEQUOIA.itemTag;
 		public static final TagKey<Item> IPE_LOGS = ForestryWoodType.IPE.itemTag;
 		public static final TagKey<Item> PADAUK_LOGS = ForestryWoodType.PADAUK.itemTag;
 		public static final TagKey<Item> COCOBOLO_LOGS = ForestryWoodType.COCOBOLO.itemTag;
-		public static final TagKey<Item> ZEBRANO_LOGS = ForestryWoodType.ZEBRAWOOD.itemTag;
+		public static final TagKey<Item> ZEBRANO_LOGS = ForestryWoodType.ZEBRANO.itemTag;
 		public static final TagKey<Item> ELM_LOGS = ForestryWoodType.ELM.itemTag;
 		public static final TagKey<Item> FIR_LOGS = ForestryWoodType.FIR.itemTag;
 		public static final TagKey<Item> COCONUT_LOGS = ForestryWoodType.COCONUT.itemTag;
@@ -194,19 +194,19 @@ public class ForestryTags {
 		public static final TagKey<Item> SCOOPS = itemTag("scoops");
 
 		public static final TagKey<Item> FORESTRY_FRUITS = itemTag("forestry_fruits");
-		public static final TagKey<Item> FRUITS = forgeTag("fruits");
-		public static final TagKey<Item> CHERRY = forgeTag("fruits/cherry");
-		public static final TagKey<Item> WALNUT = forgeTag("fruits/walnut");
-		public static final TagKey<Item> CHESTNUT = forgeTag("fruits/chestnut");
-		public static final TagKey<Item> LEMON = forgeTag("fruits/lemon");
-		public static final TagKey<Item> PLUM = forgeTag("fruits/plum");
-		public static final TagKey<Item> DATE = forgeTag("fruits/date");
-		public static final TagKey<Item> PAPAYA = forgeTag("fruits/papaya");
-		public static final TagKey<Item> PEAR = forgeTag("fruits/pear");
-		public static final TagKey<Item> ORANGE = forgeTag("fruits/orange");
-		public static final TagKey<Item> FEIJOA = forgeTag("fruits/feijoa");
-		public static final TagKey<Item> COCONUT = forgeTag("fruits/coconut");
-		public static final TagKey<Item> OLIVE = forgeTag("fruits/olive");
+		public static final TagKey<Item> FRUITS = commonTag("fruits");
+		public static final TagKey<Item> CHERRY = commonTag("fruits/cherry");
+		public static final TagKey<Item> WALNUT = commonTag("fruits/walnut");
+		public static final TagKey<Item> CHESTNUT = commonTag("fruits/chestnut");
+		public static final TagKey<Item> LEMON = commonTag("fruits/lemon");
+		public static final TagKey<Item> PLUM = commonTag("fruits/plum");
+		public static final TagKey<Item> DATE = commonTag("fruits/date");
+		public static final TagKey<Item> PAPAYA = commonTag("fruits/papaya");
+		public static final TagKey<Item> PEAR = commonTag("fruits/pear");
+		public static final TagKey<Item> ORANGE = commonTag("fruits/orange");
+		public static final TagKey<Item> FEIJOA = commonTag("fruits/feijoa");
+		public static final TagKey<Item> COCONUT = commonTag("fruits/coconut");
+		public static final TagKey<Item> OLIVE = commonTag("fruits/olive");
 
 		public static final TagKey<Item> MINER_ALLOW = itemTag("backpack/allow/miner");
 		public static final TagKey<Item> MINER_REJECT = itemTag("backpack/reject/miner");
@@ -232,8 +232,8 @@ public class ForestryTags {
 
 		public static final TagKey<Item> BEES = itemTag("bees");
 
-		private static TagKey<Item> forgeTag(String name) {
-			return ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge", name));
+		private static TagKey<Item> commonTag(String name) {
+			return ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", name));
 		}
 	}
 

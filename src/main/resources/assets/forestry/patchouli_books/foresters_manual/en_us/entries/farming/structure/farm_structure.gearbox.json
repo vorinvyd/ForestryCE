@@ -1,5 +1,5 @@
 {
-  "icon": "forestry:farm_gearbox_brick",
+  "icon": "forestry:brick_farm_gearbox",
   "name": "for.gui.book.patchouli.entry.farming.structure.farm_structure.gearbox",
   "category": "forestry:structure",
   "pages": [
@@ -9,7 +9,7 @@
     },
     {
       "type": "crafting",
-      "recipe": "forestry:farm_gearbox_brick",
+      "recipe": "forestry:brick_farm_gearbox",
       "text": "for.gui.book.patchouli.entry.farming.structure.farm_structure.gearbox2"
     }
   ]

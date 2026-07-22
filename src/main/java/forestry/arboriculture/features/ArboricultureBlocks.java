@@ -73,8 +73,8 @@ public class ArboricultureBlocks {
 	/* GENETICS */
 	public static final FeatureBlock<BlockSapling, BlockItem> SAPLING_GE = REGISTRY.block(BlockSapling::new, "sapling_ge");
 	public static final FeatureBlock<BlockForestryLeaves, ItemBlockLeaves> LEAVES = REGISTRY.block(BlockForestryLeaves::new, ItemBlockLeaves::new, "leaves");
-	public static final FeatureBlockGroup<BlockDefaultLeaves, ForestryLeafType> LEAVES_DEFAULT = REGISTRY.blockGroup(BlockDefaultLeaves::new, ForestryLeafType.values()).item(ItemBlockLeaves::new).identifier("default_leaves", FeatureGroup.IdentifierType.SUFFIX).create();
-	public static final FeatureBlockGroup<BlockDefaultLeavesFruit, ForestryLeafType> LEAVES_DEFAULT_FRUIT = REGISTRY.blockGroup(BlockDefaultLeavesFruit::new, ForestryLeafType.values()).item(ItemBlockLeaves::new).identifier("default_leaves_fruit", FeatureGroup.IdentifierType.SUFFIX).create();
+	public static final FeatureBlockGroup<BlockDefaultLeaves, ForestryLeafType> LEAVES_DEFAULT = REGISTRY.blockGroup(BlockDefaultLeaves::new, ForestryLeafType.values()).item(ItemBlockDefaultLeaves::new).identifier("default_leaves", FeatureGroup.IdentifierType.SUFFIX).create();
+	public static final FeatureBlockGroup<BlockDefaultLeavesFruit, ForestryLeafType> LEAVES_DEFAULT_FRUIT = REGISTRY.blockGroup(BlockDefaultLeavesFruit::new, ForestryLeafType.values()).item(ItemBlockDefaultLeaves::new).identifier("default_leaves_fruit", FeatureGroup.IdentifierType.SUFFIX).create();
 	public static final FeatureBlockGroup<BlockDecorativeLeaves, ForestryLeafType> LEAVES_DECORATIVE = REGISTRY.blockGroup(BlockDecorativeLeaves::new, ForestryLeafType.values()).item(ItemBlockDecorativeLeaves::new).identifier("decorative_leaves", FeatureGroup.IdentifierType.SUFFIX).create();
 	public static final FeatureBlockGroup<BlockFruitPod, ForestryPodType> PODS = REGISTRY.blockGroup(BlockFruitPod::new, Arrays.asList(ForestryPodType.values())).identifier("pods").create();
 

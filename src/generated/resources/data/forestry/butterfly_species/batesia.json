@@ -1,0 +1,14 @@
+{
+  "dominant": true,
+  "genome": {
+    "forestry:size": {
+      "value": 0.75
+    }
+  },
+  "genus": "batesia",
+  "humidity": "damp",
+  "rarity": 0.3,
+  "serum_color": 16676707,
+  "species": "hypochlora",
+  "temperature": "warm"
+}

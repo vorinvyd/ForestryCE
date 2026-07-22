@@ -1,7 +1,7 @@
 {
   "version": 1,
   "recipeType": "forestry:fabricator",
-  "block": "forestry:fabricator",
+  "block": "forestry:thermionic_fabricator",
   "inputs": {
     "items": {
       "capability": "ItemHandler",

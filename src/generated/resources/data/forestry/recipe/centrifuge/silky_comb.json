@@ -2,7 +2,7 @@
   "type": "forestry:centrifuge",
   "id": "forestry:centrifuge/silky_comb",
   "input": {
-    "item": "forestry:bee_comb_silky"
+    "item": "forestry:silky_comb"
   },
   "products": [
     {
@@ -11,7 +11,7 @@
     },
     {
       "chance": 0.8,
-      "item": "forestry:propolis_silky"
+      "item": "forestry:silky_propolis"
     }
   ],
   "time": 20

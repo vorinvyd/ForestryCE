@@ -1,0 +1,48 @@
+{
+  "authority": "EnderiumSmith",
+  "genome": {
+    "forestry:bee_effect": {
+      "value": "forestry:bee_effect_guardian"
+    },
+    "forestry:fertility": {
+      "dominant": true,
+      "value": 2
+    },
+    "forestry:flower_type": {
+      "value": "forestry:flower_type_coral"
+    },
+    "forestry:lifespan": {
+      "dominant": true,
+      "value": 30
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.6
+    },
+    "forestry:temperature_tolerance": {
+      "dominant": true,
+      "value": "DOWN_1"
+    }
+  },
+  "genus": "spongiforma",
+  "glint": true,
+  "outline": 5478530,
+  "products": [
+    {
+      "chance": 0.2,
+      "item": "forestry:spongy_comb"
+    }
+  ],
+  "specialties": [
+    {
+      "chance": 0.4,
+      "item": "minecraft:prismarine_shard"
+    },
+    {
+      "chance": 0.05,
+      "item": "minecraft:prismarine_crystals"
+    }
+  ],
+  "species": "orichalcus",
+  "temperature": "warm"
+}

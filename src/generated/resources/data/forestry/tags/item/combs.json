@@ -1,21 +1,21 @@
 {
   "values": [
-    "forestry:bee_comb_honey",
-    "forestry:bee_comb_cocoa",
-    "forestry:bee_comb_simmering",
-    "forestry:bee_comb_stringy",
-    "forestry:bee_comb_frozen",
-    "forestry:bee_comb_dripping",
-    "forestry:bee_comb_silky",
-    "forestry:bee_comb_parched",
-    "forestry:bee_comb_mysterious",
-    "forestry:bee_comb_powdery",
-    "forestry:bee_comb_wheaten",
-    "forestry:bee_comb_mossy",
-    "forestry:bee_comb_mellow",
-    "forestry:bee_comb_kaolin",
-    "forestry:bee_comb_vintage",
-    "forestry:bee_comb_sponge",
-    "forestry:bee_comb_sculken"
+    "forestry:honey_comb",
+    "forestry:cocoa_comb",
+    "forestry:simmering_comb",
+    "forestry:stringy_comb",
+    "forestry:frozen_comb",
+    "forestry:dripping_comb",
+    "forestry:silky_comb",
+    "forestry:parched_comb",
+    "forestry:mysterious_comb",
+    "forestry:powdery_comb",
+    "forestry:wheaten_comb",
+    "forestry:mossy_comb",
+    "forestry:mellow_comb",
+    "forestry:kaolin_comb",
+    "forestry:vintage_comb",
+    "forestry:spongy_comb",
+    "forestry:sculken_comb"
   ]
 }

@@ -1,10 +1,10 @@
 {
     "parent": "forestry:block/apiculture/alveary_plain_normal",
     "textures": {
-      "particle": "forestry:block/apiculture/alveary.fan.on",
-      "north": "forestry:block/apiculture/alveary.fan.on",
-      "east": "forestry:block/apiculture/alveary.fan.on",
-      "south": "forestry:block/apiculture/alveary.fan.on",
-      "west": "forestry:block/apiculture/alveary.fan.on"
+      "particle": "forestry:block/apiculture/alveary_fan_on",
+      "north": "forestry:block/apiculture/alveary_fan_on",
+      "east": "forestry:block/apiculture/alveary_fan_on",
+      "south": "forestry:block/apiculture/alveary_fan_on",
+      "west": "forestry:block/apiculture/alveary_fan_on"
     }
 }

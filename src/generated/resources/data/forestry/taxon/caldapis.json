@@ -1,0 +1,26 @@
+{
+  "type": "forestry:bee_species",
+  "parent": "apidae",
+  "alleles": {
+    "forestry:bee_effect": {
+      "value": "forestry:bee_effect_miasmic"
+    },
+    "forestry:flower_type": {
+      "value": "forestry:flower_type_jungle"
+    },
+    "forestry:humidity_tolerance": {
+      "dominant": true,
+      "value": "UP_1"
+    },
+    "forestry:temperature_tolerance": {
+      "dominant": true,
+      "value": "UP_1"
+    },
+    "forestry:tolerates_rain": {
+      "dominant": true,
+      "value": true
+    }
+  },
+  "name": "caldapis",
+  "rank": "genus"
+}

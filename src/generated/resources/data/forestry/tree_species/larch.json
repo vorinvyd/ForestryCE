@@ -1,0 +1,21 @@
+{
+  "dominant": true,
+  "escritoire_color": 6918032,
+  "genome": {
+    "forestry:height": {
+      "value": 1.0
+    },
+    "forestry:saplings": {
+      "dominant": true,
+      "value": 0.035
+    },
+    "forestry:sappiness": {
+      "dominant": true,
+      "value": 0.2
+    }
+  },
+  "genus": "larix",
+  "rarity": 0.0025,
+  "species": "decidua",
+  "temperature": "cold"
+}

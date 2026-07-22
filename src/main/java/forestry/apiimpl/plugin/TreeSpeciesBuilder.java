@@ -32,8 +32,8 @@ public class TreeSpeciesBuilder extends SpeciesBuilder<ITreeSpeciesType, ITreeSp
 	private final HashSet<Item> vanillaItems = new HashSet<>();
 	private ItemStack decorativeLeaves = ItemStack.EMPTY;
 
-	public TreeSpeciesBuilder(ResourceLocation id, String genus, String species, MutationsRegistration mutations) {
-		super(id, genus, species, mutations);
+	public TreeSpeciesBuilder(ResourceLocation id, String genus, String species) {
+		super(id, genus, species);
 	}
 
 	@Override

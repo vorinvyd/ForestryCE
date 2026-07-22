@@ -1,0 +1,35 @@
+{
+  "authority": "EnderiumSmith",
+  "body": 10101539,
+  "dominant": true,
+  "genome": {
+    "forestry:bee_effect": {
+      "value": "forestry:bee_effect_phasing"
+    },
+    "forestry:lifespan": {
+      "dominant": true,
+      "value": 45
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.8
+    }
+  },
+  "genus": "irata",
+  "humidity": "arid",
+  "outline": 1356933,
+  "products": [
+    {
+      "chance": 0.15,
+      "item": "forestry:simmering_comb"
+    }
+  ],
+  "specialties": [
+    {
+      "chance": 0.35,
+      "item": "forestry:mysterious_comb"
+    }
+  ],
+  "species": "corrumpata",
+  "temperature": "hellish"
+}

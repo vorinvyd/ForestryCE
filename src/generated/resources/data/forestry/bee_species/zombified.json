@@ -1,0 +1,53 @@
+{
+  "authority": "EnderiumSmith",
+  "body": 14968938,
+  "dominant": true,
+  "genome": {
+    "forestry:activity": {
+      "value": "forestry:activity_metaturnal"
+    },
+    "forestry:cave_dwelling": {
+      "dominant": true,
+      "value": true
+    },
+    "forestry:fertility": {
+      "dominant": true,
+      "value": 1
+    },
+    "forestry:flower_type": {
+      "value": "forestry:flower_type_nether"
+    },
+    "forestry:humidity_tolerance": {
+      "dominant": true,
+      "value": "UP_1"
+    },
+    "forestry:lifespan": {
+      "value": 2147483647
+    },
+    "forestry:pollination": {
+      "dominant": true,
+      "value": 5
+    },
+    "forestry:speed": {
+      "value": 1.0
+    },
+    "forestry:temperature_tolerance": {
+      "value": "DOWN_3"
+    }
+  },
+  "genus": "abominatio",
+  "humidity": "arid",
+  "outline": 6917701,
+  "products": [
+    {
+      "chance": 0.2,
+      "item": "forestry:simmering_comb"
+    },
+    {
+      "chance": 0.15,
+      "item": "minecraft:gold_nugget"
+    }
+  ],
+  "species": "inmortui",
+  "temperature": "hellish"
+}

@@ -1,0 +1,20 @@
+{
+  "dominant": true,
+  "genome": {
+    "forestry:humidity_tolerance": {
+      "dominant": true,
+      "value": "DOWN_1"
+    },
+    "forestry:size": {
+      "value": 0.6
+    },
+    "forestry:temperature_tolerance": {
+      "dominant": true,
+      "value": "DOWN_1"
+    }
+  },
+  "genus": "siproeta",
+  "rarity": 0.5,
+  "serum_color": 12451667,
+  "species": "stelenes"
+}

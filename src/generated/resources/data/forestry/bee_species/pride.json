@@ -1,0 +1,42 @@
+{
+  "authority": "EnderiumSmith",
+  "dominant": true,
+  "genome": {
+    "forestry:bee_effect": {
+      "value": "forestry:bee_effect_hakuna_matata"
+    },
+    "forestry:lifespan": {
+      "dominant": true,
+      "value": 35
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.6
+    },
+    "forestry:territory": {
+      "value": [
+        13,
+        12,
+        13
+      ]
+    }
+  },
+  "genus": "afrapis",
+  "glint": true,
+  "humidity": "arid",
+  "outline": 6619169,
+  "products": [
+    {
+      "chance": 0.2,
+      "item": "forestry:kaolin_comb"
+    }
+  ],
+  "specialties": [
+    {
+      "chance": 0.1,
+      "item": "forestry:mellow_comb"
+    }
+  ],
+  "species": "rafikii",
+  "temperature": "warm"
+}

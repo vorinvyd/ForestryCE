@@ -1,0 +1,37 @@
+{
+  "type": "forestry:bee_species",
+  "parent": "apidae",
+  "alleles": {
+    "forestry:cave_dwelling": {
+      "dominant": true,
+      "value": true
+    },
+    "forestry:fertility": {
+      "dominant": true,
+      "value": 1
+    },
+    "forestry:flower_type": {
+      "value": "forestry:flower_type_wheat"
+    },
+    "forestry:humidity_tolerance": {
+      "dominant": true,
+      "value": "BOTH_1"
+    },
+    "forestry:lifespan": {
+      "value": 50
+    },
+    "forestry:pollination": {
+      "value": 30
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.6
+    },
+    "forestry:temperature_tolerance": {
+      "dominant": true,
+      "value": "BOTH_1"
+    }
+  },
+  "name": "monapis",
+  "rank": "genus"
+}

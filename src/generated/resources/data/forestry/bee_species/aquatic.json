@@ -1,0 +1,33 @@
+{
+  "authority": "EnderiumSmith",
+  "dominant": true,
+  "genome": {
+    "forestry:bee_effect": {
+      "value": "forestry:bee_effect_miasmic"
+    },
+    "forestry:fertility": {
+      "value": 4
+    },
+    "forestry:flower_type": {
+      "value": "forestry:flower_type_coral"
+    },
+    "forestry:lifespan": {
+      "dominant": true,
+      "value": 10
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.8
+    }
+  },
+  "genus": "spongiforma",
+  "outline": 4159204,
+  "products": [
+    {
+      "chance": 0.3,
+      "item": "forestry:spongy_comb"
+    }
+  ],
+  "species": "squarepantsii",
+  "temperature": "warm"
+}

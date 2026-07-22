@@ -3,7 +3,7 @@ package forestry.core.gui;
 import com.google.common.collect.ImmutableList;
 import forestry.api.apiculture.IApiaristTracker;
 import forestry.api.genetics.*;
-import forestry.api.genetics.alleles.IRegistryChromosome;
+import forestry.api.genetics.alleles.IChromosome;
 import forestry.api.genetics.capability.IIndividualHandlerItem;
 import forestry.core.config.Constants;
 import forestry.core.gui.buttons.GuiBetterButton;
@@ -68,15 +68,15 @@ public class GuiNaturalistInventory<C extends AbstractContainerMenu & INaturalis
             this.textLayout.startPage(graphics);
 
 			IGenome genome = individual.getGenome();
-			IRegistryChromosome<? extends ISpecies<?>> speciesChromosome = individual.getType().getKaryotype().getSpeciesChromosome();
+			IChromosome<ResourceLocation> speciesChromosome = individual.getType().getKaryotype().getSpeciesChromosome();
 			// var allows generics to compile :)
 			var speciesPair = genome.getAllelePair(speciesChromosome);
 			boolean pureBred = speciesPair.isSameAlleles();
 
-			ISpecies<?> active = speciesPair.active().value();
+			ISpecies<?> active = genome.getActiveSpecies();
 			displaySpeciesInformation(graphics, true, active, this.iconStacks.get(active.id()), 10, pureBred ? 25 : 10);
 			if (!pureBred) {
-				ISpecies<?> inactive = speciesPair.inactive().value();
+				ISpecies<?> inactive = genome.getInactiveSpecies();
 				displaySpeciesInformation(graphics, individual.isAnalyzed(), inactive, this.iconStacks.get(inactive.id()), 10, 10);
 			}
 

@@ -2,7 +2,7 @@
   "values": [
     "forestry:larch_boat",
     "forestry:teak_boat",
-    "forestry:acacia_desert_boat",
+    "forestry:camelthorn_boat",
     "forestry:lime_boat",
     "forestry:chestnut_boat",
     "forestry:wenge_boat",
@@ -16,7 +16,7 @@
     "forestry:willow_boat",
     "forestry:walnut_boat",
     "forestry:greenheart_boat",
-    "forestry:hill_cherry_boat",
+    "forestry:sour_cherry_boat",
     "forestry:mahoe_boat",
     "forestry:poplar_boat",
     "forestry:palm_boat",
@@ -24,8 +24,8 @@
     "forestry:pine_boat",
     "forestry:plum_boat",
     "forestry:maple_boat",
-    "forestry:citrus_boat",
-    "forestry:giganteum_boat",
+    "forestry:lemon_boat",
+    "forestry:giant_sequoia_boat",
     "forestry:ipe_boat",
     "forestry:padauk_boat",
     "forestry:cocobolo_boat",
@@ -42,6 +42,6 @@
     "forestry:orange_boat",
     "forestry:pear_boat",
     "forestry:kauri_boat",
-    "forestry:zebrawood_boat"
+    "forestry:zebrano_boat"
   ]
 }

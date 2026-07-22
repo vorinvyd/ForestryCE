@@ -1,0 +1,20 @@
+{
+  "authority": "Spear",
+  "dominant": true,
+  "escritoire_color": 11350042,
+  "genome": {
+    "forestry:height": {
+      "value": 1.0
+    },
+    "forestry:maturation": {
+      "dominant": true,
+      "value": 5
+    },
+    "forestry:sappiness": {
+      "dominant": true,
+      "value": 0.3
+    }
+  },
+  "genus": "fagus",
+  "species": "sylvatica"
+}

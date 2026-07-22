@@ -1,0 +1,28 @@
+{
+  "authority": "EnderiumSmith",
+  "genome": {
+    "forestry:fertility": {
+      "value": 0
+    },
+    "forestry:lifespan": {
+      "dominant": true,
+      "value": 35
+    },
+    "forestry:pollination": {
+      "value": 20
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.3
+    }
+  },
+  "genus": "bombus",
+  "outline": 15582019,
+  "products": [
+    {
+      "chance": 0.65,
+      "item": "minecraft:honeycomb"
+    }
+  ],
+  "species": "dinnerbonei"
+}

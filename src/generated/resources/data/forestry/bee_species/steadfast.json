@@ -1,0 +1,21 @@
+{
+  "genome": {
+    "forestry:lifespan": {
+      "value": 40
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.6
+    }
+  },
+  "genus": "herapis",
+  "glint": true,
+  "outline": 5057301,
+  "products": [
+    {
+      "chance": 0.2,
+      "item": "forestry:cocoa_comb"
+    }
+  ],
+  "species": "legio"
+}

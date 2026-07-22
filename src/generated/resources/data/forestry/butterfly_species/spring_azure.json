@@ -1,0 +1,16 @@
+{
+  "dominant": true,
+  "genome": {
+    "forestry:butterfly_lifespan": {
+      "dominant": true,
+      "value": 30
+    },
+    "forestry:size": {
+      "value": 0.4
+    }
+  },
+  "genus": "celastrina",
+  "rarity": 0.3,
+  "serum_color": 12110562,
+  "species": "argiolus"
+}

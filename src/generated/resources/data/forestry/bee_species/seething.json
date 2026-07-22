@@ -1,0 +1,28 @@
+{
+  "authority": "EnderiumSmith",
+  "body": 10101539,
+  "genome": {
+    "forestry:bee_effect": {
+      "value": "forestry:bee_effect_ignition"
+    },
+    "forestry:speed": {
+      "value": 1.0
+    }
+  },
+  "genus": "irata",
+  "glint": true,
+  "humidity": "arid",
+  "outline": 16748288,
+  "products": [
+    {
+      "chance": 0.45,
+      "item": "forestry:simmering_comb"
+    },
+    {
+      "chance": 0.15,
+      "item": "minecraft:blaze_powder"
+    }
+  ],
+  "species": "sulphuri",
+  "temperature": "hellish"
+}

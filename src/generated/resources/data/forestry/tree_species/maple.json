@@ -1,0 +1,20 @@
+{
+  "dominant": true,
+  "escritoire_color": 13956133,
+  "genome": {
+    "forestry:height": {
+      "value": 1.0
+    },
+    "forestry:saplings": {
+      "dominant": true,
+      "value": 0.035
+    },
+    "forestry:sappiness": {
+      "dominant": true,
+      "value": 0.2
+    }
+  },
+  "genus": "acer",
+  "rarity": 0.0025,
+  "species": "saccharum"
+}

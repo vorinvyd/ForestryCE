@@ -2,7 +2,6 @@ package forestry.apiculture.blocks;
 
 import forestry.api.core.IBlockSubtype;
 import forestry.apiculture.features.ApicultureTiles;
-import forestry.apiculture.multiblock.IAlvearyControllerInternal;
 import forestry.apiculture.multiblock.TileAlveary;
 import forestry.apiculture.network.packets.PacketAlvearyChange;
 import forestry.core.blocks.BlockStructure;
@@ -15,7 +14,6 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.Item;
@@ -87,6 +85,14 @@ public class BlockAlveary extends BlockStructure implements EntityBlock {
 		return this.type.tileFeature.tileType().create(pos, state);
 	}
 
+	@Nullable
+	@Override
+	public <T extends BlockEntity> net.minecraft.world.level.block.entity.BlockEntityTicker<T> getTicker(Level level, BlockState state, net.minecraft.world.level.block.entity.BlockEntityType<T> type) {
+		// The holder may be ANY member type (lowest member could be a heater/sieve/...), so return a ticker
+		// for every alveary member type; the body is guarded by the anchor + assembled check (spec §7.1).
+		return forestry.core.multiblock.MultiblockTicker.getTicker(level);
+	}
+
 	public BlockState getNewState(TileAlveary tile) {
 		BlockState state = this.defaultBlockState();
 
@@ -139,14 +145,12 @@ public class BlockAlveary extends BlockStructure implements EntityBlock {
 
 	@Override
 	public void neighborChanged(BlockState state, Level level, BlockPos pos, Block blockIn, BlockPos fromPos, boolean movedByPiston) {
+		// The non-Forestry alveary cells (slab cap / entrance air ring) are caught here. Re-run the
+		// event-driven validation for this block (spec §5.3) instead of the deleted controller.reassemble().
 		TileUtil.actOnTile(level, pos, TileAlveary.class, tileAlveary -> {
-			// We must check that the slabs on top were not removed
-			IAlvearyControllerInternal alveary = tileAlveary.getMultiblockLogic().getController();
-			alveary.reassemble();
-			BlockPos referenceCoord = alveary.getReferenceCoord();
-			if (level instanceof ServerLevel serverLevel) {
-				NetworkUtil.sendToPlayersTrackingPos(new PacketAlvearyChange(referenceCoord), referenceCoord, serverLevel);
-			}
+			forestry.core.multiblock.MultiblockValidation.validateFor(level, pos, tileAlveary);
+			// Refresh the client so the entrance textures / assembled state update (spec §5.3, §7.3).
+			NetworkUtil.sendNetworkPacket(new PacketAlvearyChange(pos), pos, level);
 		});
 	}
 

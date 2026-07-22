@@ -1,17 +1,21 @@
 package forestry.api.plugin;
 
 import forestry.api.genetics.IGenome;
-import forestry.api.genetics.alleles.*;
+import forestry.api.genetics.alleles.Allele;
+import forestry.api.genetics.alleles.AllelePair;
+import forestry.api.genetics.alleles.IChromosome;
+import net.minecraft.resources.ResourceLocation;
 
 /**
- * Used to create a genome.
+ * Used to create a genome. Alleles are inline values ({@link Allele}); reference chromosomes accept a
+ * {@link ResourceLocation} which is resolved (with the value's default dominance) at apply time.
  */
 public interface IGenomeBuilder {
 	/**
-	 * Shortcut for setting dominant true/false alleles.
+	 * Shortcut for setting a dominant boolean allele.
 	 */
-	default void set(IBooleanChromosome chromosome, boolean defaultAllele) {
-		set(chromosome, defaultAllele ? ForestryAlleles.TRUE : ForestryAlleles.FALSE);
+	default void set(IChromosome<Boolean> chromosome, boolean value) {
+		set(chromosome, Allele.of(value, true));
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
@@ -21,36 +25,25 @@ public interface IGenomeBuilder {
 	}
 
 	/**
-	 * Sets both the active and inactive allele for the chromosome in this genome.
-	 *
-	 * @param chromosome The chromosome to set.
-	 * @param allele     The allele for this chromosome.
-	 * @throws IllegalArgumentException If the chromosome is not contained in this genome, or if the
-	 *                                  given allele is not valid for the given chromosome.
+	 * Sets both the active and inactive allele for the chromosome.
 	 */
-	<A extends IAllele> void set(IChromosome<A> chromosome, A allele);
+	<V> void set(IChromosome<V> chromosome, Allele<V> allele);
 
 	/**
-	 * Sets the active allele for the chromosome in this genome.
-	 * Active alleles have the most influence over the actual traits of an individual, also called the phenotype.
-	 *
-	 * @param chromosome The chromosome to set.
-	 * @param allele     The active allele for this chromosome.
-	 * @throws IllegalArgumentException If the chromosome is not contained in this genome, or if the
-	 *                                  given allele is not valid for the given chromosome.
+	 * Sets a reference chromosome (species, flower type, effect, ...) by the referenced value's ID. The value's
+	 * declared dominance is resolved at apply time.
 	 */
-	<A extends IAllele> void setActive(IChromosome<A> chromosome, A allele);
+	void set(IChromosome<ResourceLocation> chromosome, ResourceLocation id);
 
 	/**
-	 * Sets the inactive (non-expressed) allele for the chromosome in this genome.
-	 * Inactive alleles have little to no influence on an individual, but are still important for inheritance/breeding.
-	 *
-	 * @param chromosome The chromosome to set.
-	 * @param allele     The active allele for this chromosome.
-	 * @throws IllegalArgumentException If the chromosome is not contained in this genome, or if the
-	 *                                  given allele is not valid for the given chromosome.
+	 * Sets the active (expressed) allele for the chromosome.
 	 */
-	<A extends IAllele> void setInactive(IChromosome<A> chromosome, A allele);
+	<V> void setActive(IChromosome<V> chromosome, Allele<V> allele);
+
+	/**
+	 * Sets the inactive (non-expressed) allele for the chromosome.
+	 */
+	<V> void setInactive(IChromosome<V> chromosome, Allele<V> allele);
 
 	/**
 	 * @return A new genome. Later modifications to this builder will not affect the returned genome.
@@ -63,7 +56,7 @@ public interface IGenomeBuilder {
 	boolean isEmpty();
 
 	/**
-	 * Sets the remaining alleles in this chromosome to their defaults as specified by this genome's karyotype.
+	 * Sets the remaining unset chromosomes to their karyotype defaults.
 	 */
 	void setRemainingDefault();
 }

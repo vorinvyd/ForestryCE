@@ -1,0 +1,22 @@
+{
+  "dominant": true,
+  "escritoire_color": 6785297,
+  "genome": {
+    "forestry:height": {
+      "value": 1.25
+    },
+    "forestry:maturation": {
+      "dominant": true,
+      "value": 5
+    },
+    "forestry:sappiness": {
+      "dominant": true,
+      "value": 0.3
+    }
+  },
+  "genus": "chlorocardium",
+  "humidity": "damp",
+  "rarity": 0.0025,
+  "species": "rodiei",
+  "temperature": "warm"
+}

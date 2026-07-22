@@ -13,7 +13,7 @@
         "tag": "c:gems/diamond"
       },
       "Y": {
-        "item": "forestry:sturdy_machine"
+        "item": "forestry:sturdy_casing"
       }
     },
     "pattern": [
@@ -23,7 +23,7 @@
     ],
     "result": {
       "count": 1,
-      "id": "forestry:hardened_machine"
+      "id": "forestry:hardened_casing"
     }
   },
   "time": 75

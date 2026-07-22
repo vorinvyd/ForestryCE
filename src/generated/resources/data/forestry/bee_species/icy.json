@@ -1,0 +1,28 @@
+{
+  "body": 14349811,
+  "dominant": true,
+  "genome": {
+    "forestry:lifespan": {
+      "dominant": true,
+      "value": 30
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.8
+    }
+  },
+  "genus": "coagapis",
+  "outline": 10551295,
+  "products": [
+    {
+      "chance": 0.2,
+      "item": "forestry:frozen_comb"
+    },
+    {
+      "chance": 0.2,
+      "item": "forestry:ice_shard"
+    }
+  ],
+  "species": "coagulis",
+  "temperature": "icy"
+}

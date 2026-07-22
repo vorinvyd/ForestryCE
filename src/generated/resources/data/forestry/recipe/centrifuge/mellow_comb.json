@@ -2,7 +2,7 @@
   "type": "forestry:centrifuge",
   "id": "forestry:centrifuge/mellow_comb",
   "input": {
-    "item": "forestry:bee_comb_mellow"
+    "item": "forestry:mellow_comb"
   },
   "products": [
     {

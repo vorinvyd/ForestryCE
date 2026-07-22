@@ -1,0 +1,20 @@
+{
+  "type": "forestry:bee_species",
+  "parent": "apidae",
+  "alleles": {
+    "forestry:activity": {
+      "value": "forestry:activity_metaturnal"
+    },
+    "forestry:flower_type": {
+      "value": "forestry:flower_type_nether"
+    },
+    "forestry:pollination": {
+      "value": 20
+    },
+    "forestry:temperature_tolerance": {
+      "value": "DOWN_2"
+    }
+  },
+  "name": "diapis",
+  "rank": "genus"
+}

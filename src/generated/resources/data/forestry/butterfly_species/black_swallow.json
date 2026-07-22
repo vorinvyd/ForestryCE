@@ -1,0 +1,28 @@
+{
+  "dominant": true,
+  "genome": {
+    "forestry:butterfly_lifespan": {
+      "dominant": true,
+      "value": 20
+    },
+    "forestry:humidity_tolerance": {
+      "dominant": true,
+      "value": "DOWN_1"
+    },
+    "forestry:size": {
+      "value": 0.75
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.8
+    },
+    "forestry:temperature_tolerance": {
+      "dominant": true,
+      "value": "DOWN_1"
+    }
+  },
+  "genus": "papilio",
+  "rarity": 1.0,
+  "serum_color": 15386499,
+  "species": "polyxenes"
+}

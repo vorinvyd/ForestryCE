@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "forestry:block/giant_sequoia_planks",
+    "side": "forestry:block/giant_sequoia_planks",
+    "top": "forestry:block/giant_sequoia_planks"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "dominant": true,
+  "genome": {
+    "forestry:lifespan": {
+      "dominant": true,
+      "value": 35
+    },
+    "forestry:speed": {
+      "value": 1.0
+    }
+  },
+  "genus": "industrapis",
+  "outline": 1698906,
+  "products": [
+    {
+      "chance": 0.3,
+      "item": "forestry:stringy_comb"
+    }
+  ],
+  "species": "assiduus"
+}

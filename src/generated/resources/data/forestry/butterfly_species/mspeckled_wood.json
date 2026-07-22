@@ -1,0 +1,13 @@
+{
+  "dominant": true,
+  "genome": {
+    "forestry:fertility": {
+      "dominant": true,
+      "value": 2
+    }
+  },
+  "genus": "pararge",
+  "rarity": 0.5,
+  "serum_color": 4204825,
+  "species": "xiphia"
+}

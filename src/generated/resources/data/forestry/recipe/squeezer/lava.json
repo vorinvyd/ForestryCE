@@ -3,8 +3,10 @@
   "chance": 0.0,
   "id": "forestry:squeezer/lava",
   "output": {
-    "amount": 500,
-    "id": "minecraft:lava"
+    "stack": {
+      "amount": 500,
+      "id": "minecraft:lava"
+    }
   },
   "resources": [
     {

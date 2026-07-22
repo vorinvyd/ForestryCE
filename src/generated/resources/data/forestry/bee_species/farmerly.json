@@ -1,0 +1,26 @@
+{
+  "authority": "MysteriousAges",
+  "dominant": true,
+  "genome": {
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.8
+    },
+    "forestry:territory": {
+      "value": [
+        11,
+        8,
+        11
+      ]
+    }
+  },
+  "genus": "rustapis",
+  "outline": 13866792,
+  "products": [
+    {
+      "chance": 0.27,
+      "item": "forestry:wheaten_comb"
+    }
+  ],
+  "species": "arator"
+}

@@ -1,0 +1,28 @@
+{
+  "type": "forestry:fabricator",
+  "id": "forestry:fabricator/fireproof/planks/zebrano",
+  "molten": {
+    "amount": 500,
+    "id": "forestry:liquid_glass"
+  },
+  "recipe": {
+    "category": "building",
+    "key": {
+      "#": {
+        "item": "forestry:refractory_wax"
+      },
+      "X": {
+        "item": "forestry:zebrano_planks"
+      }
+    },
+    "pattern": [
+      "XXX",
+      "X#X",
+      "XXX"
+    ],
+    "result": {
+      "count": 8,
+      "id": "forestry:zebrano_fireproof_planks"
+    }
+  }
+}

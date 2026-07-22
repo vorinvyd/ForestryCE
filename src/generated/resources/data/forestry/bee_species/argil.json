@@ -1,0 +1,41 @@
+{
+  "authority": "EnderiumSmith",
+  "dominant": true,
+  "genome": {
+    "forestry:bee_effect": {
+      "value": "forestry:bee_effect_sifter"
+    },
+    "forestry:lifespan": {
+      "dominant": true,
+      "value": 30
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.8
+    },
+    "forestry:territory": {
+      "value": [
+        11,
+        8,
+        11
+      ]
+    }
+  },
+  "genus": "afrapis",
+  "humidity": "arid",
+  "outline": 9875410,
+  "products": [
+    {
+      "chance": 0.3,
+      "item": "forestry:kaolin_comb"
+    }
+  ],
+  "specialties": [
+    {
+      "chance": 0.15,
+      "item": "minecraft:red_sand"
+    }
+  ],
+  "species": "argillata",
+  "temperature": "warm"
+}

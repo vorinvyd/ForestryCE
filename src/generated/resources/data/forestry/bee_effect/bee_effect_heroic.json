@@ -1,0 +1,10 @@
+{
+  "type": "forestry:damage_entities",
+  "armor_scaling": false,
+  "combinable": false,
+  "damage": 2.0,
+  "damage_type": "forestry:heroic",
+  "dominant": false,
+  "requires_working": true,
+  "target": "monsters"
+}

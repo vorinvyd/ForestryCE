@@ -9,11 +9,11 @@
           "functions": [
             {
               "function": "forestry:set_species_nbt",
-              "species_id": "forestry:tree_acacia",
+              "species_id": "forestry:acacia",
               "type_id": "forestry:tree_species"
             }
           ],
-          "name": "forestry:sapling"
+          "name": "forestry:tree_sapling"
         },
         {
           "type": "minecraft:empty",

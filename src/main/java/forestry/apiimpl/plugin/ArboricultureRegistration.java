@@ -26,8 +26,8 @@ public class ArboricultureRegistration extends SpeciesRegistration<ITreeSpeciesB
 	}
 
 	@Override
-	protected TreeSpeciesBuilder createSpeciesBuilder(ResourceLocation id, String genus, String species, MutationsRegistration mutations) {
-		return new TreeSpeciesBuilder(id, genus, species, mutations);
+	protected TreeSpeciesBuilder createSpeciesBuilder(ResourceLocation id, String genus, String species) {
+		return new TreeSpeciesBuilder(id, genus, species);
 	}
 
 	@Override

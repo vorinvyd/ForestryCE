@@ -3,7 +3,7 @@
   "fermentationValue": 50,
   "fluidResource": {
     "amount": 1,
-    "id": "forestry:juice"
+    "id": "forestry:fruit_juice"
   },
   "id": "forestry:fermenter/wheat_juice",
   "modifier": 1.5,

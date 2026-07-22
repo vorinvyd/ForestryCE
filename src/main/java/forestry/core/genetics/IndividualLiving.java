@@ -7,7 +7,7 @@ import forestry.api.genetics.IGenome;
 import forestry.api.genetics.IIndividualLiving;
 import forestry.api.genetics.ISpecies;
 import forestry.api.genetics.ISpeciesType;
-import forestry.api.genetics.alleles.IIntegerChromosome;
+import forestry.api.genetics.alleles.IChromosome;
 import forestry.core.features.CoreDataComponents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
@@ -45,7 +45,7 @@ public abstract class IndividualLiving<S extends ISpecies<I>, I extends IIndivid
 		));
 	}
 
-	protected abstract IIntegerChromosome getLifespanChromosome();
+	protected abstract IChromosome<Integer> getLifespanChromosome();
 
 	/* GENERATION */
 	@Override

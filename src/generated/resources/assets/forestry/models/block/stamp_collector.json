@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "forestry:block/philatelist.0",
+    "east": "forestry:block/philatelist.2",
+    "north": "forestry:block/philatelist.3",
+    "particle": "forestry:block/philatelist.2",
+    "south": "forestry:block/philatelist.2",
+    "up": "forestry:block/philatelist.1",
+    "west": "forestry:block/philatelist.2"
+  }
+}

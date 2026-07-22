@@ -1,0 +1,18 @@
+{
+  "dominant": true,
+  "escritoire_color": 10729637,
+  "genome": {
+    "forestry:height": {
+      "value": 0.75
+    },
+    "forestry:maturation": {
+      "value": 7
+    },
+    "forestry:sappiness": {
+      "dominant": true,
+      "value": 0.3
+    }
+  },
+  "genus": "populus",
+  "species": "alba"
+}

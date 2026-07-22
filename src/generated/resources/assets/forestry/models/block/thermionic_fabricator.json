@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "forestry:block/thermionic_fabricator.0",
+    "east": "forestry:block/thermionic_fabricator.4",
+    "north": "forestry:block/thermionic_fabricator.3",
+    "particle": "forestry:block/thermionic_fabricator.4",
+    "south": "forestry:block/thermionic_fabricator.2",
+    "up": "forestry:block/thermionic_fabricator.1",
+    "west": "forestry:block/thermionic_fabricator.4"
+  }
+}

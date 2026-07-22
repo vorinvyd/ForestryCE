@@ -1,0 +1,24 @@
+{
+  "dominant": true,
+  "escritoire_color": 10670666,
+  "genome": {
+    "forestry:girth": {
+      "value": 3
+    },
+    "forestry:height": {
+      "value": 1.0
+    },
+    "forestry:maturation": {
+      "value": 7
+    },
+    "forestry:sappiness": {
+      "dominant": true,
+      "value": 0.3
+    }
+  },
+  "genus": "diospyros",
+  "humidity": "damp",
+  "rarity": 5.0E-4,
+  "species": "pentamera",
+  "temperature": "warm"
+}

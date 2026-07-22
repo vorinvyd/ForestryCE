@@ -1,0 +1,18 @@
+{
+  "type": "forestry:carpenter",
+  "box": [],
+  "id": "forestry:carpenter/crates/unpack/forestry/cocoa_comb",
+  "recipe": {
+    "category": "misc",
+    "ingredients": [
+      {
+        "item": "forestry:crated_cocoa_comb"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "forestry:cocoa_comb"
+    }
+  },
+  "time": 5
+}

@@ -1,0 +1,18 @@
+{
+  "type": "forestry:transform_block",
+  "attempts": 10,
+  "chance": 1.0,
+  "dominant": false,
+  "max_temperature": "normal",
+  "requires_working": true,
+  "throttle": 200,
+  "transforms": [
+    {
+      "from": "minecraft:water",
+      "requires_air_above": true,
+      "to": {
+        "Name": "minecraft:ice"
+      }
+    }
+  ]
+}

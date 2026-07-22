@@ -25,4 +25,9 @@ public interface IMutationCondition {
 	 * A localized description of the mutation condition. (i.e. "A temperature of HOT is required.")
 	 */
 	Component getDescription();
+
+	/**
+	 * @return The type of this mutation condition, used to (de)serialize it via a dispatch codec.
+	 */
+	MutationConditionType<?> type();
 }

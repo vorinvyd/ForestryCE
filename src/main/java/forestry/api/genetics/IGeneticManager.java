@@ -19,6 +19,14 @@ public interface IGeneticManager {
 	ITaxon getTaxon(String name);
 
 	/**
+	 * @return The taxon with the given (lowercase) name, or {@code null} if none is registered (including datapack taxa
+	 * that failed to load) — for callers that must degrade gracefully rather than throw, mirroring the datapack-genetics
+	 * crash-safety of the {@code *Safe} species-type getters.
+	 */
+	@Nullable
+	ITaxon getTaxonSafe(String name);
+
+	/**
 	 * Returns a list containing this taxon and its parents in order of taxonomic rank. See {@link TaxonomicRank}.
 	 *
 	 * @param name The name of the taxon whose parent taxa to retrieve.
@@ -28,11 +36,10 @@ public interface IGeneticManager {
 
 	/**
 	 * Retrieves the registry of possible mutations for a given species type.
-	 * Register mutations using a {@link forestry.api.plugin.IForestryPlugin}.
+	 * Delegates to {@link ISpeciesType#getMutations()}; the manager is empty until mutation recipes are loaded.
 	 *
 	 * @param speciesType The species type.
 	 * @return A registry of possible mutations for the given species type.
-	 * @throws IllegalStateException If mutations have not been registered yet.
 	 */
 	<S extends ISpecies<?>> IMutationManager<S> getMutations(ISpeciesType<?, ?> speciesType);
 

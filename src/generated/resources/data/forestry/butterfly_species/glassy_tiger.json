@@ -1,0 +1,12 @@
+{
+  "dominant": true,
+  "genome": {
+    "forestry:size": {
+      "value": 0.6
+    }
+  },
+  "genus": "parantica",
+  "rarity": 0.3,
+  "serum_color": 5978421,
+  "species": "aglea"
+}

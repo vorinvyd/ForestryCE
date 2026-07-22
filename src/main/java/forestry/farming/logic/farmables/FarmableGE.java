@@ -1,6 +1,8 @@
 package forestry.farming.logic.farmables;
 
 import com.google.common.collect.ImmutableSet;
+import forestry.api.arboriculture.ForestryFruits;
+import forestry.api.arboriculture.ITreeSpecies;
 import forestry.api.arboriculture.genetics.IFruit;
 import forestry.api.arboriculture.genetics.ITree;
 import forestry.api.arboriculture.genetics.ITreeSpeciesType;
@@ -27,9 +29,14 @@ public class FarmableGE implements IFarmable {
 
 	public FarmableGE() {
 		ImmutableSet.Builder<Item> builder = new ImmutableSet.Builder<>();
-		for (IFruit fruit : TreeChromosomes.FRUIT.values()) {
-			for (IProduct product : fruit.getProducts()) {
-				builder.add(product.item());
+		for (ITreeSpecies species : SpeciesUtil.TREE_TYPE.get().getAllSpecies()) {
+			var genome = species.getDefaultGenome();
+
+			if (!genome.getActiveValue(TreeChromosomes.FRUIT).equals(ForestryFruits.NONE)) {
+				IFruit fruit = genome.resolveActive(TreeChromosomes.FRUIT);
+				for (IProduct product : fruit.getProducts()) {
+					builder.add(product.item());
+				}
 			}
 		}
 		this.windfall = builder.build();

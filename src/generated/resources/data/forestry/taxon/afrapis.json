@@ -1,0 +1,26 @@
+{
+  "type": "forestry:bee_species",
+  "parent": "apidae",
+  "alleles": {
+    "forestry:activity": {
+      "value": "forestry:activity_crepuscular"
+    },
+    "forestry:flower_type": {
+      "value": "forestry:flower_type_gourd"
+    },
+    "forestry:humidity_tolerance": {
+      "dominant": true,
+      "value": "UP_1"
+    },
+    "forestry:pollination": {
+      "dominant": true,
+      "value": 5
+    },
+    "forestry:temperature_tolerance": {
+      "dominant": true,
+      "value": "UP_1"
+    }
+  },
+  "name": "afrapis",
+  "rank": "genus"
+}

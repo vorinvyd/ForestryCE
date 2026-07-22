@@ -133,5 +133,14 @@ public abstract class TileNaturalistChest extends TileBase implements IPagedInve
 		public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
 			return new ContainerNaturalistInventory(windowId, playerInv, TileNaturalistChest.this, this.page, this.isFlipPage);
 		}
+
+		@Override
+		public boolean shouldTriggerClientSideContainerClosingOnOpen() {
+			// Flipping a page reopens this menu server-side. The default (true) sends the client a
+			// container-close packet first, which momentarily returns it to the in-game GUI and grabs
+			// the mouse - warping the cursor to the window centre. Returning false skips that close so
+			// the new page swaps in without moving the cursor.
+			return !this.isFlipPage;
+		}
 	}
 }

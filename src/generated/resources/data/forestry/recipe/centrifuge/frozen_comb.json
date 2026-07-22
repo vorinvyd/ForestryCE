@@ -2,7 +2,7 @@
   "type": "forestry:centrifuge",
   "id": "forestry:centrifuge/frozen_comb",
   "input": {
-    "item": "forestry:bee_comb_frozen"
+    "item": "forestry:frozen_comb"
   },
   "products": [
     {
@@ -19,7 +19,7 @@
     },
     {
       "chance": 0.2,
-      "item": "forestry:pollen_cluster_crystalline"
+      "item": "forestry:crystalline_pollen_cluster"
     }
   ],
   "time": 20

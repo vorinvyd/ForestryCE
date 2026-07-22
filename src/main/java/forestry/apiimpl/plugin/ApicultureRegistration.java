@@ -3,12 +3,13 @@ package forestry.apiimpl.plugin;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import forestry.api.apiculture.IActivityType;
+import forestry.api.apiculture.IBeeJubilance;
 import forestry.api.apiculture.IFlowerType;
 import forestry.api.apiculture.genetics.IBeeEffect;
 import forestry.api.apiculture.genetics.IBeeSpecies;
 import forestry.api.apiculture.hives.IHiveDefinition;
 import forestry.api.genetics.ISpeciesType;
-import forestry.api.genetics.alleles.IAllele;
+import forestry.api.genetics.alleles.Allele;
 import forestry.api.genetics.alleles.IChromosome;
 import forestry.api.plugin.IApicultureRegistration;
 import forestry.api.plugin.IBeeSpeciesBuilder;
@@ -28,6 +29,7 @@ public class ApicultureRegistration extends SpeciesRegistration<IBeeSpeciesBuild
 	private final ModifiableRegistrar<ResourceLocation, IHiveBuilder, HiveBuilder> hives = new ModifiableRegistrar<>(IHiveBuilder.class);
 	private final Registrar<ResourceLocation, IFlowerType, IFlowerType> flowerTypes = new Registrar<>(IFlowerType.class);
 	private final Registrar<ResourceLocation, IBeeEffect, IBeeEffect> beeEffects = new Registrar<>(IBeeEffect.class);
+	private final Registrar<ResourceLocation, IBeeJubilance, IBeeJubilance> jubilances = new Registrar<>(IBeeJubilance.class);
 	private final Registrar<ResourceLocation, IActivityType, IActivityType> activityTypes = new Registrar<>(IActivityType.class);
 	private final ArrayList<VillageHive> commonVillageHives = new ArrayList<>();
 	private final ArrayList<VillageHive> rareVillageHives = new ArrayList<>();
@@ -38,8 +40,8 @@ public class ApicultureRegistration extends SpeciesRegistration<IBeeSpeciesBuild
 	}
 
 	@Override
-	protected BeeSpeciesBuilder createSpeciesBuilder(ResourceLocation id, String genus, String species, MutationsRegistration mutations) {
-		return new BeeSpeciesBuilder(id, genus, species, mutations);
+	protected BeeSpeciesBuilder createSpeciesBuilder(ResourceLocation id, String genus, String species) {
+		return new BeeSpeciesBuilder(id, genus, species);
 	}
 
 	@Override
@@ -50,7 +52,7 @@ public class ApicultureRegistration extends SpeciesRegistration<IBeeSpeciesBuild
 	}
 
 	@Override
-	public void addVillageBee(ResourceLocation speciesId, boolean rare, Map<IChromosome<?>, IAllele> alleles) {
+	public void addVillageBee(ResourceLocation speciesId, boolean rare, Map<IChromosome<?>, Allele<?>> alleles) {
 		(rare ? this.rareVillageHives : this.commonVillageHives).add(new VillageHive(speciesId, alleles));
 	}
 
@@ -70,6 +72,15 @@ public class ApicultureRegistration extends SpeciesRegistration<IBeeSpeciesBuild
 
 	public ImmutableMap<ResourceLocation, IBeeEffect> getBeeEffects() {
 		return this.beeEffects.build();
+	}
+
+	@Override
+	public void registerBeeJubilance(ResourceLocation id, IBeeJubilance jubilance) {
+		this.jubilances.create(id, jubilance);
+	}
+
+	public ImmutableMap<ResourceLocation, IBeeJubilance> getJubilances() {
+		return this.jubilances.build();
 	}
 
 	@Override

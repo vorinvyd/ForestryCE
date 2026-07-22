@@ -1,0 +1,59 @@
+{
+  "authority": "EnderiumSmith",
+  "body": 352861,
+  "dominant": true,
+  "genome": {
+    "forestry:activity": {
+      "value": "forestry:activity_metaturnal"
+    },
+    "forestry:bee_effect": {
+      "value": "forestry:bee_effect_sculk"
+    },
+    "forestry:cave_dwelling": {
+      "dominant": true,
+      "value": true
+    },
+    "forestry:fertility": {
+      "dominant": true,
+      "value": 1
+    },
+    "forestry:flower_type": {
+      "value": "forestry:flower_type_sculk"
+    },
+    "forestry:humidity_tolerance": {
+      "dominant": true,
+      "value": "BOTH_1"
+    },
+    "forestry:lifespan": {
+      "value": 60
+    },
+    "forestry:pollination": {
+      "dominant": true,
+      "value": 5
+    },
+    "forestry:speed": {
+      "value": 1.0
+    },
+    "forestry:temperature_tolerance": {
+      "dominant": true,
+      "value": "BOTH_1"
+    },
+    "forestry:territory": {
+      "value": [
+        13,
+        12,
+        13
+      ]
+    }
+  },
+  "genus": "abominatio",
+  "glint": true,
+  "outline": 13751990,
+  "products": [
+    {
+      "chance": 0.3,
+      "item": "forestry:sculken_comb"
+    }
+  ],
+  "species": "alieni"
+}

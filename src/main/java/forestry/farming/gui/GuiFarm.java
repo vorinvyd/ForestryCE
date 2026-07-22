@@ -44,13 +44,12 @@ public class GuiFarm extends GuiForestryTitled<ContainerFarm> {
 	}
 
 	@Override
-	protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseY, int mouseX) {
-		super.renderBg(graphics, partialTicks, mouseY, mouseX);
+	protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseX, int mouseY) {
+		super.renderBg(graphics, partialTicks, mouseX, mouseY);
 
 		// Fuel remaining
 		int fertilizerRemain = this.tile.getMultiblockLogic().getController().getStoredFertilizerScaled(16);
 		if (fertilizerRemain > 0) {
-			// todo not sure if the textureFile is the correct sprite to draw
 			graphics.blit(this.textureFile, this.leftPos + 81, this.topPos + 94 + 17 - fertilizerRemain, this.imageWidth, 17 - fertilizerRemain, 4, fertilizerRemain);
 		}
 	}

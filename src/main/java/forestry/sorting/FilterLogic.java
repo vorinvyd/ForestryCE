@@ -4,7 +4,6 @@ import forestry.api.IForestryApi;
 import forestry.api.core.ILocationProvider;
 import forestry.api.genetics.IIndividual;
 import forestry.api.genetics.ISpecies;
-import forestry.api.genetics.alleles.IAlleleManager;
 import forestry.api.genetics.capability.IIndividualHandlerItem;
 import forestry.api.genetics.filter.FilterData;
 import forestry.api.genetics.filter.IFilterLogic;
@@ -141,7 +140,6 @@ public class FilterLogic implements IFilterLogic {
 
 	public static AlleleFilter[][] readGenomeFilters(FriendlyByteBuf buffer) {
 		AlleleFilter[][] genomeFilters = new AlleleFilter[6][3];
-		IAlleleManager alleles = IForestryApi.INSTANCE.getAlleleManager();
 
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 3; j++) {

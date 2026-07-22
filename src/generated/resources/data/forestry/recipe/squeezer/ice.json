@@ -3,8 +3,10 @@
   "chance": 0.0,
   "id": "forestry:squeezer/ice",
   "output": {
-    "amount": 4000,
-    "id": "forestry:ice"
+    "stack": {
+      "amount": 4000,
+      "id": "forestry:crushed_ice"
+    }
   },
   "resources": [
     {

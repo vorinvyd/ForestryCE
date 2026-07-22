@@ -9,7 +9,7 @@
       "tag": "c:ingots/iron"
     },
     "Y": {
-      "item": "forestry:sturdy_machine"
+      "item": "forestry:sturdy_casing"
     }
   },
   "pattern": [

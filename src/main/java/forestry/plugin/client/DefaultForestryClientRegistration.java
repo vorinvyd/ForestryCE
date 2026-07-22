@@ -7,6 +7,7 @@ import forestry.api.arboriculture.ForestryTreeSpecies;
 import forestry.api.client.arboriculture.ForestryLeafSprites;
 import forestry.api.client.plugin.IClientRegistration;
 import forestry.api.genetics.ForestrySpeciesTypes;
+import forestry.api.lepidopterology.ForestryButterflySpecies;
 import forestry.arboriculture.client.BiomeLeafTint;
 import forestry.arboriculture.client.FixedLeafTint;
 import net.minecraft.resources.ResourceLocation;
@@ -113,8 +114,9 @@ public class DefaultForestryClientRegistration implements Consumer<IClientRegist
 	}
 
 	private static void registerSapling(IClientRegistration registration, String modId, ResourceLocation speciesId) {
-		// remove the "tree/" prefix and add "_sapling"
-		String path = speciesId.getPath().substring(5) + "_sapling";
+		// add "_sapling" (no longer need to remove "tree_" prefix)
+		String path = speciesId.getPath() + "_sapling";
+
 		ResourceLocation blockModel = ResourceLocation.fromNamespaceAndPath(modId, "block/" + path);
 		ResourceLocation itemModel = ResourceLocation.fromNamespaceAndPath(modId, "item/" + path);
 		registration.setSaplingModel(speciesId, blockModel, itemModel);
@@ -122,5 +124,20 @@ public class DefaultForestryClientRegistration implements Consumer<IClientRegist
 
 	private static void registerLepidopterology(IClientRegistration client) {
 		client.setAnalyzerPlugin(ForestrySpeciesTypes.BUTTERFLY, new ButterflyAnalyzerPlugin());
+
+		// Register the default item/entity texture naming convention for every built-in butterfly species, so
+		// ButterflyItemModel can bake a per-species model instead of falling back to the default (cabbage white)
+		// for all of them. Sourced from the static compile-time id list, not the live/reloadable species map.
+		for (ResourceLocation speciesId : ForestryButterflySpecies.ALL) {
+			registerDefaultButterflyTextures(client, speciesId);
+		}
+	}
+
+	private static void registerDefaultButterflyTextures(IClientRegistration client, ResourceLocation speciesId) {
+		// Mirrors ButterflyClientManager#defaultTexturesFor's render-time fallback naming convention.
+		String path = speciesId.getPath().replace("butterfly_", "");
+		ResourceLocation itemTexture = ResourceLocation.fromNamespaceAndPath(speciesId.getNamespace(), "item/butterfly/" + path);
+		ResourceLocation entityTexture = ResourceLocation.fromNamespaceAndPath(speciesId.getNamespace(), "textures/entity/butterfly/" + path + ".png");
+		client.setButterflySprites(speciesId, itemTexture, entityTexture);
 	}
 }

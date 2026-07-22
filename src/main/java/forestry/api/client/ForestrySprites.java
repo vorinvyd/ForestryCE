@@ -43,7 +43,7 @@ public class ForestrySprites {
 	public static final ResourceLocation ANALYZER_PURE_NOCTURNAL = ForestryConstants.forestry("analyzer/pure_nocturnal");
 	public static final ResourceLocation ANALYZER_QUEEN = ForestryConstants.forestry("analyzer/queen");
 	public static final ResourceLocation ANALYZER_TREE = ForestryConstants.forestry("analyzer/tree");
-	public static final ResourceLocation ANALYZER_SAPLING = ForestryConstants.forestry("analyzer/sapling");
+	public static final ResourceLocation ANALYZER_SAPLING = ForestryConstants.forestry("analyzer/tree_sapling");
 	public static final ResourceLocation ANALYZER_POLLEN = ForestryConstants.forestry("analyzer/pollen");
 	public static final ResourceLocation ANALYZER_FLUTTER = ForestryConstants.forestry("analyzer/flutter");
 	public static final ResourceLocation ANALYZER_BUTTERFLY = ForestryConstants.forestry("analyzer/butterfly");

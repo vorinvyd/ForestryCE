@@ -1,0 +1,29 @@
+{
+  "type": "forestry:bee_species",
+  "parent": "apidae",
+  "alleles": {
+    "forestry:activity": {
+      "value": "forestry:activity_cathemeral"
+    },
+    "forestry:cave_dwelling": {
+      "dominant": true,
+      "value": true
+    },
+    "forestry:fertility": {
+      "value": 4
+    },
+    "forestry:flower_type": {
+      "value": "forestry:flower_type_nether"
+    },
+    "forestry:lifespan": {
+      "dominant": true,
+      "value": 35
+    },
+    "forestry:pollination": {
+      "dominant": true,
+      "value": 5
+    }
+  },
+  "name": "irata",
+  "rank": "genus"
+}

@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "B": {
-      "tag": "forge:gears/bronze"
+      "tag": "c:gears/bronze"
     },
     "D": {
       "tag": "c:gems/diamond"
@@ -13,10 +13,10 @@
         "type": "neoforge:compound",
         "children": [
           {
-            "item": "forestry:caterpillar_ge"
+            "item": "forestry:caterpillar"
           },
           {
-            "item": "forestry:propolis_normal"
+            "item": "forestry:propolis"
           }
         ]
       },

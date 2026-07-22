@@ -1,0 +1,30 @@
+{
+  "authority": "EnderiumSmith",
+  "genome": {
+    "forestry:bee_effect": {
+      "value": "forestry:bee_effect_glow_berry_grow"
+    },
+    "forestry:lifespan": {
+      "value": 50
+    },
+    "forestry:pollination": {
+      "value": 25
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.3
+    }
+  },
+  "genus": "troglobites",
+  "glint": true,
+  "humidity": "damp",
+  "outline": 15436081,
+  "products": [
+    {
+      "chance": 0.55,
+      "item": "forestry:honey_comb"
+    }
+  ],
+  "species": "verni",
+  "temperature": "warm"
+}

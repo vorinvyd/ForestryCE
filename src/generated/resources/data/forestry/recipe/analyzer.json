@@ -3,13 +3,13 @@
   "category": "misc",
   "key": {
     "T": {
-      "item": "forestry:portable_alyzer"
+      "item": "forestry:portable_analyzer"
     },
     "X": {
-      "tag": "forge:ingots/bronze"
+      "tag": "c:ingots/bronze"
     },
     "Y": {
-      "item": "forestry:sturdy_machine"
+      "item": "forestry:sturdy_casing"
     }
   },
   "pattern": [

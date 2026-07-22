@@ -1,7 +1,7 @@
 {
   "name": "for.gui.book.patchouli.entry.beekeeping.suit",
   "category": "forestry:beekeeping",
-  "icon": "forestry:apiarist_chest",
+  "icon": "forestry:apiarists_shirt",
   "pages": [
     {
       "type": "patchouli:text",
@@ -9,13 +9,13 @@
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "forestry:apiarist_helmet",
-      "recipe2": "forestry:apiarist_chest"
+      "recipe": "forestry:apiarists_hat",
+      "recipe2": "forestry:apiarists_shirt"
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "forestry:apiarist_legs",
-      "recipe2": "forestry:apiarist_boots"
+      "recipe": "forestry:apiarists_pants",
+      "recipe2": "forestry:apiarists_shoes"
     },
     {
       "type": "patchouli:text",

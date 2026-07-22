@@ -1,0 +1,39 @@
+{
+  "authority": "TheDarkColour",
+  "body": 11737410,
+  "dominant": true,
+  "genome": {
+    "forestry:activity": {
+      "value": "forestry:activity_metaturnal"
+    },
+    "forestry:humidity_tolerance": {
+      "dominant": true,
+      "value": "UP_1"
+    },
+    "forestry:temperature_tolerance": {
+      "value": "UP_2"
+    },
+    "forestry:territory": {
+      "value": [
+        15,
+        13,
+        15
+      ]
+    }
+  },
+  "genus": "festapis",
+  "outline": 668001,
+  "products": [
+    {
+      "chance": 0.45,
+      "item": "forestry:powdery_comb"
+    },
+    {
+      "type": "forestry:firework",
+      "chance": 0.2
+    }
+  ],
+  "secret": true,
+  "species": "americanus",
+  "stripes": 16777215
+}

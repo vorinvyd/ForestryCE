@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "B": {
-      "item": "forestry:circuit_board_basic"
+      "item": "forestry:basic_circuit_board"
     },
     "C": {
       "item": "forestry:flexible_casing"
@@ -12,7 +12,7 @@
       "tag": "c:glass_blocks/colorless"
     },
     "T": {
-      "item": "forestry:electron_tube_lapis"
+      "item": "forestry:lapis_electron_tube"
     }
   },
   "pattern": [

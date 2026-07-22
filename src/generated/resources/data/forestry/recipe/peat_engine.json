@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "item": "minecraft:piston"
+    },
+    "I": {
+      "tag": "c:glass_blocks/colorless"
+    },
+    "P": {
+      "tag": "c:ingots/copper"
+    },
+    "Q": {
+      "tag": "c:gears/copper"
+    }
+  },
+  "pattern": [
+    "PPP",
+    " I ",
+    "QDQ"
+  ],
+  "result": {
+    "count": 1,
+    "id": "forestry:peat_engine"
+  }
+}

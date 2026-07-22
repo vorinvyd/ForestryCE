@@ -3,7 +3,7 @@
   "id": "forestry:fabricator/electron_tubes/ender",
   "molten": {
     "amount": 500,
-    "id": "forestry:glass"
+    "id": "forestry:liquid_glass"
   },
   "recipe": {
     "category": "misc",
@@ -22,7 +22,7 @@
     ],
     "result": {
       "count": 4,
-      "id": "forestry:electron_tube_ender"
+      "id": "forestry:ender_electron_tube"
     }
   }
 }

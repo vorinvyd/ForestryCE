@@ -3,8 +3,10 @@
   "chance": 0.1,
   "id": "forestry:squeezer/fruit/papaya",
   "output": {
-    "amount": 600,
-    "id": "forestry:juice"
+    "stack": {
+      "amount": 600,
+      "id": "forestry:fruit_juice"
+    }
   },
   "remnant": {
     "count": 1,
@@ -12,7 +14,7 @@
   },
   "resources": [
     {
-      "tag": "forge:fruits/papaya"
+      "tag": "c:fruits/papaya"
     }
   ],
   "time": 10

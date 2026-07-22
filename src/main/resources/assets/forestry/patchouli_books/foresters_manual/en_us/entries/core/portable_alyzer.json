@@ -1,11 +1,11 @@
 {
-  "icon": "forestry:portable_alyzer",
+  "icon": "forestry:portable_analyzer",
   "name": "for.gui.book.patchouli.entry.core.portable_alyzer",
   "category": "forestry:core",
   "pages": [
     {
       "type": "forestry:carpenter/single",
-      "item": "forestry:portable_alyzer",
+      "item": "forestry:portable_analyzer",
       "text": "for.gui.book.patchouli.entry.core.portable_alyzer1"
     },
     {

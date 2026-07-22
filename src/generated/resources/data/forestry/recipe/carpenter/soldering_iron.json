@@ -13,7 +13,7 @@
         "tag": "c:ingots/iron"
       },
       "B": {
-        "tag": "forge:ingots/bronze"
+        "tag": "c:ingots/bronze"
       }
     },
     "pattern": [

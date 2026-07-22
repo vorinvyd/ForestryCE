@@ -13,5 +13,5 @@ public class MailItems {
 
 	public static final FeatureItemGroup<ItemStamp, EnumStampDefinition> STAMPS = REGISTRY.itemGroup(ItemStamp::new, "stamp", EnumStampDefinition.VALUES);
 	public static final FeatureItemTable<LetterItem, LetterItem.Size, LetterItem.State> LETTERS = REGISTRY.itemTable(LetterItem::new, LetterItem.Size.values(), LetterItem.State.values(), "letter");
-	public static final FeatureItem<CatalogueItem> CATALOGUE = REGISTRY.item(CatalogueItem::new, "catalogue");
+	public static final FeatureItem<CatalogueItem> CATALOGUE = REGISTRY.item(CatalogueItem::new, "catalog");
 }

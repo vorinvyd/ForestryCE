@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "forestry:block/giant_sequoia_pressure_plate"
+    },
+    "powered=true": {
+      "model": "forestry:block/giant_sequoia_pressure_plate_down"
+    }
+  }
+}

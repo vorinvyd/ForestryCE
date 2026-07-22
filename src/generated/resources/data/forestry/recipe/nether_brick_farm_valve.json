@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:nether_bricks"
+    },
+    "T": {
+      "tag": "c:gears/tin"
+    },
+    "X": {
+      "tag": "c:glass_blocks/colorless"
+    }
+  },
+  "pattern": [
+    " # ",
+    "XTX"
+  ],
+  "result": {
+    "count": 1,
+    "id": "forestry:nether_brick_farm_valve"
+  }
+}

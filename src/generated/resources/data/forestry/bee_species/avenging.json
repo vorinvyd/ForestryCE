@@ -1,0 +1,27 @@
+{
+  "dominant": true,
+  "genome": {
+    "forestry:bee_effect": {
+      "value": "forestry:bee_effect_radioactive"
+    },
+    "forestry:lifespan": {
+      "value": 70
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.3
+    }
+  },
+  "genus": "punapis",
+  "glint": true,
+  "humidity": "arid",
+  "outline": 14548736,
+  "products": [
+    {
+      "chance": 0.4,
+      "item": "forestry:parched_comb"
+    }
+  ],
+  "species": "hostimentum",
+  "temperature": "warm"
+}

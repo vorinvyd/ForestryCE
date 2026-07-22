@@ -1,0 +1,18 @@
+{
+  "genus": "monapis",
+  "jubilance": "forestry:hermit",
+  "outline": 4339484,
+  "products": [
+    {
+      "chance": 0.3,
+      "item": "forestry:wheaten_comb"
+    }
+  ],
+  "specialties": [
+    {
+      "chance": 0.1,
+      "item": "forestry:mellow_comb"
+    }
+  ],
+  "species": "monachus"
+}

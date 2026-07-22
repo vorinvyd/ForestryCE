@@ -1,0 +1,21 @@
+{
+  "genome": {
+    "forestry:butterfly_lifespan": {
+      "dominant": true,
+      "value": 10
+    },
+    "forestry:size": {
+      "value": 0.75
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.6
+    }
+  },
+  "genus": "papilio",
+  "humidity": "damp",
+  "rarity": 0.2,
+  "serum_color": 15386499,
+  "species": "thoas",
+  "temperature": "warm"
+}

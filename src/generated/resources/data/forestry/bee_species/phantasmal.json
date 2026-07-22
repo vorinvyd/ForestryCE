@@ -1,0 +1,27 @@
+{
+  "body": 14278302,
+  "genome": {
+    "forestry:bee_effect": {
+      "value": "forestry:bee_effect_resurrection"
+    },
+    "forestry:lifespan": {
+      "value": 70
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.3
+    }
+  },
+  "genus": "finapis",
+  "glint": true,
+  "humidity": "arid",
+  "outline": 13369594,
+  "products": [
+    {
+      "chance": 0.4,
+      "item": "forestry:mysterious_comb"
+    }
+  ],
+  "species": "lemur",
+  "temperature": "cold"
+}

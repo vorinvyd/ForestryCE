@@ -1,0 +1,17 @@
+{
+  "dominant": true,
+  "escritoire_color": 13688716,
+  "genome": {
+    "forestry:height": {
+      "value": 1.25
+    },
+    "forestry:sappiness": {
+      "dominant": true,
+      "value": 0.2
+    }
+  },
+  "genus": "pterocarpus",
+  "rarity": 0.005,
+  "species": "soyauxii",
+  "temperature": "warm"
+}

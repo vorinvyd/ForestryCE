@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "forestry:block/zebrano_planks",
+    "side": "forestry:block/zebrano_planks",
+    "top": "forestry:block/zebrano_planks"
+  }
+}

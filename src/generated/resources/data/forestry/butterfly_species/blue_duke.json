@@ -1,0 +1,14 @@
+{
+  "dominant": true,
+  "genome": {
+    "forestry:temperature_tolerance": {
+      "dominant": true,
+      "value": "BOTH_1"
+    }
+  },
+  "genus": "bassarona",
+  "rarity": 0.5,
+  "serum_color": 3162688,
+  "species": "durga",
+  "temperature": "cold"
+}

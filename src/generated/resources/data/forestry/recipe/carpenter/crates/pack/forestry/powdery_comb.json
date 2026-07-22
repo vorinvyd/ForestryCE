@@ -1,0 +1,29 @@
+{
+  "type": "forestry:carpenter",
+  "box": {
+    "item": "forestry:crate"
+  },
+  "id": "forestry:carpenter/crates/pack/forestry/powdery_comb",
+  "liquid": {
+    "amount": 100,
+    "id": "minecraft:water"
+  },
+  "recipe": {
+    "category": "misc",
+    "key": {
+      "#": {
+        "item": "forestry:powdery_comb"
+      }
+    },
+    "pattern": [
+      "###",
+      "###",
+      "###"
+    ],
+    "result": {
+      "count": 1,
+      "id": "forestry:crated_powdery_comb"
+    }
+  },
+  "time": 5
+}

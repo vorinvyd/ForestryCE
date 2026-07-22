@@ -1,7 +1,7 @@
 {
   "name": "for.gui.book.patchouli.entry.beekeeping.mutations",
   "category": "forestry:beekeeping",
-  "icon": "forestry:bee_queen_ge",
+  "icon": "forestry:queen_bee",
   "pages": [
     {
       "type": "patchouli:text",

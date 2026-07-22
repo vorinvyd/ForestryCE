@@ -1,20 +1,24 @@
 package forestry.api.core;
 
+import com.mojang.serialization.Codec;
+
 import forestry.api.ForestryTags;
 import forestry.api.client.ForestrySprites;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.biome.Biome;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Many things Forestry use temperature and humidity of a biome to determine whether they can or how they can work or spawn at a given location.
  * <p>
  * This enum concerns temperature.
  */
-public enum TemperatureType {
+public enum TemperatureType implements StringRepresentable {
 	ICY(ForestryTags.Biomes.ICY_TEMPERATURE, ForestrySprites.HABITAT_SNOW, 0xaafff0),
 	COLD(ForestryTags.Biomes.COLD_TEMPERATURE, ForestrySprites.HABITAT_TAIGA, 0x72ddf7),
 	NORMAL(ForestryTags.Biomes.NORMAL_TEMPERATURE, ForestrySprites.HABITAT_PLAINS, 0xffd013),
@@ -23,6 +27,7 @@ public enum TemperatureType {
 	HELLISH(ForestryTags.Biomes.HELLISH_TEMPERATURE, ForestrySprites.HABITAT_NETHER, 0x81032d);
 
 	public static final List<TemperatureType> VALUES = List.of(values());
+	public static final Codec<TemperatureType> CODEC = StringRepresentable.fromEnum(TemperatureType::values);
 
 	public final TagKey<Biome> tag;
 	public final ResourceLocation iconTexture;
@@ -46,6 +51,11 @@ public enum TemperatureType {
 	 */
 	public TemperatureType up(int steps) {
 		return VALUES.get(Mth.clamp(ordinal() + steps, 0, 5));
+	}
+
+	@Override
+	public String getSerializedName() {
+		return name().toLowerCase(Locale.ROOT);
 	}
 
 	/**

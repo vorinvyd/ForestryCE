@@ -1,0 +1,21 @@
+{
+  "genome": {
+    "forestry:bee_effect": {
+      "value": "forestry:bee_effect_repulsion"
+    },
+    "forestry:pollination": {
+      "value": 35
+    }
+  },
+  "genus": "monapis",
+  "glint": true,
+  "jubilance": "forestry:hermit",
+  "outline": 16766060,
+  "specialties": [
+    {
+      "chance": 0.2,
+      "item": "forestry:mellow_comb"
+    }
+  ],
+  "species": "anachoreta"
+}

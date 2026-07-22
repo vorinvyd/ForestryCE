@@ -1,0 +1,24 @@
+{
+  "dominant": true,
+  "escritoire_color": 5804614,
+  "genome": {
+    "forestry:fruits": {
+      "value": "forestry:fruit_plum"
+    },
+    "forestry:height": {
+      "value": 0.5
+    },
+    "forestry:sappiness": {
+      "dominant": true,
+      "value": 0.4
+    },
+    "forestry:yield": {
+      "value": 0.3
+    }
+  },
+  "genus": "prunus",
+  "humidity": "damp",
+  "rarity": 0.005,
+  "species": "domestica",
+  "temperature": "warm"
+}

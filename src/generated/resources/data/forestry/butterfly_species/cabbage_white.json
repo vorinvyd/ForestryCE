@@ -1,0 +1,12 @@
+{
+  "dominant": true,
+  "genome": {
+    "forestry:size": {
+      "value": 0.6
+    }
+  },
+  "genus": "pieris",
+  "rarity": 1.0,
+  "serum_color": 13434862,
+  "species": "rapae"
+}

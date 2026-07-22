@@ -1,0 +1,13 @@
+{
+  "dominant": true,
+  "genome": {
+    "forestry:fertility": {
+      "dominant": true,
+      "value": 2
+    }
+  },
+  "genus": "pararge",
+  "rarity": 1.0,
+  "serum_color": 9728581,
+  "species": "aegeria"
+}

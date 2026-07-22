@@ -3,7 +3,6 @@ package forestry.api.arboriculture.genetics;
 import forestry.api.apiculture.genetics.IEffect;
 import forestry.api.genetics.IEffectData;
 import forestry.api.genetics.IGenome;
-import forestry.api.genetics.alleles.IRegistryAlleleValue;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
@@ -13,7 +12,12 @@ import net.minecraft.world.level.block.Block;
  * Defines random tick and animation tick logic for leaves.
  * In Forestry, this is only used by Cherry Blossom trees to spawn petal particles.
  */
-public interface ITreeEffect extends IEffect, IRegistryAlleleValue {
+public interface ITreeEffect extends IEffect {
+	/**
+	 * @return Whether the allele for this value is dominant or recessive.
+	 */
+	boolean isDominant();
+
 	/**
 	 * Called whenever this leaf block is randomly ticked, like in {@link Block#randomTick}.
 	 *

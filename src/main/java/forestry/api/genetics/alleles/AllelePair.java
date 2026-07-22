@@ -1,92 +1,78 @@
 package forestry.api.genetics.alleles;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.util.RandomSource;
 
 /**
- * A pair of an active allele and an inactive allele, for use in a {@link forestry.api.genetics.IGenome}.
+ * A pair of an active allele and an inactive allele for one chromosome of a {@link forestry.api.genetics.IGenome}.
+ * <p>
+ * Alleles are inline values ({@link Allele}); the pair is serialized per-chromosome by the karyotype's genome codec,
+ * built from each chromosome's value codec. There is no global allele registry.
  *
- * @param active   The active allele for the chromosome
- * @param inactive The inactive allele for the chromosome
- * @param <A>      The generic type of allele this pair holds.
+ * @param active   The active (expressed) allele for the chromosome.
+ * @param inactive The inactive allele for the chromosome.
+ * @param <V>      The type of value held by this pair's alleles.
  */
-public record AllelePair<A extends IAllele>(A active, A inactive) {
-	public static final Codec<AllelePair<?>> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-		IAllele.CODEC.fieldOf("active").forGetter(AllelePair::active),
-		IAllele.CODEC.fieldOf("inactive").forGetter(AllelePair::inactive)
-	).apply(instance, AllelePair::new));
-
+public record AllelePair<V>(Allele<V> active, Allele<V> inactive) {
 	/**
 	 * Creates an allele pair where both the active and inactive alleles are the same.
-	 *
-	 * @param allele The allele.
-	 * @param <A>    The generic type of the allele class.
-	 * @return A new pair with the same value for both its active and inactive allele.
 	 */
-	public static <A extends IAllele> AllelePair<A> both(A allele) {
+	public static <V> AllelePair<V> both(Allele<V> allele) {
 		return new AllelePair<>(allele, allele);
 	}
 
 	/**
-	 * Creates a new chromosome out of the alleles of this chromosome and the other chromosome.
-	 * It always uses one allele from this and one from the other chromosome to create the new chromosome.
-	 *
-	 * @param rand  The instance of random it should uses to figure out which of the two alleles if should use.
-	 * @param other The other chromosome that this chromosome uses to create the new one.
+	 * Creates a new pair out of one allele from this pair and one from the other pair, ordered by dominance.
 	 */
-	public AllelePair<A> inheritOther(RandomSource rand, AllelePair<A> other) {
-		A firstChoice = rand.nextBoolean() ? this.active() : this.inactive();
-		A secondChoice = rand.nextBoolean() ? other.active() : other.inactive();
+	public AllelePair<V> inheritOther(RandomSource rand, AllelePair<V> other) {
+		Allele<V> firstChoice = rand.nextBoolean() ? this.active : this.inactive;
+		Allele<V> secondChoice = rand.nextBoolean() ? other.active : other.inactive;
 
 		if (rand.nextBoolean()) {
-			return AllelePair.create(firstChoice, secondChoice);
+			return create(firstChoice, secondChoice);
 		} else {
-			return AllelePair.create(secondChoice, firstChoice);
+			return create(secondChoice, firstChoice);
 		}
 	}
 
-	public AllelePair<A> inheritHaploid(RandomSource rand) {
-		A choice = rand.nextBoolean() ? this.active() : this.inactive();
-		return AllelePair.create(choice, choice);
+	public AllelePair<V> inheritHaploid(RandomSource rand) {
+		Allele<V> choice = rand.nextBoolean() ? this.active : this.inactive;
+		return new AllelePair<>(choice, choice);
 	}
 
 	/**
-	 * @return {@code true} if the active allele is the same as the inactive allele.
+	 * @return {@code true} if the active allele equals the inactive allele.
 	 */
 	public boolean isSameAlleles() {
-		return this.active == this.inactive;
+		return this.active.equals(this.inactive);
 	}
 
 	/**
-	 * A new chromosome pair where the active allele is the first dominant allele and the inactive allele is the other allele.
-	 * THIS IS DIFFERENT THAN THE CONSTRUCTOR, {@link AllelePair#AllelePair}.
-	 *
-	 * @return A chromosome pair of two alleles in order of allele dominance.
+	 * A pair where the active allele is the first dominant allele and the inactive allele is the other.
+	 * THIS IS DIFFERENT THAN THE CONSTRUCTOR.
 	 */
-	public static <A extends IAllele> AllelePair<A> create(A firstAllele, A secondAllele) {
-		return new AllelePair<>(getActiveAllele(firstAllele, secondAllele), getInactiveAllele(firstAllele, secondAllele));
+	public static <V> AllelePair<V> create(Allele<V> first, Allele<V> second) {
+		return new AllelePair<>(activeOf(first, second), inactiveOf(first, second));
 	}
 
-	private static <A extends IAllele> A getActiveAllele(A firstAllele, A secondAllele) {
-		if (firstAllele.dominant()) {
-			return firstAllele;
+	private static <V> Allele<V> activeOf(Allele<V> first, Allele<V> second) {
+		if (first.dominant()) {
+			return first;
 		}
-		if (secondAllele.dominant()) {
-			return secondAllele;
+		if (second.dominant()) {
+			return second;
 		}
-		// Leaves only the case of both being recessive
-		return firstAllele;
+		// Both recessive
+		return first;
 	}
 
-	private static <A extends IAllele> A getInactiveAllele(A firstAllele, A secondAllele) {
-		if (!secondAllele.dominant()) {
-			return secondAllele;
+	private static <V> Allele<V> inactiveOf(Allele<V> first, Allele<V> second) {
+		if (!second.dominant()) {
+			return second;
 		}
-		if (!firstAllele.dominant()) {
-			return firstAllele;
+		if (!first.dominant()) {
+			return first;
 		}
-		// Leaves only the case of both being dominant
-		return secondAllele;
+		// Both dominant
+		return second;
 	}
 }

@@ -1,0 +1,40 @@
+{
+  "authority": "EnderiumSmith",
+  "genome": {
+    "forestry:bee_effect": {
+      "value": "forestry:bee_effect_rejuvenation"
+    },
+    "forestry:fertility": {
+      "dominant": true,
+      "value": 1
+    },
+    "forestry:lifespan": {
+      "value": 2147483647
+    },
+    "forestry:pollination": {
+      "dominant": true,
+      "value": 5
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.3
+    }
+  },
+  "genus": "reliquia",
+  "glint": true,
+  "outline": 16733695,
+  "products": [
+    {
+      "chance": 0.2,
+      "item": "forestry:vintage_comb"
+    }
+  ],
+  "specialties": [
+    {
+      "chance": 0.15,
+      "item": "forestry:royal_jelly"
+    }
+  ],
+  "species": "elizabethii",
+  "temperature": "warm"
+}

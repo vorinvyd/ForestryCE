@@ -24,7 +24,7 @@ import java.util.List;
  * Genetic leaves with no tile entity, used for worldgen trees.
  * Similar to decorative leaves, but these will drop saplings and can be used for pollination.
  */
-public class BlockDefaultLeaves extends BlockAbstractLeaves {
+public class BlockDefaultLeaves extends BlockAbstractLeaves implements ILeafTypeBlock {
 	private final ForestryLeafType type;
 
 	public BlockDefaultLeaves(Block.Properties properties, ForestryLeafType type) {

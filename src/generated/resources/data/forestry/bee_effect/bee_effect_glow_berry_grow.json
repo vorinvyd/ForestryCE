@@ -1,0 +1,18 @@
+{
+  "type": "forestry:transform_block",
+  "chance": 1.0,
+  "combinable": true,
+  "dominant": false,
+  "requires_working": true,
+  "throttle": 200,
+  "transforms": [
+    {
+      "from": "#minecraft:cave_vines",
+      "to": {
+        "set": {
+          "berries": "true"
+        }
+      }
+    }
+  ]
+}

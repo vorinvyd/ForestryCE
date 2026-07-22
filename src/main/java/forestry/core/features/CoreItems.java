@@ -28,8 +28,8 @@ public class CoreItems {
 	public static final FeatureItem<ForestersManualItem> FORESTERS_MANUAL = REGISTRY.item(ForestersManualItem::new, "foresters_manual");
 
 	/* Fertilizer */
-	public static final FeatureItem<ItemFertilizer> COMPOST = REGISTRY.item(ItemFertilizer::new, "fertilizer_bio");
-	public static final FeatureItem<ItemFertilizer> FERTILIZER_COMPOUND = REGISTRY.item(ItemFertilizer::new, "fertilizer_compound");
+	public static final FeatureItem<ItemFertilizer> COMPOST = REGISTRY.item(ItemFertilizer::new, "compost");
+	public static final FeatureItem<ItemFertilizer> FERTILIZER_COMPOUND = REGISTRY.item(ItemFertilizer::new, "fertilizer");
 
 	/* Gems and raw ores */
 	public static final FeatureItem<ItemForestry> APATITE = REGISTRY.item(ItemForestry::new, "apatite");
@@ -43,11 +43,11 @@ public class CoreItems {
 	public static final FeatureItem<PortableAnalyzerItem> PORTABLE_ALYZER = REGISTRY.item(PortableAnalyzerItem::new, () -> new Item.Properties()
 		.stacksTo(1)
 		.component(DataComponents.CONTAINER, ItemContainerContents.EMPTY)
-		.component(CoreDataComponents.ALYZER_CHARGES.get(), 0), "portable_alyzer");
+		.component(CoreDataComponents.ALYZER_CHARGES.get(), 0), "portable_analyzer");
 
 	/* Ingots */
-	public static final FeatureItem<ItemForestry> INGOT_TIN = REGISTRY.item(ItemForestry::new, "ingot_tin");
-	public static final FeatureItem<ItemForestry> INGOT_BRONZE = REGISTRY.item(ItemForestry::new, "ingot_bronze");
+	public static final FeatureItem<ItemForestry> INGOT_TIN = REGISTRY.item(ItemForestry::new, "tin_ingot");
+	public static final FeatureItem<ItemForestry> INGOT_BRONZE = REGISTRY.item(ItemForestry::new, "bronze_ingot");
 
 	/* Tools */
 	public static final FeatureItem<ItemWrench> WRENCH = REGISTRY.item(ItemWrench::new, "wrench");
@@ -61,40 +61,46 @@ public class CoreItems {
 	public static final FeatureItem<ItemForestry> BROKEN_BRONZE_AXE = REGISTRY.item(ItemForestry::new, "broken_axe");
 	public static final FeatureItem<ItemForestry> BROKEN_BRONZE_SWORD = REGISTRY.item(ItemForestry::new, "broken_sword");
 	public static final FeatureItem<ItemForestry> BROKEN_BRONZE_HOE = REGISTRY.item(ItemForestry::new, "broken_hoe");
-	public static final FeatureItem<PickaxeItem> BRONZE_PICKAXE = REGISTRY.item(() -> new HasRemnants.Pickaxe(ToolTier.SURVIVALIST, 1, -2.8f, new Item.Properties(), BROKEN_BRONZE_PICKAXE::stack), "bronze_pickaxe");
-	public static final FeatureItem<ShovelItem> BRONZE_SHOVEL = REGISTRY.item(() -> new HasRemnants.Shovel(ToolTier.SURVIVALIST, 1.5f, -3.0f, new Item.Properties(), BROKEN_BRONZE_SHOVEL::stack), "bronze_shovel");
-	public static final FeatureItem<AxeItem> BRONZE_AXE = REGISTRY.item(() -> new HasRemnants.Axe(ToolTier.SURVIVALIST, 5.5f, -3.2f, new Item.Properties(), BROKEN_BRONZE_AXE::stack), "bronze_axe");
-	public static final FeatureItem<SwordItem> BRONZE_SWORD = REGISTRY.item(() -> new HasRemnants.Sword(ToolTier.SURVIVALIST, 3, -2.4f, new Item.Properties(), BROKEN_BRONZE_SWORD::stack), "bronze_sword");
-	public static final FeatureItem<HoeItem> BRONZE_HOE = REGISTRY.item(() -> new HasRemnants.Hoe(ToolTier.SURVIVALIST, -2, -1.0f, new Item.Properties(), BROKEN_BRONZE_HOE::stack), "bronze_hoe");
-	public static final FeatureItem<ItemAssemblyKit> KIT_SHOVEL = REGISTRY.item(() -> new ItemAssemblyKit(BRONZE_SHOVEL::stack), "kit_shovel");
-	public static final FeatureItem<ItemAssemblyKit> KIT_PICKAXE = REGISTRY.item(() -> new ItemAssemblyKit(BRONZE_PICKAXE::stack), "kit_pickaxe");
+	public static final FeatureItem<PickaxeItem> BRONZE_PICKAXE = REGISTRY.item(() -> new HasRemnants.Pickaxe(ToolTier.SURVIVALIST, 1, -2.8f, new Item.Properties(), BROKEN_BRONZE_PICKAXE::stack), "survivalists_pickaxe");
+	public static final FeatureItem<ShovelItem> BRONZE_SHOVEL = REGISTRY.item(() -> new HasRemnants.Shovel(ToolTier.SURVIVALIST, 1.5f, -3.0f, new Item.Properties(), BROKEN_BRONZE_SHOVEL::stack), "survivalists_shovel");
+	public static final FeatureItem<AxeItem> BRONZE_AXE = REGISTRY.item(() -> new HasRemnants.Axe(ToolTier.SURVIVALIST, 5.5f, -3.2f, new Item.Properties(), BROKEN_BRONZE_AXE::stack), "survivalists_axe");
+	public static final FeatureItem<SwordItem> BRONZE_SWORD = REGISTRY.item(() -> new HasRemnants.Sword(ToolTier.SURVIVALIST, 3, -2.4f, new Item.Properties(), BROKEN_BRONZE_SWORD::stack), "survivalists_sword");
+	public static final FeatureItem<HoeItem> BRONZE_HOE = REGISTRY.item(() -> new HasRemnants.Hoe(ToolTier.SURVIVALIST, -2, -1.0f, new Item.Properties(), BROKEN_BRONZE_HOE::stack), "survivalists_hoe");
+	public static final FeatureItem<ItemAssemblyKit> KIT_SHOVEL = REGISTRY.item(() -> new ItemAssemblyKit(BRONZE_SHOVEL::stack), "shovel_kit");
+	public static final FeatureItem<ItemAssemblyKit> KIT_PICKAXE = REGISTRY.item(() -> new ItemAssemblyKit(BRONZE_PICKAXE::stack), "pickaxe_kit");
 	public static final FeatureItem<ItemAssemblyKit> KIT_AXE = REGISTRY.item(() -> new ItemAssemblyKit(BRONZE_AXE::stack), "axe_kit");
 	public static final FeatureItem<ItemAssemblyKit> KIT_SWORD = REGISTRY.item(() -> new ItemAssemblyKit(BRONZE_SWORD::stack), "sword_kit");
 	public static final FeatureItem<ItemAssemblyKit> KIT_HOE = REGISTRY.item(() -> new ItemAssemblyKit(BRONZE_HOE::stack), "hoe_kit");
 
 	/* Machine Parts */
-	public static final FeatureItem<ItemForestry> STURDY_CASING = REGISTRY.item(ItemForestry::new, "sturdy_machine");
-	public static final FeatureItem<ItemForestry> HARDENED_CASING = REGISTRY.item(ItemForestry::new, "hardened_machine");
+	public static final FeatureItem<ItemForestry> STURDY_CASING = REGISTRY.item(ItemForestry::new, "sturdy_casing");
+	public static final FeatureItem<ItemForestry> HARDENED_CASING = REGISTRY.item(ItemForestry::new, "hardened_casing");
 	public static final FeatureItem<ItemForestry> IMPREGNATED_CASING = REGISTRY.item(ItemForestry::new, "impregnated_casing");
 	public static final FeatureItem<ItemForestry> FLEXIBLE_CASING = REGISTRY.item(ItemForestry::new, "flexible_casing");
-	public static final FeatureItem<ItemForestry> GEAR_BRONZE = REGISTRY.item(ItemForestry::new, "gear_bronze");
-	public static final FeatureItem<ItemForestry> GEAR_COPPER = REGISTRY.item(ItemForestry::new, "gear_copper");
-	public static final FeatureItem<ItemForestry> GEAR_TIN = REGISTRY.item(ItemForestry::new, "gear_tin");
+	public static final FeatureItem<ItemForestry> GEAR_BRONZE = REGISTRY.item(ItemForestry::new, "bronze_gear");
+	public static final FeatureItem<ItemForestry> GEAR_COPPER = REGISTRY.item(ItemForestry::new, "copper_gear");
+	public static final FeatureItem<ItemForestry> GEAR_TIN = REGISTRY.item(ItemForestry::new, "tin_gear");
 
 	/* Soldering */
 	public static final FeatureItem<SolderingIronItem> SOLDERING_IRON = REGISTRY.item(SolderingIronItem::new, () -> new Item.Properties()
 		.durability(5)
 		.component(DataComponents.CONTAINER, ItemContainerContents.EMPTY), "soldering_iron");
-	public static final FeatureItemGroup<ItemCircuitBoard, EnumCircuitBoardType> CIRCUITBOARDS = REGISTRY.itemGroup(ItemCircuitBoard::new, "circuit_board", EnumCircuitBoardType.values());
-	public static final FeatureItemGroup<ItemElectronTube, EnumElectronTube> ELECTRON_TUBES = REGISTRY.itemGroup(ItemElectronTube::new, "electron_tube", EnumElectronTube.values());
+	public static final FeatureItemGroup<ItemCircuitBoard, EnumCircuitBoardType> CIRCUITBOARDS = REGISTRY.itemGroup(ItemCircuitBoard::new, EnumCircuitBoardType.values()).identifier("circuit_board", FeatureGroup.IdentifierType.SUFFIX).create();
+	public static final FeatureItemGroup<ItemElectronTube, EnumElectronTube> ELECTRON_TUBES = REGISTRY.itemGroup(ItemElectronTube::new, EnumElectronTube.values()).identifier(type -> switch (type) {
+		case GOLD -> "golden_electron_tube";
+		case DIAMOND -> "diamantine_electron_tube";
+		case APATITE -> "apatine_electron_tube";
+		case BLAZE -> "blazing_electron_tube";
+		default -> type.getSerializedName() + "_electron_tube";
+	}).create();
 
 	/* Armor */
-	public static final FeatureItem<ItemSpectacles> SPECTACLES = REGISTRY.item(ItemSpectacles::new, "naturalist_helmet");
+	public static final FeatureItem<ItemSpectacles> SPECTACLES = REGISTRY.item(ItemSpectacles::new, "spectacles");
 
 	/* Peat */
-	public static final FeatureItem<ItemForestry> PEAT = REGISTRY.item(() -> new ItemForestry(new ItemProperties().burnTime(2000)), "peat");
+	public static final FeatureItem<ItemForestry> PEAT = REGISTRY.item(ItemForestry::new, "peat");
 	public static final FeatureItem<ItemForestry> ASH = REGISTRY.item(ItemForestry::new, "ash");
-	public static final FeatureItem<ItemForestry> BITUMINOUS_PEAT = REGISTRY.item(() -> new ItemForestry(new ItemProperties().burnTime(4200)), "bituminous_peat");
+	public static final FeatureItem<ItemForestry> BITUMINOUS_PEAT = REGISTRY.item(ItemForestry::new, "bituminous_peat");
 
 	/* Moistener */
 	public static final FeatureItem<ItemForestry> MOULDY_WHEAT = REGISTRY.item(ItemForestry::new, "mouldy_wheat");
@@ -107,7 +113,7 @@ public class CoreItems {
 
 	/* Misc */
 	public static final FeatureItemGroup<ItemCraftingMaterial, EnumCraftingMaterial> CRAFTING_MATERIALS = REGISTRY.itemGroup(ItemCraftingMaterial::new, EnumCraftingMaterial.values()).create();
-	public static final FeatureItemGroup<ItemFruit, ItemFruit.EnumFruit> FRUITS = REGISTRY.itemGroup(ItemFruit::new, "fruit", ItemFruit.EnumFruit.values());
+	public static final FeatureItemGroup<ItemFruit, ItemFruit.EnumFruit> FRUITS = REGISTRY.itemGroup(ItemFruit::new, ItemFruit.EnumFruit.values()).identifier(type -> type == ItemFruit.EnumFruit.DATES ? "date" : type.getSerializedName()).create();
 	public static final FeatureItem<ItemBeesWax> BEESWAX = REGISTRY.item(ItemBeesWax::new, "beeswax");
 	public static final FeatureItem<ItemRefractoryWax> REFRACTORY_WAX = REGISTRY.item(ItemRefractoryWax::new, "refractory_wax");
 }

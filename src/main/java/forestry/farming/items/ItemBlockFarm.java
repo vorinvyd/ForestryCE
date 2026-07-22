@@ -24,10 +24,4 @@ public class ItemBlockFarm extends ItemBlockForestry<FarmBlock> {
 			tooltip.add(Component.translatable(TranslationKeys.HOLD_SHIFT_FOR_DETAILS).withStyle(ChatFormatting.GRAY));
 		}
 	}
-
-	@Override
-	public String getDescriptionId() {
-		FarmBlock block = getBlock();
-		return "block.forestry.farm_" + block.getType().getSerializedName();
-	}
 }

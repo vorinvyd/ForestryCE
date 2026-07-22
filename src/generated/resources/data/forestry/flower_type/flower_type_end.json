@@ -1,0 +1,6 @@
+{
+  "type": "forestry:tag_flower_type",
+  "biomes": "minecraft:is_end",
+  "dominant": false,
+  "flowers": "forestry:flowers/end"
+}

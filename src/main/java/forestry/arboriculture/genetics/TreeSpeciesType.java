@@ -3,14 +3,15 @@ package forestry.arboriculture.genetics;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
 import com.mojang.authlib.GameProfile;
-import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
+import forestry.Forestry;
 import forestry.api.IForestryApi;
 import forestry.api.arboriculture.IArboristTracker;
 import forestry.api.arboriculture.ILeafTickHandler;
 import forestry.api.arboriculture.ITreeSpecies;
 import forestry.api.arboriculture.genetics.IFruit;
 import forestry.api.arboriculture.genetics.ITree;
+import forestry.api.arboriculture.genetics.ITreeEffect;
 import forestry.api.arboriculture.genetics.ITreeSpeciesType;
 import forestry.api.core.IProduct;
 import forestry.api.genetics.*;
@@ -57,20 +58,60 @@ public class TreeSpeciesType extends SpeciesType<ITreeSpecies, ITree> implements
 	private final IdentityHashMap<BlockState, ITree> vanillaIndividuals = new IdentityHashMap<>();
 	private final IdentityHashMap<Item, ITree> vanillaItems = new IdentityHashMap<>();
 
+	// Reference-value registries backing the fruits and tree_effect chromosomes.
+	@Nullable
+	private ImmutableMap<ResourceLocation, IFruit> fruits;
+	@Nullable
+	private ImmutableMap<ResourceLocation, ITreeEffect> treeEffects;
+
+	// Code-side per-species block/worldgen bindings, keyed by species id. Captured from the DefaultTreeSpecies builders
+	// at plugin registration (below); merged into runtime TreeSpecies by TreeSpeciesProjector. Never null after
+	// handleSpeciesRegistration. Volatile: written on the registration thread, read from the reload/sync projection path.
+	private volatile ImmutableMap<ResourceLocation, TreeBlockBindings> bindings = ImmutableMap.of();
+
 	public TreeSpeciesType(IKaryotype karyotype, ISpeciesTypeBuilder builder) {
 		super(ForestrySpeciesTypes.TREE, karyotype, builder);
 	}
 
 	@Override
-	public void onSpeciesRegistered(ImmutableMap<ResourceLocation, ITreeSpecies> allSpecies, IMutationManager<ITreeSpecies> mutations) {
-		super.onSpeciesRegistered(allSpecies, mutations);
+	public IFruit getFruit(ResourceLocation id) {
+		return requireValue(this.fruits, id, "fruit");
+	}
 
+	@Nullable
+	public TreeBlockBindings getBindings(ResourceLocation id) {
+		return this.bindings.get(id);
+	}
+
+	@Nullable
+	@Override
+	public IFruit getFruitSafe(ResourceLocation id) {
+		return valueSafe(this.fruits, id);
+	}
+
+	@Override
+	public ITreeEffect getTreeEffect(ResourceLocation id) {
+		return requireValue(this.treeEffects, id, "tree effect");
+	}
+
+	@Override
+	public void onSpeciesRegistered(ImmutableMap<ResourceLocation, ITreeSpecies> allSpecies) {
+		// Base delegates to setSpecies (overridden below), which runs the tree side effects. Kept as an override point.
+		super.onSpeciesRegistered(allSpecies);
+	}
+
+	@Override
+	public void setSpecies(ImmutableMap<ResourceLocation, ITreeSpecies> allSpecies) {
+		super.setSpecies(allSpecies);
+		rebuildVanillaMembership(allSpecies);
+		rebuildLeafTypes(allSpecies);
+	}
+
+	private void rebuildVanillaMembership(ImmutableMap<ResourceLocation, ITreeSpecies> allSpecies) {
 		this.vanillaIndividuals.clear();
 		this.vanillaItems.clear();
-
 		for (ITreeSpecies entry : allSpecies.values()) {
 			ITree defaultIndividual = entry.createIndividual();
-
 			for (BlockState state : entry.getVanillaLeafStates()) {
 				this.vanillaIndividuals.put(state, defaultIndividual);
 			}
@@ -78,33 +119,58 @@ public class TreeSpeciesType extends SpeciesType<ITreeSpecies, ITree> implements
 				this.vanillaItems.put(item, defaultIndividual);
 			}
 		}
+	}
+
+	private void rebuildLeafTypes(ImmutableMap<ResourceLocation, ITreeSpecies> allSpecies) {
+		// Fail-soft fallback for a leaf type whose species a datapack removed: use the default species so
+		// ForestryLeafType#getIndividual() stays non-null whenever any species are loaded (its block-color/name/item
+		// consumers deref it unguarded). Resolved via the map directly (not getDefaultSpecies(), which throws when the
+		// default id itself is absent) so it is null only in the empty-at-setup window, where nothing renders yet.
+		ITreeSpecies fallback = allSpecies.get(getKaryotype().getDefaultSpecies());
 		for (ForestryLeafType type : ForestryLeafType.allValues()) {
 			ITreeSpecies species = allSpecies.get(type.getSpeciesId());
-
+			if (species == null) {
+				species = fallback;
+			}
 			if (species != null) {
 				type.setSpecies(species);
 			} else {
-				throw new IllegalStateException("Invalid ForestryLeafType " + type.getSerializedName() + ": no tree species found with ID: " + type.getSpeciesId());
+				// Empty at setup before the datapack loads (no species at all, not even the default). Warn instead of
+				// throwing and leave the back-ref for the datapack load to populate; nothing renders in this window.
+				Forestry.LOGGER.warn("ForestryLeafType {} has no tree species with id {} and no default to fall back to (not yet loaded)", type.getSerializedName(), type.getSpeciesId());
 			}
 		}
 	}
 
 	@Override
-	public Pair<ImmutableMap<ResourceLocation, ITreeSpecies>, IMutationManager<ITreeSpecies>> handleSpeciesRegistration(List<IForestryPlugin> plugins) {
+	public ImmutableMap<ResourceLocation, ITreeSpecies> handleSpeciesRegistration(List<IForestryPlugin> plugins) {
 		ArboricultureRegistration registration = new ArboricultureRegistration(this);
 
 		for (IForestryPlugin plugin : plugins) {
 			plugin.registerArboriculture(registration);
 		}
 
-		// populate tree registry chromosomes
-		TreeChromosomes.EFFECT.populate(registration.getEffects());
-		TreeChromosomes.FRUIT.populate(registration.getFruits());
+		// store the reference-value registries backing the fruits and tree_effect chromosomes
+		this.treeEffects = registration.getEffects();
+		this.fruits = registration.getFruits();
+
+		// capture the code-side block/worldgen bindings from the registered builders
+		ImmutableMap.Builder<ResourceLocation, TreeBlockBindings> bindings = ImmutableMap.builder();
+		registration.forEachSpeciesBuilder((id, builder) -> bindings.put(id, new TreeBlockBindings(
+			builder.getGenerator(),
+			builder.getVanillaLeafStates(),
+			builder.getVanillaSaplingItems(),
+			builder.getDecorativeLeaves()
+		)));
+		this.bindings = bindings.build();
 
 		// initialize tree manager
 		((ForestryApiImpl) IForestryApi.INSTANCE).setTreeManager(registration.buildTreeManager());
 
-		return registration.buildAll();
+		// Tree species are no longer built at setup; they come exclusively from the tree_species datapack loader. The
+		// companion reference registries (fruits/effects), the TreeManager, and the block/worldgen bindings above are
+		// still captured here so projection can resolve them.
+		return ImmutableMap.of();
 	}
 
 	@Override
@@ -248,7 +314,7 @@ public class TreeSpeciesType extends SpeciesType<ITreeSpecies, ITree> implements
 		if (stack.isEmpty()) {
 			return 0f;
 		}
-		IFruit fruit = species.getDefaultGenome().getActiveValue(TreeChromosomes.FRUIT);
+		IFruit fruit = species.getDefaultGenome().resolveActive(TreeChromosomes.FRUIT);
 		for (IProduct product : Iterables.concat(fruit.getProducts(), fruit.getSpecialty())) {
 			if (stack.is(product.item())) {
 				return 1f;

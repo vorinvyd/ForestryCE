@@ -1,6 +1,5 @@
 package forestry.api.genetics;
 
-import forestry.api.genetics.alleles.IAllele;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
@@ -53,7 +52,7 @@ public interface IBreedingTracker {
 	boolean isDiscovered(ISpecies<?> species);
 
 	/**
-	 * @return A collection that contains the {@link IAllele#alleleId()}s of all discovered species.
+	 * @return A collection that contains the IDs of all discovered species.
 	 */
 	Collection<ResourceLocation> getDiscoveredSpecies();
 

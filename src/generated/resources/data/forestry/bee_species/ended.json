@@ -1,0 +1,14 @@
+{
+  "body": 14278302,
+  "genus": "finapis",
+  "humidity": "arid",
+  "outline": 14711290,
+  "products": [
+    {
+      "chance": 0.3,
+      "item": "forestry:mysterious_comb"
+    }
+  ],
+  "species": "mikui",
+  "temperature": "cold"
+}

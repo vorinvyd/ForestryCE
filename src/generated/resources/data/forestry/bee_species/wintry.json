@@ -1,0 +1,26 @@
+{
+  "body": 14349811,
+  "genome": {
+    "forestry:fertility": {
+      "value": 4
+    },
+    "forestry:lifespan": {
+      "dominant": true,
+      "value": 30
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.6
+    }
+  },
+  "genus": "coagapis",
+  "outline": 10551240,
+  "products": [
+    {
+      "chance": 0.3,
+      "item": "forestry:frozen_comb"
+    }
+  ],
+  "species": "brumalis",
+  "temperature": "icy"
+}

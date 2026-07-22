@@ -1,0 +1,28 @@
+{
+  "body": 14349811,
+  "genome": {
+    "forestry:lifespan": {
+      "dominant": true,
+      "value": 30
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.6
+    }
+  },
+  "genus": "coagapis",
+  "glint": true,
+  "outline": 15728639,
+  "products": [
+    {
+      "chance": 0.2,
+      "item": "forestry:frozen_comb"
+    },
+    {
+      "chance": 0.4,
+      "item": "forestry:ice_shard"
+    }
+  ],
+  "species": "glacialis",
+  "temperature": "icy"
+}

@@ -4,8 +4,8 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.authlib.GameProfile;
 import forestry.api.climate.IClimateProvider;
 import forestry.api.genetics.*;
+import forestry.api.genetics.alleles.Allele;
 import forestry.api.genetics.alleles.AllelePair;
-import forestry.api.genetics.alleles.IAllele;
 import forestry.api.genetics.alleles.IChromosome;
 import forestry.api.genetics.alleles.IKaryotype;
 import forestry.core.genetics.ItemResearchNote;
@@ -28,7 +28,7 @@ public class Mutation<S extends ISpecies<?>> implements IMutation<S> {
 	private final ImmutableList<AllelePair<?>> resultAlleles;
 	private final boolean secret;
 
-	public Mutation(ISpeciesType<S, ?> type, S firstParent, S secondParent, S result, Map<IChromosome<?>, IAllele> resultAlleles, float chance, List<IMutationCondition> conditions) {
+	public Mutation(ISpeciesType<S, ?> type, S firstParent, S secondParent, S result, Map<IChromosome<?>, Allele<?>> resultAlleles, float chance, List<IMutationCondition> conditions) {
 		this.type = type;
 		this.chance = chance;
 		this.conditions = conditions;
@@ -44,14 +44,14 @@ public class Mutation<S extends ISpecies<?>> implements IMutation<S> {
 		this.secret = result.isSecret() || firstParent.isSecret() || secondParent.isSecret();
 	}
 
-	private static ImmutableList<AllelePair<?>> buildResultAlleles(IKaryotype karyotype, IGenome defaultGenome, Map<IChromosome<?>, IAllele> resultAlleles) {
+	private static ImmutableList<AllelePair<?>> buildResultAlleles(IKaryotype karyotype, IGenome defaultGenome, Map<IChromosome<?>, Allele<?>> resultAlleles) {
 		if (resultAlleles.isEmpty()) {
 			return defaultGenome.getAllelePairs();
 		}
 		ImmutableList.Builder<AllelePair<?>> newAlleles = ImmutableList.builderWithExpectedSize(karyotype.size());
 
 		for (IChromosome<?> chromosome : karyotype.getChromosomes()) {
-			IAllele customAllele = resultAlleles.get(chromosome);
+			Allele<?> customAllele = resultAlleles.get(chromosome);
 			if (customAllele != null) {
 				newAlleles.add(AllelePair.both(customAllele));
 			} else {

@@ -1,0 +1,25 @@
+{
+  "dominant": true,
+  "escritoire_color": 10670666,
+  "genome": {
+    "forestry:girth": {
+      "value": 2
+    },
+    "forestry:height": {
+      "value": 1.25
+    },
+    "forestry:maturation": {
+      "dominant": true,
+      "value": 5
+    },
+    "forestry:saplings": {
+      "dominant": true,
+      "value": 0.025
+    }
+  },
+  "genus": "microberlinia",
+  "humidity": "damp",
+  "rarity": 5.0E-4,
+  "species": "brazzavillensis",
+  "temperature": "warm"
+}

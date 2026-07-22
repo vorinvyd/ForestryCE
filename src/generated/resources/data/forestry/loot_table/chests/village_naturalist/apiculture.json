@@ -27,7 +27,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "forestry:smoker"
+          "name": "forestry:bee_smoker"
         }
       ],
       "name": "forestry_apiculture_items",
@@ -41,11 +41,11 @@
           "functions": [
             {
               "function": "forestry:set_species_nbt",
-              "species_id": "forestry:bee_common",
+              "species_id": "forestry:common",
               "type_id": "forestry:bee_species"
             }
           ],
-          "name": "forestry:bee_drone_ge",
+          "name": "forestry:drone_bee",
           "weight": 6
         },
         {
@@ -53,11 +53,11 @@
           "functions": [
             {
               "function": "forestry:set_species_nbt",
-              "species_id": "forestry:bee_meadows",
+              "species_id": "forestry:meadows",
               "type_id": "forestry:bee_species"
             }
           ],
-          "name": "forestry:bee_drone_ge",
+          "name": "forestry:drone_bee",
           "weight": 6
         },
         {

@@ -1,0 +1,15 @@
+{
+  "dominant": true,
+  "genome": {
+    "forestry:metabolism": {
+      "value": 5
+    },
+    "forestry:size": {
+      "value": 0.6
+    }
+  },
+  "genus": "myscelia",
+  "rarity": 0.3,
+  "serum_color": 3838924,
+  "species": "ethusa"
+}

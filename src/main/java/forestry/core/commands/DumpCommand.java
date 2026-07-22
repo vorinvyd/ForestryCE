@@ -35,6 +35,7 @@ import net.minecraft.world.level.biome.Biome;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
+import forestry.core.utils.GeneticsUtil;
 
 // Used to dump currently registered Forestry data
 public class DumpCommand {
@@ -159,19 +160,19 @@ public class DumpCommand {
 
 				Forestry.LOGGER.debug("PROPERTIES OF BEE SPECIES {}:", species.id());
 				Forestry.LOGGER.debug("  Primary Stats:");
-				Forestry.LOGGER.debug("    Lifespan: {}", defaultGenome.getActiveName(BeeChromosomes.LIFESPAN).getString());
-				Forestry.LOGGER.debug("    Production: {}", defaultGenome.getActiveName(BeeChromosomes.SPEED).getString());
-				Forestry.LOGGER.debug("    Pollination: {}", defaultGenome.getActiveName(BeeChromosomes.POLLINATION).getString());
-				Forestry.LOGGER.debug("    Fertility: {}", defaultGenome.getActiveName(BeeChromosomes.FERTILITY).getString());
-				Forestry.LOGGER.debug("    Territory: {}", defaultGenome.getActiveName(BeeChromosomes.TERRITORY).getString());
-				Forestry.LOGGER.debug("    Effect: {}", defaultGenome.getActiveName(BeeChromosomes.EFFECT).getString());
+				Forestry.LOGGER.debug("    Lifespan: {}", GeneticsUtil.getActiveName(defaultGenome, BeeChromosomes.LIFESPAN).getString());
+				Forestry.LOGGER.debug("    Production: {}", GeneticsUtil.getActiveName(defaultGenome, BeeChromosomes.SPEED).getString());
+				Forestry.LOGGER.debug("    Pollination: {}", GeneticsUtil.getActiveName(defaultGenome, BeeChromosomes.POLLINATION).getString());
+				Forestry.LOGGER.debug("    Fertility: {}", GeneticsUtil.getActiveName(defaultGenome, BeeChromosomes.FERTILITY).getString());
+				Forestry.LOGGER.debug("    Territory: {}", GeneticsUtil.getActiveName(defaultGenome, BeeChromosomes.TERRITORY).getString());
+				Forestry.LOGGER.debug("    Effect: {}", GeneticsUtil.getActiveName(defaultGenome, BeeChromosomes.EFFECT).getString());
 				Forestry.LOGGER.debug("  Secondary Stats:");
-				Forestry.LOGGER.debug("    Temperature: {}, {}", temperature, defaultGenome.getActiveName(BeeChromosomes.TEMPERATURE_TOLERANCE).getString());
-				Forestry.LOGGER.debug("    Humidity: {}, {}", humidity, defaultGenome.getActiveName(BeeChromosomes.HUMIDITY_TOLERANCE).getString());
-				Forestry.LOGGER.debug("    Activity: {}", defaultGenome.getActiveName(BeeChromosomes.ACTIVITY));
-				Forestry.LOGGER.debug("    Tolerant flyer: {}", defaultGenome.getActiveName(BeeChromosomes.TOLERATES_RAIN).getString());
-				Forestry.LOGGER.debug("    Cave-dwelling: {}", defaultGenome.getActiveName(BeeChromosomes.CAVE_DWELLING).getString());
-				Forestry.LOGGER.debug("    Flower Type: {}", defaultGenome.getActiveName(BeeChromosomes.FLOWER_TYPE).getString());
+				Forestry.LOGGER.debug("    Temperature: {}, {}", temperature, GeneticsUtil.getActiveName(defaultGenome, BeeChromosomes.TEMPERATURE_TOLERANCE).getString());
+				Forestry.LOGGER.debug("    Humidity: {}, {}", humidity, GeneticsUtil.getActiveName(defaultGenome, BeeChromosomes.HUMIDITY_TOLERANCE).getString());
+				Forestry.LOGGER.debug("    Activity: {}", GeneticsUtil.getActiveName(defaultGenome, BeeChromosomes.ACTIVITY));
+				Forestry.LOGGER.debug("    Tolerant flyer: {}", GeneticsUtil.getActiveName(defaultGenome, BeeChromosomes.TOLERATES_RAIN).getString());
+				Forestry.LOGGER.debug("    Cave-dwelling: {}", GeneticsUtil.getActiveName(defaultGenome, BeeChromosomes.CAVE_DWELLING).getString());
+				Forestry.LOGGER.debug("    Flower Type: {}", GeneticsUtil.getActiveName(defaultGenome, BeeChromosomes.FLOWER_TYPE).getString());
 
 				List<ResourceLocation> suitableBiomes = new ArrayList<>();
 				ToleranceType temperatureTolerance = defaultGenome.getActiveValue(BeeChromosomes.TEMPERATURE_TOLERANCE);
@@ -210,7 +211,7 @@ public class DumpCommand {
 			Forestry.LOGGER.debug("ISpeciesType \"{}\" has {} chromosomes:", speciesType.id(), chromosomes.size());
 
 			for (IChromosome<?> chromosome : chromosomes) {
-				Forestry.LOGGER.debug("  {} - {} -> \"{}\"", chromosome.id(), chromosome.getChromosomeTranslationKey(), chromosome.getChromosomeDisplayName().getString());
+				Forestry.LOGGER.debug("  {} - {} -> \"{}\"", chromosome.id(), chromosome.chromosomeTranslationKey(), GeneticsUtil.getChromosomeName(chromosome).getString());
 			}
 		}
 

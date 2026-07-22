@@ -1,0 +1,34 @@
+{
+  "authority": "MysteriousAges",
+  "body": 16769095,
+  "dominant": true,
+  "genome": {
+    "forestry:bee_effect": {
+      "value": "forestry:bee_effect_fertile"
+    },
+    "forestry:humidity_tolerance": {
+      "value": "BOTH_2"
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.8
+    },
+    "forestry:territory": {
+      "value": [
+        11,
+        8,
+        11
+      ]
+    }
+  },
+  "genus": "rustapis",
+  "glint": true,
+  "outline": 16763509,
+  "products": [
+    {
+      "chance": 0.35,
+      "item": "forestry:wheaten_comb"
+    }
+  ],
+  "species": "agrarius"
+}

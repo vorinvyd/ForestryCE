@@ -1,0 +1,28 @@
+{
+  "authority": "EnderiumSmith",
+  "body": 10101539,
+  "dominant": true,
+  "genome": {
+    "forestry:bee_effect": {
+      "value": "forestry:bee_effect_aggressive"
+    },
+    "forestry:speed": {
+      "value": 1.0
+    }
+  },
+  "genus": "irata",
+  "humidity": "arid",
+  "outline": 8995652,
+  "products": [
+    {
+      "chance": 0.45,
+      "item": "forestry:simmering_comb"
+    },
+    {
+      "chance": 0.15,
+      "item": "forestry:phosphor"
+    }
+  ],
+  "species": "irata",
+  "temperature": "hellish"
+}

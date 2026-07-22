@@ -21,8 +21,8 @@ public class BeeSpeciesBuilder extends SpeciesBuilder<IBeeSpeciesType, IBeeSpeci
 	private int outlineColor = -1;
 	private IBeeJubilance jubilance = DefaultBeeJubilance.INSTANCE;
 
-	public BeeSpeciesBuilder(ResourceLocation id, String genus, String species, MutationsRegistration mutations) {
-		super(id, genus, species, mutations);
+	public BeeSpeciesBuilder(ResourceLocation id, String genus, String species) {
+		super(id, genus, species);
 	}
 
 	@Override

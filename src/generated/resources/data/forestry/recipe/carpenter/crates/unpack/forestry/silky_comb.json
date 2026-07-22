@@ -1,0 +1,18 @@
+{
+  "type": "forestry:carpenter",
+  "box": [],
+  "id": "forestry:carpenter/crates/unpack/forestry/silky_comb",
+  "recipe": {
+    "category": "misc",
+    "ingredients": [
+      {
+        "item": "forestry:crated_silky_comb"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "forestry:silky_comb"
+    }
+  },
+  "time": 5
+}

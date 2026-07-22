@@ -1,17 +1,17 @@
 {
-  "icon": "forestry:gear_bronze",
+  "icon": "forestry:bronze_gear",
   "name": "for.gui.book.patchouli.entry.core.gears",
   "category": "forestry:core",
   "pages": [
     {
       "type": "crafting",
-      "recipe": "forestry:gear_bronze",
+      "recipe": "forestry:bronze_gear",
       "text": "for.gui.book.patchouli.entry.core.gears1"
     },
     {
       "type": "crafting",
-      "recipe": "forestry:gear_copper",
-      "recipe2": "forestry:gear_tin"
+      "recipe": "forestry:copper_gear",
+      "recipe2": "forestry:tin_gear"
     }
   ]
 }

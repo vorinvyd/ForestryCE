@@ -1,0 +1,22 @@
+{
+  "dominant": true,
+  "escritoire_color": 5876736,
+  "genome": {
+    "forestry:height": {
+      "value": 1.25
+    },
+    "forestry:saplings": {
+      "dominant": true,
+      "value": 0.1
+    },
+    "forestry:sappiness": {
+      "dominant": true,
+      "value": 0.2
+    }
+  },
+  "genus": "ochroma",
+  "humidity": "damp",
+  "rarity": 5.0E-4,
+  "species": "pyramidale",
+  "temperature": "warm"
+}

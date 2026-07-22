@@ -1,0 +1,22 @@
+{
+  "authority": "Nedelosk",
+  "genome": {
+    "forestry:cocoon": {
+      "value": "forestry:cocoon_silk"
+    },
+    "forestry:metabolism": {
+      "value": 3
+    },
+    "forestry:size": {
+      "value": 0.3
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.6
+    }
+  },
+  "genus": "bombyx",
+  "rarity": 0.1,
+  "serum_color": 14342874,
+  "species": "mori"
+}

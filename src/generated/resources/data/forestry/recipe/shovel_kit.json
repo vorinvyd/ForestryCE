@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "forestry:survivalists_shovel"
+    },
+    {
+      "item": "forestry:carton"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "forestry:shovel_kit"
+  }
+}

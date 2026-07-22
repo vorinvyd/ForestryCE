@@ -1,33 +1,29 @@
 package forestry.plugin;
 
-import forestry.api.ForestryTags;
 import forestry.api.apiculture.ForestryBeeSpecies;
 import forestry.api.core.HumidityType;
 import forestry.api.core.TemperatureType;
 import forestry.api.genetics.alleles.BeeChromosomes;
 import forestry.api.genetics.alleles.ForestryAlleles;
 import forestry.api.plugin.IApicultureRegistration;
-import forestry.apiculture.CaveMutationCondition;
 import forestry.apiculture.features.ApicultureItems;
 import forestry.apiculture.genetics.FireworkProduct;
 import forestry.apiculture.genetics.HermitBeeJubilance;
 import forestry.apiculture.items.EnumHoneyComb;
 import forestry.apiculture.items.EnumPollenCluster;
 import forestry.core.features.CoreItems;
-import forestry.core.genetics.mutations.MutationConditionCave;
 import forestry.core.items.definitions.EnumCraftingMaterial;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.neoforged.neoforge.common.Tags;
-
-import java.time.Month;
 
 import static forestry.api.genetics.ForestryTaxa.*;
 import static forestry.apiculture.features.ApicultureItems.BEE_COMBS;
 import static forestry.apiculture.features.ApicultureItems.POLLEN_CLUSTER;
+import forestry.api.apiculture.ForestryActivityTypes;
+import forestry.api.apiculture.ForestryBeeEffects;
+import forestry.api.apiculture.ForestryFlowerTypes;
 
 public class DefaultBeeSpecies {
 	@SuppressWarnings("CodeBlock2Expr")
@@ -56,14 +52,6 @@ public class DefaultBeeSpecies {
 			.addProduct(BEE_COMBS.stack(EnumHoneyComb.HONEY), 0.35f)
 			.setGenome(genome -> {
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_SLOWER);
-			})
-			.addMutations(mutations -> {
-				for (int i = 0; i < overworldHiveBees.length; i++) {
-					ResourceLocation firstParent = overworldHiveBees[i];
-					for (int j = i + 1; j < overworldHiveBees.length; j++) {
-						mutations.add(firstParent, overworldHiveBees[j], 15);
-					}
-				}
 			});
 
 		// Cultivated
@@ -72,11 +60,6 @@ public class DefaultBeeSpecies {
 			.setGenome(genome -> {
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_FAST);
 				genome.set(BeeChromosomes.LIFESPAN, ForestryAlleles.LIFESPAN_SHORTEST);
-			})
-			.addMutations(mutations -> {
-				for (ResourceLocation secondParent : overworldHiveBees) {
-					mutations.add(ForestryBeeSpecies.COMMON, secondParent, 12);
-				}
 			});
 
 		// Noble
@@ -86,9 +69,6 @@ public class DefaultBeeSpecies {
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_SLOWER);
 				genome.set(BeeChromosomes.LIFESPAN, ForestryAlleles.LIFESPAN_SHORT);
 				genome.set(BeeChromosomes.POLLINATION, ForestryAlleles.POLLINATION_SLOW);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.COMMON, ForestryBeeSpecies.CULTIVATED, 10);
 			});
 
 		// Majestic
@@ -98,9 +78,6 @@ public class DefaultBeeSpecies {
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_NORMAL);
 				genome.set(BeeChromosomes.LIFESPAN, ForestryAlleles.LIFESPAN_SHORTENED);
 				genome.set(BeeChromosomes.FERTILITY, ForestryAlleles.FERTILITY_4);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.NOBLE, ForestryBeeSpecies.CULTIVATED, 8);
 			});
 
 		// Imperial
@@ -110,10 +87,7 @@ public class DefaultBeeSpecies {
 			.setGenome(genome -> {
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_SLOWER);
 				genome.set(BeeChromosomes.LIFESPAN, ForestryAlleles.LIFESPAN_NORMAL);
-				genome.set(BeeChromosomes.EFFECT, ForestryAlleles.EFFECT_BEATIFIC);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.NOBLE, ForestryBeeSpecies.MAJESTIC, 8);
+				genome.set(BeeChromosomes.EFFECT, ForestryBeeEffects.BEATIFIC);
 			})
 			.setGlint(true);
 
@@ -124,9 +98,6 @@ public class DefaultBeeSpecies {
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_SLOWER);
 				genome.set(BeeChromosomes.LIFESPAN, ForestryAlleles.LIFESPAN_SHORT);
 				genome.set(BeeChromosomes.POLLINATION, ForestryAlleles.POLLINATION_SLOW);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.COMMON, ForestryBeeSpecies.CULTIVATED, 10);
 			});
 		// Unweary
 		apiculture.registerSpecies(ForestryBeeSpecies.UNWEARY, GENUS_INDUSTRIOUS, SPECIES_UNWEARY, true, TextColor.fromRgb(0x19ec5a))
@@ -134,9 +105,6 @@ public class DefaultBeeSpecies {
 			.setGenome(genome -> {
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_NORMAL);
 				genome.set(BeeChromosomes.LIFESPAN, ForestryAlleles.LIFESPAN_SHORTENED);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.DILIGENT, ForestryBeeSpecies.CULTIVATED, 8);
 			});
 
 		// Industrious
@@ -147,9 +115,6 @@ public class DefaultBeeSpecies {
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_SLOWER);
 				genome.set(BeeChromosomes.LIFESPAN, ForestryAlleles.LIFESPAN_NORMAL);
 				genome.set(BeeChromosomes.POLLINATION, ForestryAlleles.POLLINATION_FAST);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.DILIGENT, ForestryBeeSpecies.UNWEARY, 8);
 			})
 			.setGlint(true);
 
@@ -163,15 +128,7 @@ public class DefaultBeeSpecies {
 			.setGenome(genome -> {
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_SLOWER);
 				genome.set(BeeChromosomes.LIFESPAN, ForestryAlleles.LIFESPAN_NORMAL);
-				genome.set(BeeChromosomes.EFFECT, ForestryAlleles.EFFECT_AGGRESSIVE);
-			})
-			.addMutations(mutations -> {
-				ResourceLocation[] parents = new ResourceLocation[]{ForestryBeeSpecies.MODEST, ForestryBeeSpecies.TROPICAL};
-
-				for (ResourceLocation parent : parents) {
-					mutations.add(ForestryBeeSpecies.CULTIVATED, parent, 60)
-						.restrictBiomeType(BiomeTags.IS_NETHER);
-				}
+				genome.set(BeeChromosomes.EFFECT, ForestryBeeEffects.AGGRESSIVE);
 			});
 
 		// Fiendish
@@ -184,15 +141,7 @@ public class DefaultBeeSpecies {
 			.setGenome(genome -> {
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_NORMAL);
 				genome.set(BeeChromosomes.LIFESPAN, ForestryAlleles.LIFESPAN_LONG);
-				genome.set(BeeChromosomes.EFFECT, ForestryAlleles.EFFECT_AGGRESSIVE);
-			})
-			.addMutations(mutations -> {
-				ResourceLocation[] parents = new ResourceLocation[]{ForestryBeeSpecies.CULTIVATED, ForestryBeeSpecies.MODEST, ForestryBeeSpecies.TROPICAL};
-
-				for (ResourceLocation parent : parents) {
-					mutations.add(ForestryBeeSpecies.SINISTER, parent, 40)
-						.restrictBiomeType(BiomeTags.IS_NETHER);
-				}
+				genome.set(BeeChromosomes.EFFECT, ForestryBeeEffects.AGGRESSIVE);
 			});
 
 		// Demonic
@@ -205,11 +154,7 @@ public class DefaultBeeSpecies {
 			.setGenome(genome -> {
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_SLOWER);
 				genome.set(BeeChromosomes.LIFESPAN, ForestryAlleles.LIFESPAN_LONGER);
-				genome.set(BeeChromosomes.EFFECT, ForestryAlleles.EFFECT_IGNITION);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.SINISTER, ForestryBeeSpecies.FIENDISH, 25)
-					.restrictBiomeType(BiomeTags.IS_NETHER);
+				genome.set(BeeChromosomes.EFFECT, ForestryBeeEffects.IGNITION);
 			})
 			.setGlint(true);
 
@@ -231,14 +176,6 @@ public class DefaultBeeSpecies {
 			.setGenome(genome -> {
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_NORMAL);
 				genome.set(BeeChromosomes.LIFESPAN, ForestryAlleles.LIFESPAN_LONG);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.MODEST, ForestryBeeSpecies.SINISTER, 16)
-					.restrictTemperature(TemperatureType.HOT, TemperatureType.HELLISH)
-					.restrictHumidity(HumidityType.ARID);
-				mutations.add(ForestryBeeSpecies.MODEST, ForestryBeeSpecies.FIENDISH, 10)
-					.restrictTemperature(TemperatureType.HOT, TemperatureType.HELLISH)
-					.restrictHumidity(HumidityType.ARID);
 			});
 
 		// Austere
@@ -251,12 +188,7 @@ public class DefaultBeeSpecies {
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_SLOWEST);
 				genome.set(BeeChromosomes.LIFESPAN, ForestryAlleles.LIFESPAN_LONGER);
 				genome.set(BeeChromosomes.TEMPERATURE_TOLERANCE, ForestryAlleles.TOLERANCE_DOWN_2);
-				genome.set(BeeChromosomes.EFFECT, ForestryAlleles.EFFECT_CREEPER);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.MODEST, ForestryBeeSpecies.FRUGAL, 8)
-					.restrictTemperature(TemperatureType.HOT, TemperatureType.HELLISH)
-					.restrictHumidity(HumidityType.ARID);
+				genome.set(BeeChromosomes.EFFECT, ForestryBeeEffects.CREEPER);
 			})
 			.setGlint(true);
 
@@ -278,9 +210,6 @@ public class DefaultBeeSpecies {
 			.setGenome(genome -> {
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_NORMAL);
 				genome.set(BeeChromosomes.LIFESPAN, ForestryAlleles.LIFESPAN_LONG);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.AUSTERE, ForestryBeeSpecies.TROPICAL, 12);
 			});
 
 		// Edenic
@@ -292,10 +221,7 @@ public class DefaultBeeSpecies {
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_SLOWEST);
 				genome.set(BeeChromosomes.LIFESPAN, ForestryAlleles.LIFESPAN_LONGER);
 				genome.set(BeeChromosomes.TEMPERATURE_TOLERANCE, ForestryAlleles.TOLERANCE_BOTH_2);
-				genome.set(BeeChromosomes.EFFECT, ForestryAlleles.EFFECT_EXPLORATION);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.EXOTIC, ForestryBeeSpecies.TROPICAL, 8);
+				genome.set(BeeChromosomes.EFFECT, ForestryBeeEffects.EXPLORATION);
 			})
 			.setGlint(true);
 
@@ -311,9 +237,6 @@ public class DefaultBeeSpecies {
 			.addSpecialty(BEE_COMBS.stack(EnumHoneyComb.MELLOW), 0.20f)
 			.setGenome(genome -> {
 				genome.set(BeeChromosomes.POLLINATION, ForestryAlleles.POLLINATION_FASTEST);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.MONASTIC, ForestryBeeSpecies.AUSTERE, 12);
 			});
 
 		// Hermitic
@@ -322,10 +245,7 @@ public class DefaultBeeSpecies {
 			.addSpecialty(BEE_COMBS.stack(EnumHoneyComb.MELLOW), 0.20f)
 			.setGenome(genome -> {
 				genome.set(BeeChromosomes.POLLINATION, ForestryAlleles.POLLINATION_FASTEST);
-				genome.set(BeeChromosomes.EFFECT, ForestryAlleles.EFFECT_REPULSION);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.MONASTIC, ForestryBeeSpecies.SECLUDED, 8);
+				genome.set(BeeChromosomes.EFFECT, ForestryBeeEffects.REPULSION);
 			})
 			.setGlint(true);
 
@@ -337,7 +257,7 @@ public class DefaultBeeSpecies {
 			.addProduct(BEE_COMBS.stack(EnumHoneyComb.MYSTERIOUS), 0.20f)
 			.addSpecialty(new ItemStack(Items.SHULKER_SHELL), 0.015F)
 			.setGenome(genome -> {
-				genome.set(BeeChromosomes.EFFECT, ForestryAlleles.EFFECT_ASCENSION);
+				genome.set(BeeChromosomes.EFFECT, ForestryBeeEffects.ASCENSION);
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_SLOW);
 			})
 			.setAuthority("EnderiumSmith");
@@ -356,10 +276,7 @@ public class DefaultBeeSpecies {
 			.setHumidity(HumidityType.ARID)
 			.addProduct(BEE_COMBS.stack(EnumHoneyComb.MYSTERIOUS), 0.50f)
 			.setGenome(genome -> {
-				genome.set(BeeChromosomes.EFFECT, ForestryAlleles.EFFECT_REANIMATION);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.HERMITIC, ForestryBeeSpecies.ENDED, 4);
+				genome.set(BeeChromosomes.EFFECT, ForestryBeeEffects.REANIMATION);
 			});
 
 		// Phantasmal
@@ -371,10 +288,7 @@ public class DefaultBeeSpecies {
 			.setGenome(genome -> {
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_SLOWEST);
 				genome.set(BeeChromosomes.LIFESPAN, ForestryAlleles.LIFESPAN_LONGEST);
-				genome.set(BeeChromosomes.EFFECT, ForestryAlleles.EFFECT_RESURRECTION);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.SPECTRAL, ForestryBeeSpecies.ENDED, 2);
+				genome.set(BeeChromosomes.EFFECT, ForestryBeeEffects.RESURRECTION);
 			})
 			.setGlint(true);
 
@@ -398,10 +312,6 @@ public class DefaultBeeSpecies {
 			.setGenome(genome -> {
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_SLOW);
 				genome.set(BeeChromosomes.LIFESPAN, ForestryAlleles.LIFESPAN_SHORT);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.INDUSTRIOUS, ForestryBeeSpecies.WINTRY, 12)
-					.restrictTemperature(TemperatureType.ICY, TemperatureType.COLD);
 			});
 
 		// Glacial
@@ -413,10 +323,6 @@ public class DefaultBeeSpecies {
 			.setGenome(genome -> {
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_SLOWER);
 				genome.set(BeeChromosomes.LIFESPAN, ForestryAlleles.LIFESPAN_SHORT);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.ICY, ForestryBeeSpecies.WINTRY, 8)
-					.restrictTemperature(TemperatureType.ICY, TemperatureType.COLD);
 			})
 			.setGlint(true);
 
@@ -432,12 +338,7 @@ public class DefaultBeeSpecies {
 			.setGenome(genome -> {
 				genome.set(BeeChromosomes.FERTILITY, ForestryAlleles.FERTILITY_4);
 				genome.set(BeeChromosomes.TOLERATES_RAIN, true);
-				genome.set(BeeChromosomes.ACTIVITY, ForestryAlleles.ACTIVITY_METATURNAL);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.MARSHY, ForestryBeeSpecies.NOBLE, 15)
-					.restrictTemperature(TemperatureType.WARM)
-					.restrictHumidity(HumidityType.DAMP);
+				genome.set(BeeChromosomes.ACTIVITY, ForestryActivityTypes.METATURNAL);
 			})
 			.setAuthority("MysteriousAges");
 
@@ -448,14 +349,9 @@ public class DefaultBeeSpecies {
 			.addSpecialty(CoreItems.PEAT.stack(), 0.08f)
 			.setGenome(genome -> {
 				genome.set(BeeChromosomes.TOLERATES_RAIN, true);
-				genome.set(BeeChromosomes.ACTIVITY, ForestryAlleles.ACTIVITY_METATURNAL);
-				genome.set(BeeChromosomes.EFFECT, ForestryAlleles.EFFECT_MYCOPHILIC);
+				genome.set(BeeChromosomes.ACTIVITY, ForestryActivityTypes.METATURNAL);
+				genome.set(BeeChromosomes.EFFECT, ForestryBeeEffects.MYCOPHILIC);
 				genome.set(BeeChromosomes.TERRITORY, ForestryAlleles.TERRITORY_LARGER);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.MARSHY, ForestryBeeSpecies.MIRY, 9)
-					.restrictTemperature(TemperatureType.WARM)
-					.restrictHumidity(HumidityType.DAMP);
 			})
 			.setAuthority("MysteriousAges");
 
@@ -482,12 +378,7 @@ public class DefaultBeeSpecies {
 				genome.set(BeeChromosomes.LIFESPAN, ForestryAlleles.LIFESPAN_SHORT);
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_SLOW);
 				genome.set(BeeChromosomes.TERRITORY, ForestryAlleles.TERRITORY_LARGE);
-				genome.set(BeeChromosomes.EFFECT, ForestryAlleles.EFFECT_SIFTER);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.SAVANNA, ForestryBeeSpecies.DILIGENT, 15)
-					.restrictTemperature(TemperatureType.WARM, TemperatureType.HOT)
-					.restrictHumidity(HumidityType.ARID);
+				genome.set(BeeChromosomes.EFFECT, ForestryBeeEffects.SIFTER);
 			})
 			.setAuthority("EnderiumSmith");
 
@@ -501,11 +392,7 @@ public class DefaultBeeSpecies {
 				genome.set(BeeChromosomes.LIFESPAN, ForestryAlleles.LIFESPAN_SHORTENED);
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_SLOWER);
 				genome.set(BeeChromosomes.TERRITORY, ForestryAlleles.TERRITORY_LARGER);
-				genome.set(BeeChromosomes.EFFECT, ForestryAlleles.EFFECT_HAKUNA_MATATA);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.SAVANNA, ForestryBeeSpecies.ARGIL, 9)
-					.restrictBiomeType(ForestryTags.Biomes.SHATTERED_SAVANNA);
+				genome.set(BeeChromosomes.EFFECT, ForestryBeeEffects.HAKUNA_MATATA);
 			})
 			.setGlint(true)
 			.setAuthority("EnderiumSmith");
@@ -518,9 +405,6 @@ public class DefaultBeeSpecies {
 			.setGenome(genome -> {
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_SLOWER);
 				genome.set(BeeChromosomes.LIFESPAN, ForestryAlleles.LIFESPAN_NORMAL);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.SAVANNA, ForestryBeeSpecies.COMMON, 12);
 			});
 
 		// Vengeful
@@ -531,9 +415,6 @@ public class DefaultBeeSpecies {
 			.setGenome(genome -> {
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_NORMAL);
 				genome.set(BeeChromosomes.LIFESPAN, ForestryAlleles.LIFESPAN_LONGER);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.VINDICTIVE, ForestryBeeSpecies.CULTIVATED, 8);
 			});
 
 		// Avenging
@@ -544,10 +425,7 @@ public class DefaultBeeSpecies {
 			.setGenome(genome -> {
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_SLOWEST);
 				genome.set(BeeChromosomes.LIFESPAN, ForestryAlleles.LIFESPAN_LONGEST);
-				genome.set(BeeChromosomes.EFFECT, ForestryAlleles.EFFECT_RADIOACTIVE);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.VINDICTIVE, ForestryBeeSpecies.VENGEFUL, 4);
+				genome.set(BeeChromosomes.EFFECT, ForestryBeeEffects.RADIOACTIVE);
 			})
 			.setGlint(true);
 
@@ -577,11 +455,7 @@ public class DefaultBeeSpecies {
 			.setGenome(genome -> {
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_SLOW);
 				genome.set(BeeChromosomes.LIFESPAN, ForestryAlleles.LIFESPAN_LONG);
-				genome.set(BeeChromosomes.EFFECT, ForestryAlleles.EFFECT_HEROIC);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.STEADFAST, ForestryBeeSpecies.VALIANT, 6)
-					.restrictBiomeType(BiomeTags.IS_FOREST);
+				genome.set(BeeChromosomes.EFFECT, ForestryBeeEffects.HEROIC);
 			})
 			.setGlint(true);
 
@@ -608,9 +482,6 @@ public class DefaultBeeSpecies {
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_SLOW);
 				genome.set(BeeChromosomes.POLLINATION, ForestryAlleles.POLLINATION_SLOWER);
 			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.LUSH, ForestryBeeSpecies.VALIANT, 10).addMutationCondition(new MutationConditionCave());
-			})
 			.setAuthority("EnderiumSmith");
 
 		// LUXURIANT
@@ -622,10 +493,7 @@ public class DefaultBeeSpecies {
 				genome.set(BeeChromosomes.LIFESPAN, ForestryAlleles.LIFESPAN_LONG);
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_SLOWEST);
 				genome.set(BeeChromosomes.POLLINATION, ForestryAlleles.POLLINATION_FAST);
-				genome.set(BeeChromosomes.EFFECT, ForestryAlleles.EFFECT_GLOW_BERRY_GROW);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.LUSH, ForestryBeeSpecies.VERDANT, 8).addMutationCondition(new MutationConditionCave());
+				genome.set(BeeChromosomes.EFFECT, ForestryBeeEffects.GLOW_BERRY_GROW);
 			})
 			.setAuthority("EnderiumSmith")
 			.setGlint(true);
@@ -638,9 +506,6 @@ public class DefaultBeeSpecies {
 				genome.set(BeeChromosomes.LIFESPAN, ForestryAlleles.LIFESPAN_LONGER);
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_NORMAL);
 			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.LUXURIANT, ForestryBeeSpecies.MONASTIC, 12);
-			})
 			.setAuthority("EnderiumSmith");
 
 		// PHOTOSYNTHETIC
@@ -650,10 +515,6 @@ public class DefaultBeeSpecies {
 			.setGenome(genome -> {
 				genome.set(BeeChromosomes.LIFESPAN, ForestryAlleles.LIFESPAN_LONGER);
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_FAST);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.KLEPTOPLASTIC, ForestryBeeSpecies.LUXURIANT, 8);
-				mutations.add(ForestryBeeSpecies.KLEPTOPLASTIC, ForestryBeeSpecies.MONASTIC, 8);
 			})
 			.setAuthority("EnderiumSmith");
 
@@ -665,9 +526,6 @@ public class DefaultBeeSpecies {
 				genome.set(BeeChromosomes.LIFESPAN, ForestryAlleles.LIFESPAN_LONGEST);
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_FASTER);
 			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.KLEPTOPLASTIC, ForestryBeeSpecies.PHOTOSYNTHETIC, 4);
-			})
 			.setGlint(true)
 			.setAuthority("EnderiumSmith");
 
@@ -678,9 +536,9 @@ public class DefaultBeeSpecies {
 			.setGenome(genome -> {
 				genome.set(BeeChromosomes.LIFESPAN, ForestryAlleles.LIFESPAN_SHORTEST);
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_SLOW);
-				genome.set(BeeChromosomes.FLOWER_TYPE, ForestryAlleles.FLOWER_TYPE_CORAL);
+				genome.set(BeeChromosomes.FLOWER_TYPE, ForestryFlowerTypes.CORAL);
 				genome.set(BeeChromosomes.FERTILITY, ForestryAlleles.FERTILITY_4);
-				genome.set(BeeChromosomes.EFFECT, ForestryAlleles.EFFECT_MIASMIC);
+				genome.set(BeeChromosomes.EFFECT, ForestryBeeEffects.MIASMIC);
 			})
 			.setAuthority("EnderiumSmith");
 
@@ -693,10 +551,10 @@ public class DefaultBeeSpecies {
 			.setGenome(genome -> {
 				genome.set(BeeChromosomes.LIFESPAN, ForestryAlleles.LIFESPAN_SHORTER);
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_SLOWER);
-				genome.set(BeeChromosomes.FLOWER_TYPE, ForestryAlleles.FLOWER_TYPE_SEA);
+				genome.set(BeeChromosomes.FLOWER_TYPE, ForestryFlowerTypes.SEA);
 				genome.set(BeeChromosomes.FERTILITY, ForestryAlleles.FERTILITY_2);
 				genome.set(BeeChromosomes.TEMPERATURE_TOLERANCE, ForestryAlleles.TOLERANCE_BOTH_1);
-				genome.set(BeeChromosomes.ACTIVITY, ForestryAlleles.ACTIVITY_CATHEMERAL);
+				genome.set(BeeChromosomes.ACTIVITY, ForestryActivityTypes.CATHEMERAL);
 			})
 			.setAuthority("EnderiumSmith");
 
@@ -709,13 +567,10 @@ public class DefaultBeeSpecies {
 			.setGenome(genome -> {
 				genome.set(BeeChromosomes.LIFESPAN, ForestryAlleles.LIFESPAN_SHORT);
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_SLOWER);
-				genome.set(BeeChromosomes.FLOWER_TYPE, ForestryAlleles.FLOWER_TYPE_CORAL);
+				genome.set(BeeChromosomes.FLOWER_TYPE, ForestryFlowerTypes.CORAL);
 				genome.set(BeeChromosomes.FERTILITY, ForestryAlleles.FERTILITY_2);
-				genome.set(BeeChromosomes.EFFECT, ForestryAlleles.EFFECT_GUARDIAN);
+				genome.set(BeeChromosomes.EFFECT, ForestryBeeEffects.GUARDIAN);
 				genome.set(BeeChromosomes.TEMPERATURE_TOLERANCE, ForestryAlleles.TOLERANCE_DOWN_1);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.AQUATIC, ForestryBeeSpecies.PIRATE, 8);
 			})
 			.setGlint(true)
 			.setAuthority("EnderiumSmith");
@@ -728,17 +583,11 @@ public class DefaultBeeSpecies {
 			.setGenome(genome -> {
 				genome.set(BeeChromosomes.LIFESPAN, ForestryAlleles.LIFESPAN_LONGER);
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_SLOWEST);
-				genome.set(BeeChromosomes.FLOWER_TYPE, ForestryAlleles.FLOWER_TYPE_SEA);
+				genome.set(BeeChromosomes.FLOWER_TYPE, ForestryFlowerTypes.SEA);
 				genome.set(BeeChromosomes.FERTILITY, ForestryAlleles.FERTILITY_1);
-				genome.set(BeeChromosomes.EFFECT, ForestryAlleles.EFFECT_DARKNESS);
-				genome.set(BeeChromosomes.ACTIVITY, ForestryAlleles.ACTIVITY_NOCTURNAL);
+				genome.set(BeeChromosomes.EFFECT, ForestryBeeEffects.DARKNESS);
+				genome.set(BeeChromosomes.ACTIVITY, ForestryActivityTypes.NOCTURNAL);
 				genome.set(BeeChromosomes.CAVE_DWELLING, ForestryAlleles.TRUE);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.PIRATE, ForestryBeeSpecies.ENDED, 40).addMutationCondition(new CaveMutationCondition());
-				mutations.add(ForestryBeeSpecies.AQUATIC, ForestryBeeSpecies.ENDED, 40).addMutationCondition(new CaveMutationCondition());
-				mutations.add(ForestryBeeSpecies.PIRATE, ForestryBeeSpecies.SHULKING, 60).addMutationCondition(new CaveMutationCondition());
-				mutations.add(ForestryBeeSpecies.AQUATIC, ForestryBeeSpecies.SHULKING, 60).addMutationCondition(new CaveMutationCondition());
 			})
 			.setGlint(true)
 			.setAuthority("EnderiumSmith");
@@ -752,7 +601,7 @@ public class DefaultBeeSpecies {
 			.addProduct(CoreItems.CRAFTING_MATERIALS.stack(EnumCraftingMaterial.PHOSPHOR), 0.15F)
 			.setGenome(genome -> {
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_NORMAL);
-				genome.set(BeeChromosomes.EFFECT, ForestryAlleles.EFFECT_AGGRESSIVE);
+				genome.set(BeeChromosomes.EFFECT, ForestryBeeEffects.AGGRESSIVE);
 			})
 			.setAuthority("EnderiumSmith");
 
@@ -765,10 +614,7 @@ public class DefaultBeeSpecies {
 			.addSpecialty(POLLEN_CLUSTER.stack(EnumPollenCluster.NORMAL), 0.05F)
 			.setGenome(genome -> {
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_FAST);
-				genome.set(BeeChromosomes.EFFECT, ForestryAlleles.EFFECT_AGGRESSIVE);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.EMBITTERED, ForestryBeeSpecies.FIENDISH, 12);
+				genome.set(BeeChromosomes.EFFECT, ForestryBeeEffects.AGGRESSIVE);
 			})
 			.setAuthority("EnderiumSmith");
 
@@ -781,10 +627,7 @@ public class DefaultBeeSpecies {
 			.addProduct(new ItemStack(Items.BLAZE_POWDER), 0.15F)
 			.setGenome(genome -> {
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_NORMAL);
-				genome.set(BeeChromosomes.EFFECT, ForestryAlleles.EFFECT_IGNITION);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.SPITEFUL, ForestryBeeSpecies.EMBITTERED, 8);
+				genome.set(BeeChromosomes.EFFECT, ForestryBeeEffects.IGNITION);
 			})
 			.setGlint(true)
 			.setAuthority("EnderiumSmith");
@@ -799,13 +642,7 @@ public class DefaultBeeSpecies {
 			.setGenome(genome -> {
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_SLOW);
 				genome.set(BeeChromosomes.LIFESPAN, ForestryAlleles.LIFESPAN_ELONGATED);
-				genome.set(BeeChromosomes.EFFECT, ForestryAlleles.EFFECT_PHASING);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.EMBITTERED, ForestryBeeSpecies.ENDED, 40).restrictBiomeType(ForestryTags.Biomes.WARPED_FOREST);
-				mutations.add(ForestryBeeSpecies.SPITEFUL, ForestryBeeSpecies.ENDED, 40).restrictBiomeType(ForestryTags.Biomes.WARPED_FOREST);
-				mutations.add(ForestryBeeSpecies.EMBITTERED, ForestryBeeSpecies.SHULKING, 40).restrictBiomeType(ForestryTags.Biomes.WARPED_FOREST);
-				mutations.add(ForestryBeeSpecies.SPITEFUL, ForestryBeeSpecies.SHULKING, 40).restrictBiomeType(ForestryTags.Biomes.WARPED_FOREST);
+				genome.set(BeeChromosomes.EFFECT, ForestryBeeEffects.PHASING);
 			})
 			.setAuthority("EnderiumSmith");
 
@@ -820,11 +657,11 @@ public class DefaultBeeSpecies {
 				genome.set(BeeChromosomes.LIFESPAN, ForestryAlleles.LIFESPAN_IMMORTAL);
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_NORMAL);
 				genome.set(BeeChromosomes.POLLINATION, ForestryAlleles.POLLINATION_SLOWEST);
-				genome.set(BeeChromosomes.FLOWER_TYPE, ForestryAlleles.FLOWER_TYPE_NETHER);
+				genome.set(BeeChromosomes.FLOWER_TYPE, ForestryFlowerTypes.NETHER);
 				genome.set(BeeChromosomes.FERTILITY, ForestryAlleles.FERTILITY_1);
 				genome.set(BeeChromosomes.TEMPERATURE_TOLERANCE, ForestryAlleles.TOLERANCE_DOWN_3);
 				genome.set(BeeChromosomes.HUMIDITY_TOLERANCE, ForestryAlleles.TOLERANCE_UP_1);
-				genome.set(BeeChromosomes.ACTIVITY, ForestryAlleles.ACTIVITY_METATURNAL);
+				genome.set(BeeChromosomes.ACTIVITY, ForestryActivityTypes.METATURNAL);
 				genome.set(BeeChromosomes.CAVE_DWELLING, ForestryAlleles.TRUE);
 			})
 			.setAuthority("EnderiumSmith");
@@ -838,27 +675,20 @@ public class DefaultBeeSpecies {
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_NORMAL);
 				genome.set(BeeChromosomes.POLLINATION, ForestryAlleles.POLLINATION_SLOWEST);
 				genome.set(BeeChromosomes.FERTILITY, ForestryAlleles.FERTILITY_1);
-				genome.set(BeeChromosomes.FLOWER_TYPE, ForestryAlleles.FLOWER_TYPE_SCULK);
-				genome.set(BeeChromosomes.EFFECT, ForestryAlleles.EFFECT_SCULK);
+				genome.set(BeeChromosomes.FLOWER_TYPE, ForestryFlowerTypes.SCULK);
+				genome.set(BeeChromosomes.EFFECT, ForestryBeeEffects.SCULK);
 				genome.set(BeeChromosomes.TERRITORY, ForestryAlleles.TERRITORY_LARGER);
 				genome.set(BeeChromosomes.TEMPERATURE_TOLERANCE, ForestryAlleles.TOLERANCE_BOTH_1);
 				genome.set(BeeChromosomes.HUMIDITY_TOLERANCE, ForestryAlleles.TOLERANCE_BOTH_1);
-				genome.set(BeeChromosomes.ACTIVITY, ForestryAlleles.ACTIVITY_METATURNAL);
+				genome.set(BeeChromosomes.ACTIVITY, ForestryActivityTypes.METATURNAL);
 				genome.set(BeeChromosomes.CAVE_DWELLING, ForestryAlleles.TRUE);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.ABYSSAL, ForestryBeeSpecies.HERMITIC, 6).restrictBiomeType(ForestryTags.Biomes.DEEP_DARK);
 			})
 			.setGlint(true)
 			.setAuthority("EnderiumSmith");
 
 		// Rural
 		apiculture.registerSpecies(ForestryBeeSpecies.RURAL, GENUS_AGRARIAN, SPECIES_RURAL, false, TextColor.fromRgb(0xfeff8f))
-			.addProduct(BEE_COMBS.stack(EnumHoneyComb.WHEATEN), 0.20f)
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.MEADOWS, ForestryBeeSpecies.DILIGENT, 12)
-					.restrictBiomeType(Tags.Biomes.IS_PLAINS);
-			});
+			.addProduct(BEE_COMBS.stack(EnumHoneyComb.WHEATEN), 0.20f);
 
 		// Farmerly
 		apiculture.registerSpecies(ForestryBeeSpecies.FARMERLY, GENUS_AGRARIAN, SPECIES_FARMERLY, true, TextColor.fromRgb(0xD39728))
@@ -866,10 +696,6 @@ public class DefaultBeeSpecies {
 			.setGenome(genome -> {
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_SLOW);
 				genome.set(BeeChromosomes.TERRITORY, ForestryAlleles.TERRITORY_LARGE);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.RURAL, ForestryBeeSpecies.UNWEARY, 10)
-					.restrictBiomeType(Tags.Biomes.IS_PLAINS);
 			})
 			.setAuthority("MysteriousAges");
 
@@ -880,12 +706,8 @@ public class DefaultBeeSpecies {
 			.setGenome(genome -> {
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_SLOW);
 				genome.set(BeeChromosomes.HUMIDITY_TOLERANCE, ForestryAlleles.TOLERANCE_BOTH_2);
-				genome.set(BeeChromosomes.EFFECT, ForestryAlleles.EFFECT_FERTILE);
+				genome.set(BeeChromosomes.EFFECT, ForestryBeeEffects.FERTILE);
 				genome.set(BeeChromosomes.TERRITORY, ForestryAlleles.TERRITORY_LARGE);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.FARMERLY, ForestryBeeSpecies.INDUSTRIOUS, 6)
-					.restrictBiomeType(Tags.Biomes.IS_PLAINS);
 			})
 			.setGlint(true)
 			.setAuthority("MysteriousAges");
@@ -900,9 +722,6 @@ public class DefaultBeeSpecies {
 				genome.set(BeeChromosomes.POLLINATION, ForestryAlleles.POLLINATION_AVERAGE);
 				genome.set(BeeChromosomes.FERTILITY, ForestryAlleles.FERTILITY_2);
 			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.ANACHRONE, ForestryBeeSpecies.STEADFAST, 15);
-			})
 			.setAuthority("EnderiumSmith");
 
 		// ANACHRONE
@@ -914,10 +733,7 @@ public class DefaultBeeSpecies {
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_SLOWEST);
 				genome.set(BeeChromosomes.POLLINATION, ForestryAlleles.POLLINATION_SLOWEST);
 				genome.set(BeeChromosomes.FERTILITY, ForestryAlleles.FERTILITY_1);
-				genome.set(BeeChromosomes.EFFECT, ForestryAlleles.EFFECT_CHRONOPHAGE);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.RELIC, ForestryBeeSpecies.STEADFAST, 10);
+				genome.set(BeeChromosomes.EFFECT, ForestryBeeEffects.CHRONOPHAGE);
 			})
 			.setGlint(true)
 			.setAuthority("EnderiumSmith");
@@ -932,7 +748,7 @@ public class DefaultBeeSpecies {
 				genome.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_SLOWEST);
 				genome.set(BeeChromosomes.POLLINATION, ForestryAlleles.POLLINATION_SLOWEST);
 				genome.set(BeeChromosomes.FERTILITY, ForestryAlleles.FERTILITY_1);
-				genome.set(BeeChromosomes.EFFECT, ForestryAlleles.EFFECT_REJUVENATION);
+				genome.set(BeeChromosomes.EFFECT, ForestryBeeEffects.REJUVENATION);
 			})
 			.setGlint(true)
 			.setAuthority("EnderiumSmith");
@@ -957,11 +773,7 @@ public class DefaultBeeSpecies {
 			.addProduct(BEE_COMBS.stack(EnumHoneyComb.SILKY), 0.30f)
 			.addProduct(new ItemStack(Items.EGG), 0.10F)
 			.setGenome(genome -> {
-				genome.set(BeeChromosomes.EFFECT, ForestryAlleles.EFFECT_EASTER);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.MEADOWS, ForestryBeeSpecies.FOREST, 10)
-					.restrictDateRange(Month.MARCH, 29, Month.APRIL, 15);
+				genome.set(BeeChromosomes.EFFECT, ForestryBeeEffects.EASTER);
 			})
 			.setGlint(true)
 			.setSecret(true);
@@ -973,12 +785,8 @@ public class DefaultBeeSpecies {
 			.addProduct(BEE_COMBS.stack(EnumHoneyComb.FROZEN), 0.30f)
 			.addProduct(CoreItems.CRAFTING_MATERIALS.stack(EnumCraftingMaterial.ICE_SHARD), 0.20f)
 			.setGenome(genome -> {
-				genome.set(BeeChromosomes.ACTIVITY, ForestryAlleles.ACTIVITY_METATURNAL);
-				genome.set(BeeChromosomes.EFFECT, ForestryAlleles.EFFECT_SNOWING);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.WINTRY, ForestryBeeSpecies.FOREST, 10)
-					.restrictDateRange(Month.DECEMBER, 21, Month.DECEMBER, 27);
+				genome.set(BeeChromosomes.ACTIVITY, ForestryActivityTypes.METATURNAL);
+				genome.set(BeeChromosomes.EFFECT, ForestryBeeEffects.SNOWING);
 			})
 			.setGlint(true)
 			.setSecret(true);
@@ -990,12 +798,8 @@ public class DefaultBeeSpecies {
 			.addProduct(BEE_COMBS.stack(EnumHoneyComb.FROZEN), 0.30f)
 			.addProduct(CoreItems.CRAFTING_MATERIALS.stack(EnumCraftingMaterial.ICE_SHARD), 0.20f)
 			.setGenome(genome -> {
-				genome.set(BeeChromosomes.ACTIVITY, ForestryAlleles.ACTIVITY_METATURNAL);
-				genome.set(BeeChromosomes.EFFECT, ForestryAlleles.EFFECT_DRUNKARD);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.WINTRY, ForestryBeeSpecies.MEADOWS, 10)
-					.restrictDateRange(Month.DECEMBER, 27, Month.JANUARY, 2);
+				genome.set(BeeChromosomes.ACTIVITY, ForestryActivityTypes.METATURNAL);
+				genome.set(BeeChromosomes.EFFECT, ForestryBeeEffects.DRUNKARD);
 			})
 			.setGlint(true)
 			.setSecret(true);
@@ -1012,13 +816,9 @@ public class DefaultBeeSpecies {
 			.addSpecialty(new ItemStack(Items.CREEPER_HEAD), 0.02f)
 			.addSpecialty(new ItemStack(Items.PLAYER_HEAD), 0.02f)
 			.setGenome(genome -> {
-				genome.set(BeeChromosomes.ACTIVITY, ForestryAlleles.ACTIVITY_METATURNAL);
+				genome.set(BeeChromosomes.ACTIVITY, ForestryActivityTypes.METATURNAL);
 				genome.set(BeeChromosomes.TOLERATES_RAIN, true);
-				genome.set(BeeChromosomes.FLOWER_TYPE, ForestryAlleles.FLOWER_TYPE_GOURD);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.SINISTER, ForestryBeeSpecies.COMMON, 10)
-					.restrictDateRange(Month.OCTOBER, 15, Month.NOVEMBER, 3);
+				genome.set(BeeChromosomes.FLOWER_TYPE, ForestryFlowerTypes.GOURD);
 			})
 			.setGlint(true)
 			.setSecret(true);
@@ -1038,13 +838,9 @@ public class DefaultBeeSpecies {
 				genome.set(BeeChromosomes.TEMPERATURE_TOLERANCE, ForestryAlleles.TOLERANCE_UP_2);
 				genome.set(BeeChromosomes.HUMIDITY_TOLERANCE, ForestryAlleles.TOLERANCE_UP_1);
 				genome.set(BeeChromosomes.TERRITORY, ForestryAlleles.TERRITORY_LARGEST);
-				genome.set(BeeChromosomes.ACTIVITY, ForestryAlleles.ACTIVITY_METATURNAL);
+				genome.set(BeeChromosomes.ACTIVITY, ForestryActivityTypes.METATURNAL);
 				// todo fireworks on 4th of July effect
 				//genome.set(BeeChromosomes.EFFECT, ForestryAlleles.EFFECT_PATRIOTIC);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryBeeSpecies.RURAL, ForestryBeeSpecies.NOBLE, 15)
-					.restrictDateRange(Month.JULY, 1, Month.JULY, 17);
 			})
 			.setAuthority("TheDarkColour")
 			.setSecret(true);

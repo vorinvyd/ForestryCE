@@ -1,0 +1,25 @@
+{
+  "dominant": true,
+  "escritoire_color": 9089364,
+  "genome": {
+    "forestry:girth": {
+      "value": 2
+    },
+    "forestry:height": {
+      "value": 1.25
+    },
+    "forestry:maturation": {
+      "dominant": true,
+      "value": 5
+    },
+    "forestry:sappiness": {
+      "dominant": true,
+      "value": 0.3
+    }
+  },
+  "genus": "swietenia",
+  "humidity": "damp",
+  "rarity": 5.0E-4,
+  "species": "macrophylla",
+  "temperature": "warm"
+}

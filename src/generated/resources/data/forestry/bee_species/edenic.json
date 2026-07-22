@@ -1,0 +1,29 @@
+{
+  "genome": {
+    "forestry:bee_effect": {
+      "value": "forestry:bee_effect_exploration"
+    },
+    "forestry:lifespan": {
+      "value": 60
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.3
+    },
+    "forestry:temperature_tolerance": {
+      "value": "BOTH_2"
+    }
+  },
+  "genus": "caldapis",
+  "glint": true,
+  "humidity": "damp",
+  "outline": 3751181,
+  "products": [
+    {
+      "chance": 0.2,
+      "item": "forestry:silky_comb"
+    }
+  ],
+  "species": "humboldti",
+  "temperature": "warm"
+}

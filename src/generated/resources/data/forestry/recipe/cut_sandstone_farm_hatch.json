@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:cut_sandstone"
+    },
+    "D": {
+      "tag": "minecraft:wooden_trapdoors"
+    },
+    "T": {
+      "tag": "c:gears/tin"
+    }
+  },
+  "pattern": [
+    " # ",
+    "TDT"
+  ],
+  "result": {
+    "count": 1,
+    "id": "forestry:cut_sandstone_farm_hatch"
+  }
+}

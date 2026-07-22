@@ -2,7 +2,7 @@
   "type": "forestry:centrifuge",
   "id": "forestry:centrifuge/simmering_comb",
   "input": {
-    "item": "forestry:bee_comb_simmering"
+    "item": "forestry:simmering_comb"
   },
   "products": [
     {

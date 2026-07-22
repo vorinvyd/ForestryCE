@@ -10,7 +10,7 @@
     "category": "misc",
     "key": {
       "#": {
-        "tag": "forge:ingots/tin"
+        "tag": "c:ingots/tin"
       },
       "P": {
         "item": "minecraft:paper"

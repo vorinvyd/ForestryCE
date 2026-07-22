@@ -113,4 +113,21 @@ public interface IBeeModifier {
 	default boolean isHellish() {
 		return false;
 	}
+
+	/**
+	 * @return Whether this hive provides its bees' required flowers on its own, so the queen can work even when no
+	 * matching flowers exist nearby. Used by the creative frame to make an apiary function in any environment.
+	 */
+	default boolean providesFlowers() {
+		return false;
+	}
+
+	/**
+	 * @return Whether this hive fully satisfies its bees' temperature and humidity requirements regardless of the actual
+	 * climate, so the queen never suffers a too-cold/too-hot/too-arid/too-humid error. Used by the creative frame to make
+	 * an apiary function in any biome.
+	 */
+	default boolean isClimateFullyTolerant() {
+		return false;
+	}
 }

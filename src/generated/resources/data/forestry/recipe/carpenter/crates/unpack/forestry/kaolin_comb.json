@@ -1,0 +1,18 @@
+{
+  "type": "forestry:carpenter",
+  "box": [],
+  "id": "forestry:carpenter/crates/unpack/forestry/kaolin_comb",
+  "recipe": {
+    "category": "misc",
+    "ingredients": [
+      {
+        "item": "forestry:crated_kaolin_comb"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "forestry:kaolin_comb"
+    }
+  },
+  "time": 5
+}

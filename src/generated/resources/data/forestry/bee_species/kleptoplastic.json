@@ -1,0 +1,21 @@
+{
+  "authority": "EnderiumSmith",
+  "body": 6613382,
+  "genome": {
+    "forestry:lifespan": {
+      "value": 60
+    },
+    "forestry:speed": {
+      "value": 1.0
+    }
+  },
+  "genus": "phytapis",
+  "outline": 16763271,
+  "products": [
+    {
+      "chance": 0.3,
+      "item": "forestry:honey_comb"
+    }
+  ],
+  "species": "vitaraptor"
+}

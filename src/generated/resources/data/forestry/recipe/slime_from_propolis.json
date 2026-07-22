@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "#": {
-      "item": "forestry:propolis_normal"
+      "item": "forestry:propolis"
     },
     "X": {
-      "item": "forestry:pollen_cluster_normal"
+      "item": "forestry:pollen_cluster"
     }
   },
   "pattern": [

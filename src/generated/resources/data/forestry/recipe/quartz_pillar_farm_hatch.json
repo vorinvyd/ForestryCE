@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:quartz_pillar"
+    },
+    "D": {
+      "tag": "minecraft:wooden_trapdoors"
+    },
+    "T": {
+      "tag": "c:gears/tin"
+    }
+  },
+  "pattern": [
+    " # ",
+    "TDT"
+  ],
+  "result": {
+    "count": 1,
+    "id": "forestry:quartz_pillar_farm_hatch"
+  }
+}

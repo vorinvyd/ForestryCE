@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "forestry:block/camelthorn_planks",
+    "side": "forestry:block/camelthorn_planks",
+    "top": "forestry:block/camelthorn_planks"
+  }
+}

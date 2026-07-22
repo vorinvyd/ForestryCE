@@ -1,7 +1,6 @@
 package forestry.api.apiculture;
 
 import forestry.api.genetics.IIndividual;
-import forestry.api.genetics.alleles.IRegistryAlleleValue;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -9,7 +8,12 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
 
-public interface IFlowerType extends IRegistryAlleleValue {
+public interface IFlowerType {
+	/**
+	 * @return Whether the allele for this value is dominant or recessive.
+	 */
+	boolean isDominant();
+
 	/**
 	 * Checks if the flower at the specified position is accepted by this rule.
 	 */
@@ -31,5 +35,14 @@ public interface IFlowerType extends IRegistryAlleleValue {
 	 */
 	default List<ItemStack> affectProducts(Level level, BlockPos pos, IIndividual individual, List<ItemStack> products) {
 		return products;
+	}
+
+	/**
+	 * @return The serializer for this flower type, used to encode it for datapacks/network. Only serializable
+	 * (datapack-backed or synced) flower types override this; purely code-registered types that hold behaviour
+	 * as lambdas (e.g. KubeJS) are never serialized and keep the throwing default.
+	 */
+	default FlowerTypeType<?> type() {
+		throw new UnsupportedOperationException(getClass().getName() + " is not a serializable flower type");
 	}
 }

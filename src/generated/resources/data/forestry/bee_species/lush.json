@@ -1,0 +1,27 @@
+{
+  "authority": "EnderiumSmith",
+  "dominant": true,
+  "genome": {
+    "forestry:lifespan": {
+      "value": 40
+    },
+    "forestry:pollination": {
+      "value": 10
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.3
+    }
+  },
+  "genus": "troglobites",
+  "humidity": "damp",
+  "outline": 7377453,
+  "products": [
+    {
+      "chance": 0.35,
+      "item": "forestry:honey_comb"
+    }
+  ],
+  "species": "atvatabari",
+  "temperature": "warm"
+}

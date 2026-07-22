@@ -1,0 +1,30 @@
+{
+  "authority": "EnderiumSmith",
+  "body": 14278302,
+  "genome": {
+    "forestry:bee_effect": {
+      "value": "forestry:bee_effect_ascension"
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.8
+    }
+  },
+  "genus": "finapis",
+  "humidity": "arid",
+  "outline": 9006452,
+  "products": [
+    {
+      "chance": 0.2,
+      "item": "forestry:mysterious_comb"
+    }
+  ],
+  "specialties": [
+    {
+      "chance": 0.015,
+      "item": "minecraft:shulker_shell"
+    }
+  ],
+  "species": "shurukui",
+  "temperature": "cold"
+}

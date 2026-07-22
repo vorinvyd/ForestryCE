@@ -1,12 +1,9 @@
 package forestry.arboriculture.tiles;
 
-import forestry.api.IForestryApi;
 import forestry.api.arboriculture.genetics.IFruit;
 import forestry.api.core.IProduct;
 import forestry.api.genetics.IFruitBearer;
 import forestry.api.genetics.IGenome;
-import forestry.api.genetics.alleles.ForestryAlleles;
-import forestry.api.genetics.alleles.IValueAllele;
 import forestry.api.genetics.alleles.TreeChromosomes;
 import forestry.arboriculture.features.ArboricultureTiles;
 import forestry.core.ClientsideCode;
@@ -29,6 +26,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import forestry.api.arboriculture.ForestryFruits;
 
 public class TileFruitPod extends BlockEntity implements IFruitBearer, IStreamable {
 	private static final short MAX_MATURITY = 2;
@@ -41,6 +39,10 @@ public class TileFruitPod extends BlockEntity implements IFruitBearer, IStreamab
 	private IGenome genome = defaultGenome;
 	@Nullable
 	private IFruit fruit = null;
+	// The id of the fruit reference value, tracked alongside the resolved object for serialization
+	// (IFruit has no id() of its own, and reference chromosomes store the id, not the object).
+	@Nullable
+	private ResourceLocation fruitId = null;
 	private short maturity;
 	private float yield;
 
@@ -51,6 +53,7 @@ public class TileFruitPod extends BlockEntity implements IFruitBearer, IStreamab
 	public void setProperties(IGenome genome, IFruit allele, float yield) {
 		this.genome = genome;
 		this.fruit = allele;
+		this.fruitId = genome.getActiveValue(TreeChromosomes.FRUIT);
 		this.yield = yield;
 		setChanged();
 	}
@@ -60,7 +63,7 @@ public class TileFruitPod extends BlockEntity implements IFruitBearer, IStreamab
 	public void writeData(RegistryFriendlyByteBuf data) {
 		if (this.fruit != null) {
 			data.writeBoolean(true);
-			data.writeResourceLocation(TreeChromosomes.FRUIT.getId(this.fruit));
+			data.writeResourceLocation(this.fruitId);
 		} else {
 			data.writeBoolean(false);
 		}
@@ -69,10 +72,11 @@ public class TileFruitPod extends BlockEntity implements IFruitBearer, IStreamab
 	@Override
 	public void readData(RegistryFriendlyByteBuf data) {
 		if (data.readBoolean()) {
-			IValueAllele<?> stored = IForestryApi.INSTANCE.getAlleleManager().getAllele(data.readResourceLocation()).cast();
-
-			if (stored.value() instanceof IFruit newFruit) {
-				this.fruit = newFruit;
+			ResourceLocation fruitId = data.readResourceLocation();
+			IFruit fruit = SpeciesUtil.TREE_TYPE.get().getFruitSafe(fruitId);
+			if (fruit != null) {
+				this.fruit = fruit;
+				this.fruitId = fruitId;
 				ClientsideCode.markForUpdate(this.worldPosition);
 			}
 		}
@@ -82,7 +86,7 @@ public class TileFruitPod extends BlockEntity implements IFruitBearer, IStreamab
 	public void saveAdditional(CompoundTag compoundNBT, HolderLookup.Provider registries) {
 		super.saveAdditional(compoundNBT, registries);
 		if (this.fruit != null) {
-			compoundNBT.putString(NBT_FRUIT, TreeChromosomes.FRUIT.getId(this.fruit).toString());
+			compoundNBT.putString(NBT_FRUIT, this.fruitId.toString());
 		}
 		compoundNBT.putShort(NBT_MATURITY, this.maturity);
 		compoundNBT.putFloat(NBT_YIELD, this.yield);
@@ -94,10 +98,13 @@ public class TileFruitPod extends BlockEntity implements IFruitBearer, IStreamab
 
 		String fruitNbt = nbt.getString(NBT_FRUIT);
 		if (!fruitNbt.isEmpty()) {
-			this.fruit = TreeChromosomes.FRUIT.getSafe(ResourceLocation.parse(fruitNbt));
+			this.fruitId = ResourceLocation.parse(fruitNbt);
+			// Nullable lookup so an unregistered/stale id gracefully falls back to cocoa instead of crashing on load.
+			this.fruit = SpeciesUtil.TREE_TYPE.get().getFruitSafe(this.fruitId);
 		}
 		if (this.fruit == null) {
-			this.fruit = ForestryAlleles.FRUIT_COCOA.value();
+			this.fruitId = ForestryFruits.COCOA;
+			this.fruit = SpeciesUtil.TREE_TYPE.get().getFruit(ForestryFruits.COCOA);
 		}
 
 		this.maturity = nbt.getShort(NBT_MATURITY);

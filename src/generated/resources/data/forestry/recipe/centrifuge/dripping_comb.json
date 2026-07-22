@@ -2,7 +2,7 @@
   "type": "forestry:centrifuge",
   "id": "forestry:centrifuge/dripping_comb",
   "input": {
-    "item": "forestry:bee_comb_dripping"
+    "item": "forestry:dripping_comb"
   },
   "products": [
     {

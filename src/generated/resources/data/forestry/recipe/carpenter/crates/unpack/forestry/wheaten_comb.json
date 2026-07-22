@@ -1,0 +1,18 @@
+{
+  "type": "forestry:carpenter",
+  "box": [],
+  "id": "forestry:carpenter/crates/unpack/forestry/wheaten_comb",
+  "recipe": {
+    "category": "misc",
+    "ingredients": [
+      {
+        "item": "forestry:crated_wheaten_comb"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "forestry:wheaten_comb"
+    }
+  },
+  "time": 5
+}

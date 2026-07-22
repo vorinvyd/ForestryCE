@@ -1,0 +1,13 @@
+{
+  "dominant": true,
+  "genome": {
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.6
+    }
+  },
+  "genus": "polygonia",
+  "rarity": 0.3,
+  "serum_color": 16291077,
+  "species": "c-album"
+}

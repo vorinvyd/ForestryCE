@@ -1,0 +1,21 @@
+{
+  "dominant": true,
+  "escritoire_color": 10533403,
+  "genome": {
+    "forestry:height": {
+      "value": 0.75
+    },
+    "forestry:maturation": {
+      "dominant": true,
+      "value": 10
+    },
+    "forestry:sappiness": {
+      "dominant": true,
+      "value": 0.6
+    }
+  },
+  "genus": "talipariti",
+  "rarity": 5.0E-6,
+  "species": "elatum",
+  "temperature": "warm"
+}

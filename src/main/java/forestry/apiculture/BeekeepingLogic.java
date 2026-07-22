@@ -213,7 +213,7 @@ public class BeekeepingLogic implements IBeekeepingLogic {
 		// might be worth only running this check in absence of other errors
 		this.hasFlowersCache.update(this.queen, this.housing);
 
-		boolean hasFlowers = this.hasFlowersCache.hasFlowers();
+		boolean hasFlowers = this.beeModifier.providesFlowers() || this.hasFlowersCache.hasFlowers();
 		boolean flowerCacheNeedsSync = this.hasFlowersCache.needsSync();
 		errorLogic.setCondition(!hasFlowers, ForestryError.NO_FLOWER);
 

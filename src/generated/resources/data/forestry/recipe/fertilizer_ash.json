@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "#": {
-      "tag": "forge:dusts/ash"
+      "tag": "c:dusts/ash"
     },
     "X": {
-      "tag": "forge:gems/apatite"
+      "tag": "c:gems/apatite"
     }
   },
   "pattern": [
@@ -16,6 +16,6 @@
   ],
   "result": {
     "count": 16,
-    "id": "forestry:fertilizer_compound"
+    "id": "forestry:fertilizer"
   }
 }

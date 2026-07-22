@@ -5,7 +5,7 @@ import forestry.api.genetics.IIndividual;
 import forestry.api.genetics.ILifeStage;
 import forestry.api.genetics.ISpecies;
 import forestry.api.genetics.ISpeciesType;
-import forestry.api.genetics.alleles.IRegistryChromosome;
+import forestry.api.genetics.alleles.IChromosome;
 import forestry.api.genetics.capability.IIndividualHandlerItem;
 import forestry.modules.features.FeatureItem;
 import mezz.jei.api.constants.VanillaTypes;
@@ -136,12 +136,12 @@ public class JeiUtil {
 		return result;
 	}
 
-	public static <S extends ISpecies<?>> void registerItemSubtypes(ISubtypeRegistration registry, IRegistryChromosome<S> species, ISpeciesType<S, ?> type) {
+	public static <S extends ISpecies<?>> void registerItemSubtypes(ISubtypeRegistration registry, IChromosome<ResourceLocation> species, ISpeciesType<S, ?> type) {
 		ISubtypeInterpreter<ItemStack> interpreter = new ISubtypeInterpreter<>() {
 			@Override
 			public Object getSubtypeData(ItemStack stack, UidContext context) {
 				IIndividual individual = IIndividualHandlerItem.getIndividual(stack);
-				return individual != null ? individual.getGenome().getActiveValue(species).getBinomial() : null;
+				return individual != null ? individual.getGenome().<S>resolveActive(species).getBinomial() : null;
 			}
 
 			@Override

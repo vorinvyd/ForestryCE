@@ -1,7 +1,8 @@
 package forestry.api.genetics;
 
-import forestry.api.genetics.alleles.IAllele;
+import forestry.api.genetics.alleles.Allele;
 import forestry.api.genetics.alleles.IChromosome;
+import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -47,11 +48,26 @@ public interface ITaxon {
 	Map<IChromosome<?>, TaxonAllele> alleles();
 
 	/**
-	 * A default allele associated with a taxon.
+	 * A default allele associated with a taxon. Exactly one of {@code allele} (a data-chromosome value) or
+	 * {@code reference} (a reference-chromosome ID, resolved lazily) is non-null.
 	 *
-	 * @param allele   The allele.
-	 * @param required
+	 * @param allele    The inline value allele for a data chromosome, or {@code null} for a reference chromosome.
+	 * @param reference The referenced value's ID for a reference chromosome, or {@code null} for a data chromosome.
+	 * @param required  Whether members of the taxon are required to have this chromosome.
 	 */
-	record TaxonAllele(IAllele allele, boolean required) {
+	record TaxonAllele(@Nullable Allele<?> allele, @Nullable ResourceLocation reference, boolean required) {
+		/**
+		 * @return A taxon default for a data chromosome.
+		 */
+		public static TaxonAllele data(Allele<?> allele, boolean required) {
+			return new TaxonAllele(allele, null, required);
+		}
+
+		/**
+		 * @return A taxon default for a reference chromosome (species, flower type, effect, ...).
+		 */
+		public static TaxonAllele reference(ResourceLocation id, boolean required) {
+			return new TaxonAllele(null, id, required);
+		}
 	}
 }

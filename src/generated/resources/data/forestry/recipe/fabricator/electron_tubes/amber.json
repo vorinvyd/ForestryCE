@@ -3,7 +3,7 @@
   "id": "forestry:fabricator/electron_tubes/amber",
   "molten": {
     "amount": 500,
-    "id": "forestry:glass"
+    "id": "forestry:liquid_glass"
   },
   "recipe": {
     "category": "misc",
@@ -12,7 +12,7 @@
         "tag": "c:dusts/redstone"
       },
       "X": {
-        "tag": "forge:gems/amber"
+        "tag": "c:gems/amber"
       }
     },
     "pattern": [
@@ -22,7 +22,7 @@
     ],
     "result": {
       "count": 2,
-      "id": "forestry:electron_tube_amber"
+      "id": "forestry:amber_electron_tube"
     }
   }
 }

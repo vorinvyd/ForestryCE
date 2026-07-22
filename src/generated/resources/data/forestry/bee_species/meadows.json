@@ -1,0 +1,21 @@
+{
+  "dominant": true,
+  "genome": {
+    "forestry:humidity_tolerance": {
+      "dominant": true,
+      "value": "DOWN_1"
+    },
+    "forestry:pollination": {
+      "value": 10
+    }
+  },
+  "genus": "apis",
+  "outline": 15667998,
+  "products": [
+    {
+      "chance": 0.3,
+      "item": "forestry:honey_comb"
+    }
+  ],
+  "species": "florea"
+}

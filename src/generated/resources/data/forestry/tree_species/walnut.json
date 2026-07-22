@@ -1,0 +1,29 @@
+{
+  "dominant": true,
+  "escritoire_color": 7965781,
+  "genome": {
+    "forestry:fruits": {
+      "value": "forestry:fruit_walnut"
+    },
+    "forestry:girth": {
+      "value": 2
+    },
+    "forestry:height": {
+      "value": 1.0
+    },
+    "forestry:saplings": {
+      "dominant": true,
+      "value": 0.025
+    },
+    "forestry:sappiness": {
+      "dominant": true,
+      "value": 0.2
+    },
+    "forestry:yield": {
+      "dominant": true,
+      "value": 0.2
+    }
+  },
+  "genus": "juglans",
+  "species": "regia"
+}

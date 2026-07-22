@@ -1,0 +1,22 @@
+{
+  "type": "forestry:bee_species",
+  "parent": "apidae",
+  "alleles": {
+    "forestry:bee_effect": {
+      "value": "forestry:bee_effect_glacial"
+    },
+    "forestry:flower_type": {
+      "value": "forestry:flower_type_snow"
+    },
+    "forestry:humidity_tolerance": {
+      "dominant": true,
+      "value": "BOTH_1"
+    },
+    "forestry:temperature_tolerance": {
+      "dominant": true,
+      "value": "UP_1"
+    }
+  },
+  "name": "coagapis",
+  "rank": "genus"
+}

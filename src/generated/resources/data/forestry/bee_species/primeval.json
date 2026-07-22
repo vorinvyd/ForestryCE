@@ -1,0 +1,30 @@
+{
+  "authority": "EnderiumSmith",
+  "dominant": true,
+  "genome": {
+    "forestry:fertility": {
+      "dominant": true,
+      "value": 2
+    },
+    "forestry:lifespan": {
+      "value": 50
+    },
+    "forestry:pollination": {
+      "value": 20
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.8
+    }
+  },
+  "genus": "reliquia",
+  "outline": 6635315,
+  "products": [
+    {
+      "chance": 0.3,
+      "item": "forestry:vintage_comb"
+    }
+  ],
+  "species": "antiqua",
+  "temperature": "warm"
+}

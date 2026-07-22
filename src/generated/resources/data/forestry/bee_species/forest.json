@@ -1,0 +1,24 @@
+{
+  "dominant": true,
+  "genome": {
+    "forestry:fertility": {
+      "value": 3
+    },
+    "forestry:pollination": {
+      "value": 10
+    },
+    "forestry:temperature_tolerance": {
+      "dominant": true,
+      "value": "DOWN_1"
+    }
+  },
+  "genus": "apis",
+  "outline": 1691884,
+  "products": [
+    {
+      "chance": 0.3,
+      "item": "forestry:honey_comb"
+    }
+  ],
+  "species": "nigrocincta"
+}

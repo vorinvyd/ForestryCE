@@ -23,6 +23,7 @@ import net.minecraft.world.level.biome.Biome;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import forestry.core.utils.GeneticsUtil;
 
 public class ButterflySpecies extends Species<IButterflySpeciesType, IButterfly> implements IButterflySpecies {
 	private final TemperatureType temperature;
@@ -79,12 +80,12 @@ public class ButterflySpecies extends Species<IButterflySpeciesType, IButterfly>
 		if (butterfly.getMate() != null) {
 			toolTip.add(Component.translatable("for.gui.fecundated").withStyle(ChatFormatting.RED));
 		}
-		toolTip.add(genome.getActiveName(ButterflyChromosomes.SIZE).withStyle(ChatFormatting.YELLOW));
-		toolTip.add(genome.getActiveName(ButterflyChromosomes.SPEED).withStyle(ChatFormatting.DARK_GREEN));
-		toolTip.add(genome.getActiveName(ButterflyChromosomes.LIFESPAN).append(" ").append(Component.translatable("for.gui.life").withStyle(ChatFormatting.GRAY)));
+		toolTip.add(GeneticsUtil.getActiveName(genome, ButterflyChromosomes.SIZE).withStyle(ChatFormatting.YELLOW));
+		toolTip.add(GeneticsUtil.getActiveName(genome, ButterflyChromosomes.SPEED).withStyle(ChatFormatting.DARK_GREEN));
+		toolTip.add(GeneticsUtil.getActiveName(genome, ButterflyChromosomes.LIFESPAN).append(" ").append(Component.translatable("for.gui.life").withStyle(ChatFormatting.GRAY)));
 
-		MutableComponent tempTolerance = genome.getActiveName(ButterflyChromosomes.TEMPERATURE_TOLERANCE);
-		MutableComponent humidTolerance = genome.getActiveName(ButterflyChromosomes.HUMIDITY_TOLERANCE);
+		MutableComponent tempTolerance = GeneticsUtil.getActiveName(genome, ButterflyChromosomes.TEMPERATURE_TOLERANCE);
+		MutableComponent humidTolerance = GeneticsUtil.getActiveName(genome, ButterflyChromosomes.HUMIDITY_TOLERANCE);
 
 		toolTip.singleLine().text("T: ").add(ClimateHelper.toDisplay(primary.getTemperature())).text(" / ").add(tempTolerance).style(ChatFormatting.GREEN).create();
 		toolTip.singleLine().text("H: ").add(ClimateHelper.toDisplay(primary.getHumidity())).text(" / ").add(humidTolerance).style(ChatFormatting.GREEN).create();

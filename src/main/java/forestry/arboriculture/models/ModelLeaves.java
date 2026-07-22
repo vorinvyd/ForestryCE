@@ -2,6 +2,7 @@ package forestry.arboriculture.models;
 
 import forestry.api.arboriculture.ITreeSpecies;
 import forestry.api.client.IForestryClientApi;
+import forestry.api.client.arboriculture.ILeafSprite;
 import forestry.arboriculture.blocks.BlockAbstractLeaves;
 import forestry.arboriculture.blocks.BlockForestryLeaves;
 import forestry.arboriculture.features.ArboricultureBlocks;
@@ -102,9 +103,12 @@ public class ModelLeaves extends ModelBlockCached<BlockForestryLeaves, ModelLeav
 		if (species == null) {
 			species = SpeciesUtil.TREE_TYPE.get().getDefaultSpecies();
 		}
-		ResourceLocation leafLocation = IForestryClientApi.INSTANCE.getTreeManager()
-			.getLeafSprite(species)
-			.get(Boolean.TRUE.equals(extraData.get(TileLeaves.PROPERTY_POLLINATED)), fancy);
+		ILeafSprite sprite = IForestryClientApi.INSTANCE.getTreeManager().getLeafSprite(species);
+		if (sprite == null) {
+			species = SpeciesUtil.TREE_TYPE.get().getDefaultSpecies();
+			sprite = IForestryClientApi.INSTANCE.getTreeManager().getLeafSprite(species);
+		}
+		ResourceLocation leafLocation = sprite.get(Boolean.TRUE.equals(extraData.get(TileLeaves.PROPERTY_POLLINATED)), fancy);
 		ResourceLocation fruitLocation = extraData.get(TileLeaves.PROPERTY_FRUIT_TEXTURE);
 
 		return new Key(ResourceUtil.getBlockSprite(leafLocation), fruitLocation != null ? ResourceUtil.getBlockSprite(fruitLocation) : null, fancy);

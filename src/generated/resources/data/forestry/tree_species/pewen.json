@@ -1,0 +1,23 @@
+{
+  "authority": "Spear",
+  "dominant": true,
+  "escritoire_color": 4543513,
+  "genome": {
+    "forestry:height": {
+      "value": 1.5
+    },
+    "forestry:maturation": {
+      "value": 7
+    },
+    "forestry:saplings": {
+      "dominant": true,
+      "value": 0.025
+    },
+    "forestry:sappiness": {
+      "dominant": true,
+      "value": 0.6
+    }
+  },
+  "genus": "araucaria",
+  "species": "araucana"
+}

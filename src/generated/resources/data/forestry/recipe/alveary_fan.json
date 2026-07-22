@@ -4,13 +4,13 @@
   "group": "alveary",
   "key": {
     "#": {
-      "item": "forestry:electron_tube_gold"
+      "item": "forestry:golden_electron_tube"
     },
     "I": {
       "tag": "c:ingots/iron"
     },
     "X": {
-      "item": "forestry:alveary_plain"
+      "item": "forestry:alveary_block"
     }
   },
   "pattern": [

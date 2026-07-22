@@ -1,0 +1,27 @@
+{
+  "body": 13893632,
+  "genome": {
+    "forestry:activity": {
+      "value": "forestry:activity_metaturnal"
+    },
+    "forestry:bee_effect": {
+      "value": "forestry:bee_effect_snowing"
+    }
+  },
+  "genus": "festapis",
+  "glint": true,
+  "outline": 16777215,
+  "products": [
+    {
+      "chance": 0.3,
+      "item": "forestry:frozen_comb"
+    },
+    {
+      "chance": 0.2,
+      "item": "forestry:ice_shard"
+    }
+  ],
+  "secret": true,
+  "species": "feliciter",
+  "temperature": "icy"
+}

@@ -25,8 +25,20 @@ public class ApicultureBlocks {
 		.item(ItemBlockForestry::new)
 		.create();
 
-	public static final FeatureBlockGroup<BlockBeeHive, BlockHiveType> BEEHIVE = REGISTRY.blockGroup(BlockBeeHive::new, List.of(BlockHiveType.values())).item((block, properties) -> new ItemBlockForestry<>(block, properties)).identifier("beehive").create();
+	public static final FeatureBlockGroup<BlockBeeHive, BlockHiveType> BEEHIVE = REGISTRY.blockGroup(BlockBeeHive::new, List.of(BlockHiveType.values())).item((block, properties) -> new ItemBlockForestry<>(block, properties)).identifier(type -> switch (type) {
+		case DESERT -> "modest_hive";
+		case JUNGLE -> "tropical_hive";
+		case END -> "ender_hive";
+		case SNOW -> "wintry_hive";
+		case SWAMP -> "marshy_hive";
+		default -> type.getSerializedName() + "_hive";
+	}).create();
 
-	public static final FeatureBlockGroup<BlockHoneyComb, EnumHoneyComb> BEE_COMB = REGISTRY.blockGroup(BlockHoneyComb::new, List.of(EnumHoneyComb.VALUES)).item((block, properties) -> new ItemBlockHoneyComb(block)).identifier("block_bee_comb").create();
-	public static final FeatureBlockGroup<BlockAlveary, BlockAlveary.Type> ALVEARY = REGISTRY.blockGroup(BlockAlveary::new, BlockAlveary.Type.DEFAULT_VALUES).item((block, properties) -> new ItemBlockForestry<>(block, properties)).identifier("alveary").create();
+	public static final FeatureBlockGroup<BlockHoneyComb, EnumHoneyComb> BEE_COMB = REGISTRY.blockGroup(BlockHoneyComb::new, List.of(EnumHoneyComb.VALUES)).item((block, properties) -> new ItemBlockHoneyComb(block)).identifier(type -> (type == EnumHoneyComb.SPONGE ? "spongy" : type.getSerializedName()) + "_comb_block").create();
+	public static final FeatureBlockGroup<BlockAlveary, BlockAlveary.Type> ALVEARY = REGISTRY.blockGroup(BlockAlveary::new, BlockAlveary.Type.DEFAULT_VALUES).item((block, properties) -> new ItemBlockForestry<>(block, properties)).identifier(type -> switch (type.getSerializedName()) {
+		case "plain" -> "alveary_block";
+		case "hygro" -> "alveary_hygroregulator";
+		case "stabiliser" -> "alveary_stabilizer";
+		default -> "alveary_" + type.getSerializedName();
+	}).create();
 }

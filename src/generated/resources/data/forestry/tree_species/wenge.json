@@ -1,0 +1,18 @@
+{
+  "dominant": true,
+  "escritoire_color": 11379031,
+  "genome": {
+    "forestry:girth": {
+      "value": 2
+    },
+    "forestry:saplings": {
+      "dominant": true,
+      "value": 0.01
+    }
+  },
+  "genus": "millettia",
+  "humidity": "damp",
+  "rarity": 5.0E-4,
+  "species": "laurentii",
+  "temperature": "warm"
+}

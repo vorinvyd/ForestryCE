@@ -3,8 +3,10 @@
   "chance": 0.05,
   "id": "forestry:squeezer/fruit/cherry",
   "output": {
-    "amount": 50,
-    "id": "forestry:juice"
+    "stack": {
+      "amount": 50,
+      "id": "forestry:fruit_juice"
+    }
   },
   "remnant": {
     "count": 1,
@@ -12,7 +14,7 @@
   },
   "resources": [
     {
-      "tag": "forge:fruits/cherry"
+      "tag": "c:fruits/cherry"
     }
   ],
   "time": 20

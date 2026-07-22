@@ -3,12 +3,14 @@
   "chance": 0.05,
   "id": "forestry:squeezer/honey_drop",
   "output": {
-    "amount": 100,
-    "id": "forestry:honey"
+    "stack": {
+      "amount": 100,
+      "id": "forestry:honey"
+    }
   },
   "remnant": {
     "count": 1,
-    "id": "forestry:propolis_normal"
+    "id": "forestry:propolis"
   },
   "resources": [
     {

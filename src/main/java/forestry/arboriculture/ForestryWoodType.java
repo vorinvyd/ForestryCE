@@ -28,7 +28,7 @@ import java.util.stream.Stream;
 public enum ForestryWoodType implements IWoodType {
 	LARCH(ForestryLeafType.LARCH),
 	TEAK(ForestryLeafType.TEAK),
-	ACACIA_DESERT(ForestryLeafType.CAMELTHORN), // TODO - 1.21.1 - Rename to Camelthorn
+	CAMELTHORN(ForestryLeafType.CAMELTHORN),
 	LIME(ForestryLeafType.LIME),
 	CHESTNUT(ForestryLeafType.CHESTNUT),
 	WENGE(ForestryLeafType.WENGE),
@@ -43,7 +43,7 @@ public enum ForestryWoodType implements IWoodType {
 	WILLOW(ForestryLeafType.WILLOW),
 	WALNUT(ForestryLeafType.WALNUT),
 	GREENHEART(ForestryLeafType.GREENHEART, 7.5f),
-	HILL_CHERRY(ForestryLeafType.SOUR_CHERRY), // TODO - 1.21.1 - Rename to Sour Cherry
+	SOUR_CHERRY(ForestryLeafType.SOUR_CHERRY),
 
 	MAHOE(ForestryLeafType.MAHOE),
 	POPLAR(ForestryLeafType.POPLAR),
@@ -52,9 +52,9 @@ public enum ForestryWoodType implements IWoodType {
 	PINE(ForestryLeafType.PINE, 3.0f),
 	PLUM(ForestryLeafType.PLUM),
 	MAPLE(ForestryLeafType.MAPLE),
-	CITRUS(ForestryLeafType.LEMON), //TODO - 1.21.1 - Change from Citrus to Lemon, as Orange is also Citrus.
+	LEMON(ForestryLeafType.LEMON),
 
-	GIGANTEUM(ForestryLeafType.GIANT_SEQUOIA, 4.0f), // TODO - 1.21.1 - Rename to Giant Sequoia
+	GIANT_SEQUOIA(ForestryLeafType.GIANT_SEQUOIA, 4.0f),
 	IPE(ForestryLeafType.IPE),
 	PADAUK(ForestryLeafType.PADAUK),
 	COCOBOLO(ForestryLeafType.COCOBOLO),
@@ -71,7 +71,7 @@ public enum ForestryWoodType implements IWoodType {
 	ORANGE(ForestryLeafType.ORANGE),
 	PEAR(ForestryLeafType.PEAR),
 	KAURI(ForestryLeafType.KAURI),
-	ZEBRAWOOD(ForestryLeafType.ZEBRANO); //TODO - 1.21.1 - Change to Zebrano
+	ZEBRANO(ForestryLeafType.ZEBRANO);
 
 	public static final float DEFAULT_HARDNESS = 2.0f;
 	public static final ForestryWoodType[] VALUES = values();
@@ -123,7 +123,7 @@ public enum ForestryWoodType implements IWoodType {
 	}
 
 	static boolean setDefaultLeavesImpl(LevelAccessor level, BlockPos pos, IGenome genome, RandomSource rand, ForestryLeafType leafType) {
-		IFruit fruit = genome.getActiveValue(TreeChromosomes.FRUIT);
+		IFruit fruit = genome.resolveActive(TreeChromosomes.FRUIT);
 		BlockState defaultLeaves;
 		FeatureBlockGroup<? extends Block, ForestryLeafType> leavesGroup;
 		if (fruit.isFruitLeaf() && rand.nextFloat() <= fruit.getFruitChance(genome, level)) {

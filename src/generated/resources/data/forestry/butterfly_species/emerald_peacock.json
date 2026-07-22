@@ -1,0 +1,28 @@
+{
+  "dominant": true,
+  "genome": {
+    "forestry:butterfly_lifespan": {
+      "value": 40
+    },
+    "forestry:fertility": {
+      "value": 5
+    },
+    "forestry:humidity_tolerance": {
+      "dominant": true,
+      "value": "DOWN_1"
+    },
+    "forestry:size": {
+      "value": 0.75
+    },
+    "forestry:temperature_tolerance": {
+      "dominant": true,
+      "value": "DOWN_1"
+    }
+  },
+  "genus": "papilio",
+  "humidity": "damp",
+  "rarity": 0.1,
+  "serum_color": 8191616,
+  "species": "palinurus",
+  "temperature": "warm"
+}

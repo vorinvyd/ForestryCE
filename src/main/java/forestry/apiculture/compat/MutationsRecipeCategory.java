@@ -21,13 +21,13 @@ import net.minecraft.world.item.ItemStack;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class MutationsRecipeCategory implements IRecipeCategory<MutationRecipe> {
+public class MutationsRecipeCategory implements IRecipeCategory<MutationDisplay> {
 	private static final int SPECIES_SLOTS_Y = 16;
 	private static final int SPECIES_SLOT_0_X = 18 + 1;
 	private static final int SPECIES_SLOT_1_X = 71 + 1;
 	private static final int SPECIES_SLOT_2_X = 125 + 1;
 
-	private final RecipeType<MutationRecipe> type;
+	private final RecipeType<MutationDisplay> type;
 	private final Component title;
 	private final IDrawable background;
 	private final IDrawable icon;
@@ -38,12 +38,12 @@ public class MutationsRecipeCategory implements IRecipeCategory<MutationRecipe> 
 		this.icon = icon;
 
 		this.speciesType = type;
-		this.type = new RecipeType<>(ModUtil.withSuffix(type.id(), "_mutations"), MutationRecipe.class);
+		this.type = new RecipeType<>(ModUtil.withSuffix(type.id(), "_mutations"), MutationDisplay.class);
 		this.title = Component.translatable("for.jei.mutations." + type.id().getNamespace() + '.' + type.id().getPath());
 	}
 
 	@Override
-	public RecipeType<MutationRecipe> getRecipeType() {
+	public RecipeType<MutationDisplay> getRecipeType() {
 		return this.type;
 	}
 
@@ -68,7 +68,7 @@ public class MutationsRecipeCategory implements IRecipeCategory<MutationRecipe> 
 	}
 
 	@Override
-	public void setRecipe(IRecipeLayoutBuilder builder, MutationRecipe recipe, IFocusGroup focuses) {
+	public void setRecipe(IRecipeLayoutBuilder builder, MutationDisplay recipe, IFocusGroup focuses) {
 		IIngredientAcceptor<?> inputs = builder.addInvisibleIngredients(RecipeIngredientRole.INPUT);
 		IIngredientAcceptor<?> outputs = builder.addInvisibleIngredients(RecipeIngredientRole.OUTPUT);
 		IMutation<?> mutation = recipe.mutation;
@@ -106,7 +106,7 @@ public class MutationsRecipeCategory implements IRecipeCategory<MutationRecipe> 
 	}
 
 	@Override
-	public void draw(MutationRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double mouseX, double mouseY) {
+	public void draw(MutationDisplay recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double mouseX, double mouseY) {
 		this.background.draw(graphics);
 
 		JeiUtil.drawCenteredMulti(graphics, recipe.mutation.getFirstParent().getDisplayName(), SPECIES_SLOT_0_X + 9, SPECIES_SLOTS_Y + 22, 0xffffffff);
@@ -124,7 +124,7 @@ public class MutationsRecipeCategory implements IRecipeCategory<MutationRecipe> 
 	}
 
 	@Override
-	public void getTooltip(ITooltipBuilder tooltip, MutationRecipe recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
+	public void getTooltip(ITooltipBuilder tooltip, MutationDisplay recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
 		List<Component> mutation = recipe.mutation.getSpecialConditions();
 
 		if (!mutation.isEmpty() && mouseX >= 90 && mouseX <= 120 && mouseY >= 11 && mouseY <= 19) {

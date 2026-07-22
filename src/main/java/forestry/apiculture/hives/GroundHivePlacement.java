@@ -1,0 +1,61 @@
+package forestry.apiculture.hives;
+
+import forestry.api.apiculture.hives.IHivePlacement;
+import forestry.core.utils.BlockUtil;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.tags.TagKey;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.Heightmap;
+
+import javax.annotation.Nullable;
+
+public class GroundHivePlacement implements IHivePlacement {
+	private final TagKey<Block> blocks;
+
+	public GroundHivePlacement(TagKey<Block> blocks) {
+		this.blocks = blocks;
+	}
+
+	@Override
+	@Nullable
+	public BlockPos getPosForHive(WorldGenLevel level, RandomSource random, int posX, int posZ) {
+		// get to the ground
+		int groundY = level.getHeight(getHeightmapType(), posX, posZ);
+		int minBuildHeight = level.getMinBuildHeight();
+		if (groundY == minBuildHeight) {
+			return null;
+		}
+
+		final BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(posX, groundY, posZ);
+
+		BlockState blockState = level.getBlockState(pos);
+		while (canReplace(blockState, level, pos)) {
+			pos.move(Direction.DOWN);
+			if (pos.getY() <= minBuildHeight) {
+				return null;
+			}
+			blockState = level.getBlockState(pos);
+		}
+
+		return pos.above();
+	}
+
+	public Heightmap.Types getHeightmapType() {
+		return Heightmap.Types.WORLD_SURFACE_WG;
+	}
+
+	@Override
+	public boolean canReplace(BlockState state, WorldGenLevel level, BlockPos pos) {
+		return IHivePlacement.isTreeBlock(state) || BlockUtil.canReplace(state, level, pos);
+	}
+
+	@Override
+	public boolean isValidLocation(WorldGenLevel level, BlockPos pos) {
+		BlockState groundBlockState = level.getBlockState(pos.below());
+		return groundBlockState.is(this.blocks);
+	}
+}

@@ -1,0 +1,28 @@
+{
+  "type": "forestry:fabricator",
+  "id": "forestry:fabricator/fireproof/wood/sour_cherry",
+  "molten": {
+    "amount": 500,
+    "id": "forestry:liquid_glass"
+  },
+  "recipe": {
+    "category": "building",
+    "key": {
+      "#": {
+        "item": "forestry:refractory_wax"
+      },
+      "X": {
+        "item": "forestry:sour_cherry_wood"
+      }
+    },
+    "pattern": [
+      "   ",
+      "X#X",
+      "   "
+    ],
+    "result": {
+      "count": 2,
+      "id": "forestry:sour_cherry_fireproof_wood"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "authority": "Spear",
+  "dominant": true,
+  "escritoire_color": 14547538,
+  "genome": {
+    "forestry:height": {
+      "value": 1.0
+    },
+    "forestry:maturation": {
+      "value": 4
+    },
+    "forestry:sappiness": {
+      "dominant": true,
+      "value": 0.3
+    }
+  },
+  "genus": "ulmus",
+  "species": "glabra"
+}

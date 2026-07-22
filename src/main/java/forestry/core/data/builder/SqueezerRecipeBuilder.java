@@ -1,5 +1,7 @@
 package forestry.core.data.builder;
 
+import forestry.api.core.FluidProduct;
+import forestry.api.core.IFluidProduct;
 import forestry.factory.recipes.SqueezerRecipe;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -12,7 +14,7 @@ import java.util.List;
 public class SqueezerRecipeBuilder {
 	private int processingTime;
 	private List<Ingredient> resources;
-	private FluidStack fluidOutput;
+	private IFluidProduct fluidOutput;
 	private ItemStack remnants = ItemStack.EMPTY;
 	private float remnantsChance;
 
@@ -27,6 +29,12 @@ public class SqueezerRecipeBuilder {
 	}
 
 	public SqueezerRecipeBuilder setFluidOutput(FluidStack fluidOutput) {
+		this.fluidOutput = FluidProduct.of(fluidOutput);
+		return this;
+	}
+
+	/** Sets a custom fluid product output, e.g. an addon's dynamic tag/random/chance product. */
+	public SqueezerRecipeBuilder setFluidOutput(IFluidProduct fluidOutput) {
 		this.fluidOutput = fluidOutput;
 		return this;
 	}

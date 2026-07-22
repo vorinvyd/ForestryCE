@@ -7,6 +7,7 @@ import forestry.api.arboriculture.ITreeSpecies;
 import forestry.api.genetics.IGenome;
 import forestry.api.genetics.ISpeciesType;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -19,6 +20,22 @@ import java.util.Collection;
 public interface ITreeSpeciesType extends ISpeciesType<ITreeSpecies, ITree> {
 	@Override
 	IArboristTracker getBreedingTracker(LevelAccessor level, @Nullable GameProfile profile);
+
+	/**
+	 * @return The fruit registered with the given ID. Backs the {@code fruits} reference chromosome.
+	 */
+	IFruit getFruit(ResourceLocation id);
+
+	/**
+	 * @return The fruit registered with the given ID, or {@code null} if none is registered (graceful fallback variant).
+	 */
+	@Nullable
+	IFruit getFruitSafe(ResourceLocation id);
+
+	/**
+	 * @return The tree effect registered with the given ID. Backs the {@code tree_effect} reference chromosome.
+	 */
+	ITreeEffect getTreeEffect(ResourceLocation id);
 
 	/**
 	 * Register a leaf random tick handler. Used for butterfly spawner.

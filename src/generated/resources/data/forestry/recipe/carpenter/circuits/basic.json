@@ -10,7 +10,7 @@
     "category": "misc",
     "key": {
       "#": {
-        "tag": "forge:ingots/tin"
+        "tag": "c:ingots/tin"
       },
       "R": {
         "tag": "c:dusts/redstone"
@@ -23,7 +23,7 @@
     ],
     "result": {
       "count": 1,
-      "id": "forestry:circuit_board_basic"
+      "id": "forestry:basic_circuit_board"
     }
   },
   "result": {
@@ -33,7 +33,7 @@
       }
     },
     "count": 1,
-    "id": "forestry:circuit_board_basic"
+    "id": "forestry:basic_circuit_board"
   },
   "time": 20
 }

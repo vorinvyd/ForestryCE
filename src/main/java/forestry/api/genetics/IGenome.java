@@ -3,69 +3,67 @@ package forestry.api.genetics;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.Codec;
-import forestry.api.genetics.alleles.*;
-import net.minecraft.network.chat.MutableComponent;
+import forestry.api.genetics.alleles.Allele;
+import forestry.api.genetics.alleles.AllelePair;
+import forestry.api.genetics.alleles.IChromosome;
+import forestry.api.genetics.alleles.IKaryotype;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.IdentityHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
- * Holds the {@link AllelePair}s which comprise the traits of a given individual.
+ * Holds the {@link AllelePair}s which comprise the traits of a given individual. Allele values are stored inline;
+ * reference chromosomes (species, flower type, effect, ...) store a {@link ResourceLocation} resolved on demand.
  */
 public interface IGenome {
 	Codec<IGenome> CODEC = IKaryotype.CODEC.dispatch("karyotype", IGenome::getKaryotype, karyotype -> karyotype.getGenomeCodec().fieldOf("genome"));
 
 	/**
-	 * @return A array with all chromosomes of this genome.
+	 * @return A list with all allele pairs of this genome, in karyotype order.
 	 */
 	ImmutableList<AllelePair<?>> getAllelePairs();
 
 	/**
-	 * Returns the allele pair containing the active and inactive alleles of the given chromosome.
-	 * Uses an unchecked cast.
-	 *
 	 * @return The allele pair for the given chromosome.
 	 */
-	<A extends IAllele> AllelePair<A> getAllelePair(IChromosome<A> chromosomeType);
+	<V> AllelePair<V> getAllelePair(IChromosome<V> chromosome);
 
 	/**
-	 * @return {@code true} if this genome is equal to the default genome of the species, as specified in the Karyotype.
+	 * @return {@code true} if this genome equals the default genome of its species.
 	 */
 	boolean isDefaultGenome();
 
 	/**
-	 * @return The karyotype of this genome. It defines the positions of the chromosomes in the array and the length
-	 * of it.
+	 * @return The karyotype of this genome.
 	 */
 	IKaryotype getKaryotype();
 
 	ImmutableMap<IChromosome<?>, AllelePair<?>> getChromosomes();
 
 	/**
-	 * Copies this genome, setting active and inactive alleles using the given map.
-	 * If the resulting genome is the same as this genome, then no copy is made.
-	 *
-	 * @param alleles Map of alleles that should be in the copy.
-	 * @return A copy of this genome with alleles from the given map. If result is equal to this, then just returns this.
+	 * Copies this genome, setting both alleles of each given chromosome to the given value. For reference chromosomes
+	 * the value's dominance is intrinsic, so it is resolved from the chromosome's resolver here (ignoring the placeholder
+	 * dominance of an {@link Allele#reference} value).
 	 */
-	default IGenome copyWith(Map<IChromosome<?>, IAllele> alleles) {
+	default IGenome copyWith(Map<IChromosome<?>, Allele<?>> alleles) {
 		IdentityHashMap<IChromosome<?>, AllelePair<?>> pairMap = new IdentityHashMap<>(alleles.size());
-
-		for (Map.Entry<IChromosome<?>, IAllele> entry : alleles.entrySet()) {
+		for (Map.Entry<IChromosome<?>, Allele<?>> entry : alleles.entrySet()) {
 			IChromosome<?> chromosome = entry.getKey();
-			IAllele allele = entry.getValue();
-			pairMap.put(chromosome, new AllelePair<>(allele, allele));
+			Allele<?> allele = entry.getValue();
+			IChromosome.IReferenceResolver<?> resolver = chromosome.resolver();
+			if (resolver != null) {
+				ResourceLocation id = (ResourceLocation) allele.value();
+				allele = new Allele<>(id, resolver.isDominant(id));
+			}
+			pairMap.put(chromosome, AllelePair.both(allele));
 		}
-
 		return copyWithPairs(pairMap);
 	}
 
 	/**
-	 * Copies this genome, setting active and inactive alleles using the given map.
-	 * If the resulting genome is the same as this genome, then no copy is made.
-	 *
-	 * @param allelePairs Map of allele pairs that should be in the copy.
-	 * @return The new genome.
+	 * Copies this genome, replacing allele pairs from the given map. Returns this genome if nothing changed.
 	 */
 	IGenome copyWithPairs(Map<IChromosome<?>, AllelePair<?>> allelePairs);
 
@@ -75,81 +73,54 @@ public interface IGenome {
 	boolean isSameAlleles(IGenome other);
 
 	/**
-	 * @return The active allele of the chromosome with the given type.
+	 * @return The active (expressed) allele of the given chromosome.
 	 */
-	default <A extends IAllele> A getActiveAllele(IChromosome<A> chromosome) {
+	default <V> Allele<V> getActiveAllele(IChromosome<V> chromosome) {
 		return getAllelePair(chromosome).active();
 	}
 
-	default float getActiveValue(IFloatChromosome chromosome) {
-		return getActiveAllele(chromosome).value();
+	/**
+	 * @return The inactive allele of the given chromosome.
+	 */
+	default <V> Allele<V> getInactiveAllele(IChromosome<V> chromosome) {
+		return getAllelePair(chromosome).inactive();
 	}
 
-	default boolean getActiveValue(IBooleanChromosome chromosome) {
-		return getActiveAllele(chromosome).value();
-	}
-
-	default int getActiveValue(IIntegerChromosome chromosome) {
-		return getActiveAllele(chromosome).value();
-	}
-
-	default <V> V getActiveValue(IValueChromosome<V> chromosome) {
+	/**
+	 * @return The active value of the given chromosome. For reference chromosomes this is the stored
+	 * {@link ResourceLocation}; use {@link #resolveActive} for the behavior object.
+	 */
+	default <V> V getActiveValue(IChromosome<V> chromosome) {
 		return getActiveAllele(chromosome).value();
 	}
 
 	/**
-	 * @return The inactive allele of the chromosome with the given type.
+	 * @return The inactive value of the given chromosome.
 	 */
-	default <A extends IAllele> A getInactiveAllele(IChromosome<A> chromosome) {
-		return getAllelePair(chromosome).inactive();
-	}
-
-	default float getInactiveValue(IFloatChromosome chromosome) {
+	default <V> V getInactiveValue(IChromosome<V> chromosome) {
 		return getInactiveAllele(chromosome).value();
 	}
 
-	default boolean getInactiveValue(IBooleanChromosome chromosome) {
-		return getInactiveAllele(chromosome).value();
+	/**
+	 * Resolves the active reference value to its behavior object via the chromosome's resolver.
+	 *
+	 * @throws NullPointerException If the chromosome is a data chromosome (has no resolver).
+	 */
+	@SuppressWarnings("unchecked")
+	default <R> R resolveActive(IChromosome<ResourceLocation> chromosome) {
+		IChromosome.IReferenceResolver<R> resolver = (IChromosome.IReferenceResolver<R>) Objects.requireNonNull(chromosome.resolver(), () -> "Not a reference chromosome: " + chromosome.id());
+		return resolver.get(getActiveValue(chromosome));
 	}
 
-	default int getInactiveValue(IIntegerChromosome chromosome) {
-		return getInactiveAllele(chromosome).value();
-	}
-
-	default <V> V getInactiveValue(IValueChromosome<V> chromosome) {
-		return getInactiveAllele(chromosome).value();
-	}
-
-	default MutableComponent getActiveName(IFloatChromosome chromosome) {
-		return chromosome.getDisplayName(getActiveAllele(chromosome));
-	}
-
-	default MutableComponent getActiveName(IBooleanChromosome chromosome) {
-		return chromosome.getDisplayName(getActiveAllele(chromosome));
-	}
-
-	default MutableComponent getActiveName(IIntegerChromosome chromosome) {
-		return chromosome.getDisplayName(getActiveAllele(chromosome));
-	}
-
-	default <V> MutableComponent getActiveName(IValueChromosome<V> chromosome) {
-		return chromosome.getDisplayName(getActiveAllele(chromosome));
-	}
-
-	default MutableComponent getInactiveName(IFloatChromosome chromosome) {
-		return chromosome.getDisplayName(getInactiveAllele(chromosome));
-	}
-
-	default MutableComponent getInactiveName(IBooleanChromosome chromosome) {
-		return chromosome.getDisplayName(getInactiveAllele(chromosome));
-	}
-
-	default MutableComponent getInactiveName(IIntegerChromosome chromosome) {
-		return chromosome.getDisplayName(getInactiveAllele(chromosome));
-	}
-
-	default <V> MutableComponent getInactiveName(IValueChromosome<V> chromosome) {
-		return chromosome.getDisplayName(getInactiveAllele(chromosome));
+	/**
+	 * Resolves the inactive reference value to its behavior object via the chromosome's resolver.
+	 *
+	 * @throws NullPointerException If the chromosome is a data chromosome (has no resolver).
+	 */
+	@SuppressWarnings("unchecked")
+	default <R> R resolveInactive(IChromosome<ResourceLocation> chromosome) {
+		IChromosome.IReferenceResolver<R> resolver = (IChromosome.IReferenceResolver<R>) Objects.requireNonNull(chromosome.resolver(), () -> "Not a reference chromosome: " + chromosome.id());
+		return resolver.get(getInactiveValue(chromosome));
 	}
 
 	/**
@@ -158,7 +129,7 @@ public interface IGenome {
 	 * @return The active species of the individual.
 	 */
 	default <S extends ISpecies<?>> S getActiveSpecies() {
-		return (S) getActiveValue(getKaryotype().getSpeciesChromosome());
+		return resolveActive(getKaryotype().getSpeciesChromosome());
 	}
 
 	/**
@@ -167,6 +138,6 @@ public interface IGenome {
 	 * @return The inactive species of the individual.
 	 */
 	default <S extends ISpecies<?>> S getInactiveSpecies() {
-		return (S) getInactiveValue(getKaryotype().getSpeciesChromosome());
+		return resolveInactive(getKaryotype().getSpeciesChromosome());
 	}
 }

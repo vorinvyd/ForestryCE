@@ -4,6 +4,8 @@ import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import forestry.api.core.FluidProductType;
+import forestry.api.core.IFluidProduct;
 import forestry.api.recipes.ISqueezerContainerRecipe;
 import forestry.factory.features.FactoryRecipeTypes;
 import net.minecraft.core.HolderLookup;
@@ -20,6 +22,20 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import java.util.List;
 
 public class SqueezerContainerRecipe implements ISqueezerContainerRecipe {
+	// Container recipes have no fluid output at all; this is never serialized (there is no "output" codec field
+	// below), so createFluidStack() being EMPTY is enough to make TileSqueezer refuse a fluid-fill for these recipes.
+	private static final IFluidProduct NO_FLUID_OUTPUT = new IFluidProduct() {
+		@Override
+		public FluidStack createFluidStack() {
+			return FluidStack.EMPTY;
+		}
+
+		@Override
+		public FluidProductType<?> type() {
+			throw new UnsupportedOperationException("SqueezerContainerRecipe's fluid output is never serialized");
+		}
+	};
+
 	private static final MapCodec<SqueezerContainerRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
 		ResourceLocation.CODEC.fieldOf("id").forGetter(SqueezerContainerRecipe::getId),
 		ItemStack.STRICT_CODEC.fieldOf("container").forGetter(SqueezerContainerRecipe::getEmptyContainer),
@@ -76,8 +92,8 @@ public class SqueezerContainerRecipe implements ISqueezerContainerRecipe {
 	}
 
 	@Override
-	public FluidStack getFluidOutput() {
-		return FluidStack.EMPTY;
+	public IFluidProduct getFluidOutput() {
+		return NO_FLUID_OUTPUT;
 	}
 
 	@Override

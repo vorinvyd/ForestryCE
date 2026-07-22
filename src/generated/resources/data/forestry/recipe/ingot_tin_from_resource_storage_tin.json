@@ -3,11 +3,11 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "forestry:resource_storage_tin"
+      "item": "forestry:tin_block"
     }
   ],
   "result": {
     "count": 9,
-    "id": "forestry:ingot_tin"
+    "id": "forestry:tin_ingot"
   }
 }

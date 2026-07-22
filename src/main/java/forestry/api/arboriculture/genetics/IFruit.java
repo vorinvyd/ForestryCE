@@ -4,7 +4,6 @@ import forestry.api.core.IProduct;
 import forestry.api.core.IProductProducer;
 import forestry.api.core.ISpecialtyProducer;
 import forestry.api.genetics.IGenome;
-import forestry.api.genetics.alleles.IRegistryAlleleValue;
 import forestry.api.genetics.alleles.TreeChromosomes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -23,7 +22,12 @@ import java.util.List;
 /**
  * Provides all information that is needed to spawn a fruit leaves / pod block in the world.
  */
-public interface IFruit extends IRegistryAlleleValue, IProductProducer, ISpecialtyProducer {
+public interface IFruit extends IProductProducer, ISpecialtyProducer {
+	/**
+	 * @return Whether the allele for this value is dominant or recessive.
+	 */
+	boolean isDominant();
+
 	/**
 	 * Returns the color of the fruit spite based on the ripening time of the fruit.
 	 *

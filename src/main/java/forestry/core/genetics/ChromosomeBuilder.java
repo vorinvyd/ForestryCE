@@ -1,39 +1,34 @@
 package forestry.core.genetics;
 
-import com.google.common.collect.ImmutableSet;
-import forestry.api.genetics.alleles.IAllele;
+import forestry.api.genetics.alleles.Allele;
 import forestry.api.genetics.alleles.IChromosome;
 import forestry.api.plugin.IChromosomeBuilder;
+import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nullable;
-import java.util.List;
 
-public class ChromosomeBuilder<A extends IAllele> implements IChromosomeBuilder<A> {
-	final IChromosome<A> chromosome;
-	final ImmutableSet.Builder<A> alleles;
+public class ChromosomeBuilder<V> implements IChromosomeBuilder<V> {
+	final IChromosome<V> chromosome;
+	// Exactly one of these is set: an eager data default, or a reference default ID resolved lazily.
 	@Nullable
-	A defaultAllele;
+	Allele<V> defaultAllele;
+	@Nullable
+	ResourceLocation defaultReferenceId;
 	boolean weaklyInherited;
 
-	public ChromosomeBuilder(IChromosome<A> chromosome) {
+	public ChromosomeBuilder(IChromosome<V> chromosome) {
 		this.chromosome = chromosome;
-		this.alleles = ImmutableSet.builder();
 	}
 
 	@Override
-	public IChromosomeBuilder<A> addAlleles(List<A> alleles) {
-		this.alleles.addAll(alleles);
-		return this;
-	}
-
-	@Override
-	public IChromosomeBuilder<A> setDefault(A allele) {
+	public IChromosomeBuilder<V> setDefault(Allele<V> allele) {
 		this.defaultAllele = allele;
+		this.defaultReferenceId = null;
 		return this;
 	}
 
 	@Override
-	public IChromosomeBuilder<A> setWeaklyInherited(boolean weaklyInherited) {
+	public IChromosomeBuilder<V> setWeaklyInherited(boolean weaklyInherited) {
 		this.weaklyInherited = weaklyInherited;
 		return this;
 	}

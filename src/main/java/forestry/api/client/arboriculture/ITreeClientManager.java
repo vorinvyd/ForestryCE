@@ -31,5 +31,11 @@ public interface ITreeClientManager {
 	 */
 	Pair<ResourceLocation, ResourceLocation> getSaplingModels(ITreeSpecies species);
 
+	/**
+	 * @return The block+item sapling model pair used when a species has no registered pair (defaults to oak's). Never
+	 * requires the species list, so it is safe before/after a datapack species reload.
+	 */
+	Pair<ResourceLocation, ResourceLocation> getDefaultSaplingModels();
+
 	Collection<Pair<ResourceLocation, ResourceLocation>> getAllSaplingModels();
 }

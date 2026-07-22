@@ -2,68 +2,144 @@
   "type": "forestry:centrifuge",
   "id": "forestry:centrifuge/amber_drone",
   "input": {
-    "item": "forestry:amber_drone"
+    "item": "forestry:amber_drone_fossil"
   },
   "products": [
     {
       "chance": 0.25,
-      "item": "forestry:bee_drone_ge",
+      "item": "forestry:drone_bee",
       "tag": {
         "forestry:bee_generation": 0,
         "forestry:bee_pristine": true,
         "forestry:genome": {
           "genome": {
             "forestry:activity": {
-              "active": "forestry:activity_diurnal",
-              "inactive": "forestry:activity_diurnal"
+              "active": {
+                "dominant": true,
+                "value": "forestry:activity_diurnal"
+              },
+              "inactive": {
+                "dominant": true,
+                "value": "forestry:activity_diurnal"
+              }
             },
             "forestry:bee_effect": {
-              "active": "forestry:bee_effect_rejuvenation",
-              "inactive": "forestry:bee_effect_rejuvenation"
+              "active": {
+                "value": "forestry:bee_effect_rejuvenation"
+              },
+              "inactive": {
+                "value": "forestry:bee_effect_rejuvenation"
+              }
             },
             "forestry:bee_species": {
-              "active": "forestry:bee_relic",
-              "inactive": "forestry:bee_relic"
+              "active": {
+                "value": "forestry:relic"
+              },
+              "inactive": {
+                "value": "forestry:relic"
+              }
             },
             "forestry:cave_dwelling": {
-              "active": "forestry:falsed",
-              "inactive": "forestry:falsed"
+              "active": {
+                "dominant": true,
+                "value": false
+              },
+              "inactive": {
+                "dominant": true,
+                "value": false
+              }
             },
             "forestry:fertility": {
-              "active": "forestry:1id",
-              "inactive": "forestry:1id"
+              "active": {
+                "dominant": true,
+                "value": 1
+              },
+              "inactive": {
+                "dominant": true,
+                "value": 1
+              }
             },
             "forestry:flower_type": {
-              "active": "forestry:flower_type_ancient",
-              "inactive": "forestry:flower_type_ancient"
+              "active": {
+                "dominant": true,
+                "value": "forestry:flower_type_ancient"
+              },
+              "inactive": {
+                "dominant": true,
+                "value": "forestry:flower_type_ancient"
+              }
             },
             "forestry:humidity_tolerance": {
-              "active": "forestry:tolerance_none",
-              "inactive": "forestry:tolerance_none"
+              "active": {
+                "value": "NONE"
+              },
+              "inactive": {
+                "value": "NONE"
+              }
             },
             "forestry:lifespan": {
-              "active": "forestry:2147483647i",
-              "inactive": "forestry:2147483647i"
+              "active": {
+                "value": 2147483647
+              },
+              "inactive": {
+                "value": 2147483647
+              }
             },
             "forestry:pollination": {
-              "active": "forestry:5id",
-              "inactive": "forestry:5id"
+              "active": {
+                "dominant": true,
+                "value": 5
+              },
+              "inactive": {
+                "dominant": true,
+                "value": 5
+              }
             },
             "forestry:speed": {
-              "active": "forestry:0.3fd",
-              "inactive": "forestry:0.3fd"
+              "active": {
+                "dominant": true,
+                "value": 0.3
+              },
+              "inactive": {
+                "dominant": true,
+                "value": 0.3
+              }
             },
             "forestry:temperature_tolerance": {
-              "active": "forestry:tolerance_down_1d",
-              "inactive": "forestry:tolerance_down_1d"
+              "active": {
+                "dominant": true,
+                "value": "DOWN_1"
+              },
+              "inactive": {
+                "dominant": true,
+                "value": "DOWN_1"
+              }
             },
             "forestry:territory": {
-              "active": "forestry:9_6_9",
-              "inactive": "forestry:9_6_9"
+              "active": {
+                "value": [
+                  9,
+                  6,
+                  9
+                ]
+              },
+              "inactive": {
+                "value": [
+                  9,
+                  6,
+                  9
+                ]
+              }
             },
             "forestry:tolerates_rain": {
-              "active": "forestry:falsed",
-              "inactive": "forestry:falsed"
+              "active": {
+                "dominant": true,
+                "value": false
+              },
+              "inactive": {
+                "dominant": true,
+                "value": false
+              }
             }
           },
           "karyotype": "forestry:bee_species"

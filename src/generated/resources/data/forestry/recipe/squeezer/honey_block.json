@@ -3,8 +3,10 @@
   "chance": 0.0,
   "id": "forestry:squeezer/honey_block",
   "output": {
-    "amount": 800,
-    "id": "forestry:honey"
+    "stack": {
+      "amount": 800,
+      "id": "forestry:honey"
+    }
   },
   "resources": [
     {

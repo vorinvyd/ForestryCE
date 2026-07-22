@@ -1,0 +1,35 @@
+{
+  "genome": {
+    "forestry:butterfly_lifespan": {
+      "dominant": true,
+      "value": 20
+    },
+    "forestry:fertility": {
+      "value": 10
+    },
+    "forestry:humidity_tolerance": {
+      "dominant": true,
+      "value": "DOWN_1"
+    },
+    "forestry:metabolism": {
+      "value": 8
+    },
+    "forestry:size": {
+      "value": 0.75
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.6
+    },
+    "forestry:temperature_tolerance": {
+      "dominant": true,
+      "value": "DOWN_1"
+    }
+  },
+  "genus": "papilio",
+  "humidity": "damp",
+  "rarity": 1.0,
+  "serum_color": 15393673,
+  "species": "demodocus",
+  "temperature": "warm"
+}

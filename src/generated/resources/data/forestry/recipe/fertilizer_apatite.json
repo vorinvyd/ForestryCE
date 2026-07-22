@@ -6,7 +6,7 @@
       "tag": "minecraft:sand"
     },
     "X": {
-      "tag": "forge:gems/apatite"
+      "tag": "c:gems/apatite"
     }
   },
   "pattern": [
@@ -16,6 +16,6 @@
   ],
   "result": {
     "count": 8,
-    "id": "forestry:fertilizer_compound"
+    "id": "forestry:fertilizer"
   }
 }

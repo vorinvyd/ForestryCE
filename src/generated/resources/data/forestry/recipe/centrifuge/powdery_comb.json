@@ -2,7 +2,7 @@
   "type": "forestry:centrifuge",
   "id": "forestry:centrifuge/powdery_comb",
   "input": {
-    "item": "forestry:bee_comb_powdery"
+    "item": "forestry:powdery_comb"
   },
   "products": [
     {

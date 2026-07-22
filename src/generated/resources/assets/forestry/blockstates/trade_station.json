@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "forestry:block/trade_station",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "forestry:block/trade_station"
+    },
+    "facing=south": {
+      "model": "forestry:block/trade_station",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "forestry:block/trade_station",
+      "y": 270
+    }
+  }
+}

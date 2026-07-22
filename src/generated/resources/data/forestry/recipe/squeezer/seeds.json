@@ -3,8 +3,10 @@
   "chance": 0.0,
   "id": "forestry:squeezer/seeds",
   "output": {
-    "amount": 10,
-    "id": "forestry:seed_oil"
+    "stack": {
+      "amount": 10,
+      "id": "forestry:seed_oil"
+    }
   },
   "resources": [
     {

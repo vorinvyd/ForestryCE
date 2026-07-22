@@ -1,0 +1,30 @@
+{
+  "authority": "EnderiumSmith",
+  "body": 10101539,
+  "genome": {
+    "forestry:bee_effect": {
+      "value": "forestry:bee_effect_aggressive"
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 1.2
+    }
+  },
+  "genus": "irata",
+  "humidity": "arid",
+  "outline": 16690285,
+  "products": [
+    {
+      "chance": 0.55,
+      "item": "forestry:simmering_comb"
+    }
+  ],
+  "specialties": [
+    {
+      "chance": 0.05,
+      "item": "forestry:pollen_cluster"
+    }
+  ],
+  "species": "invida",
+  "temperature": "hellish"
+}

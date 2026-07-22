@@ -5,6 +5,7 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import forestry.api.arboriculture.ITreeSpecies;
+import forestry.api.arboriculture.genetics.IFruit;
 import forestry.api.arboriculture.genetics.ITree;
 import forestry.api.arboriculture.genetics.ITreeEffect;
 import forestry.api.arboriculture.genetics.ITreeSpeciesType;
@@ -50,7 +51,7 @@ public class Tree extends Individual<ITreeSpecies, ITree, ITreeSpeciesType> impl
 	/* EFFECTS */
 	@Override
 	public IEffectData[] doEffect(IEffectData[] storedData, Level level, BlockPos pos) {
-		ITreeEffect effect = this.genome.getActiveValue(TreeChromosomes.EFFECT);
+		ITreeEffect effect = this.genome.resolveActive(TreeChromosomes.EFFECT);
 
 		storedData[0] = doEffect(effect, storedData[0], level, pos);
 
@@ -59,7 +60,7 @@ public class Tree extends Individual<ITreeSpecies, ITree, ITreeSpeciesType> impl
 			return storedData;
 		}
 
-		ITreeEffect secondary = this.genome.getInactiveValue(TreeChromosomes.EFFECT);
+		ITreeEffect secondary = this.genome.resolveInactive(TreeChromosomes.EFFECT);
 		if (!secondary.isCombinable()) {
 			return storedData;
 		}
@@ -134,21 +135,25 @@ public class Tree extends Individual<ITreeSpecies, ITree, ITreeSpeciesType> impl
 	/* PRODUCTION */
 	@Override
 	public boolean hasFruitLeaves() {
-		return this.genome.getActiveValue(TreeChromosomes.FRUIT).isFruitLeaf();
+		IFruit fruit = this.genome.resolveActive(TreeChromosomes.FRUIT);
+		return fruit.isFruitLeaf();
 	}
 
 	@Override
 	public List<IProduct> getProducts() {
-		return this.genome.getActiveValue(TreeChromosomes.FRUIT).getProducts();
+		IFruit fruit = this.genome.resolveActive(TreeChromosomes.FRUIT);
+		return fruit.getProducts();
 	}
 
 	@Override
 	public List<IProduct> getSpecialties() {
-		return this.genome.getActiveValue(TreeChromosomes.FRUIT).getSpecialty();
+		IFruit fruit = this.genome.resolveActive(TreeChromosomes.FRUIT);
+		return fruit.getSpecialty();
 	}
 
 	@Override
 	public List<ItemStack> produceStacks(Level level, BlockPos pos, int ripeningTime) {
-		return this.genome.getActiveValue(TreeChromosomes.FRUIT).getFruits(this.genome, level, ripeningTime);
+		IFruit fruit = this.genome.resolveActive(TreeChromosomes.FRUIT);
+		return fruit.getFruits(this.genome, level, ripeningTime);
 	}
 }

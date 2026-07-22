@@ -19,8 +19,9 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 
-import forestry.api.core.Product;
+import forestry.api.core.IProduct;
 import forestry.api.recipes.ICentrifugeRecipe;
+import forestry.core.genetics.ProductTypes;
 import forestry.factory.features.FactoryRecipeTypes;
 
 public class CentrifugeRecipe implements ICentrifugeRecipe {
@@ -28,22 +29,22 @@ public class CentrifugeRecipe implements ICentrifugeRecipe {
 		ResourceLocation.CODEC.fieldOf("id").forGetter(CentrifugeRecipe::getId),
 		Codec.INT.fieldOf("time").forGetter(CentrifugeRecipe::getProcessingTime),
 		Ingredient.CODEC_NONEMPTY.fieldOf("input").forGetter(CentrifugeRecipe::getInput),
-		Product.CODEC.listOf().fieldOf("products").forGetter(CentrifugeRecipe::getAllProducts)
+		ProductTypes.LIST_CODEC.fieldOf("products").forGetter(CentrifugeRecipe::getAllProducts)
 	).apply(instance, CentrifugeRecipe::new));
 	private static final StreamCodec<RegistryFriendlyByteBuf, CentrifugeRecipe> STREAM_CODEC = StreamCodec.composite(
 		ResourceLocation.STREAM_CODEC, CentrifugeRecipe::getId,
 		ByteBufCodecs.INT, CentrifugeRecipe::getProcessingTime,
 		Ingredient.CONTENTS_STREAM_CODEC, CentrifugeRecipe::getInput,
-		Product.STREAM_CODEC.apply(ByteBufCodecs.list()), CentrifugeRecipe::getAllProducts,
+		ProductTypes.LIST_STREAM_CODEC, CentrifugeRecipe::getAllProducts,
 		CentrifugeRecipe::new
 	);
 
 	private final ResourceLocation id;
 	private final int processingTime;
 	private final Ingredient input;
-	private final List<Product> products;
+	private final List<IProduct> products;
 
-	public CentrifugeRecipe(ResourceLocation id, int processingTime, Ingredient input, List<Product> products) {
+	public CentrifugeRecipe(ResourceLocation id, int processingTime, Ingredient input, List<IProduct> products) {
 		Preconditions.checkNotNull(id, "Recipe identifier cannot be null");
 
 		this.id = id;
@@ -66,13 +67,15 @@ public class CentrifugeRecipe implements ICentrifugeRecipe {
 	public List<ItemStack> getProducts(RandomSource random, double outputMult) {
 		ArrayList<ItemStack> products = new ArrayList<>();
 
-		for (Product entry : this.products) {
+		for (IProduct entry : this.products) {
 			double probability = entry.chance() * outputMult;
 
-			if (probability >= 1.0) {
-				products.add(entry.createStack());
-			} else if (random.nextFloat() < probability) {
-				products.add(entry.createStack());
+			if (probability >= 1.0 || random.nextFloat() < probability) {
+				// Dynamic products (e.g. a tag that no loaded mod fills) can yield an empty stack; skip those.
+				ItemStack stack = entry.createRandomStack(random);
+				if (!stack.isEmpty()) {
+					products.add(stack);
+				}
 			}
 		}
 
@@ -80,7 +83,7 @@ public class CentrifugeRecipe implements ICentrifugeRecipe {
 	}
 
 	@Override
-	public List<Product> getAllProducts() {
+	public List<IProduct> getAllProducts() {
 		return this.products;
 	}
 

@@ -1,0 +1,16 @@
+{
+  "escritoire_color": 7752018,
+  "genome": {
+    "forestry:fruits": {
+      "value": "forestry:fruit_cocoa"
+    },
+    "forestry:height": {
+      "value": 1.5
+    },
+    "forestry:maturation": {
+      "value": 3
+    }
+  },
+  "genus": "theobroma",
+  "species": "cacao"
+}

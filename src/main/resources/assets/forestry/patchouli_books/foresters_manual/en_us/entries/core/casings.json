@@ -1,16 +1,16 @@
 {
-  "icon": "forestry:sturdy_machine",
+  "icon": "forestry:sturdy_casing",
   "name": "for.gui.book.patchouli.entry.core.casings",
   "category": "forestry:core",
   "pages": [
     {
       "type": "crafting",
-      "recipe": "forestry:sturdy_machine",
+      "recipe": "forestry:sturdy_casing",
       "text": "for.gui.book.patchouli.entry.core.casings1"
     },
     {
       "type": "forestry:carpenter/double",
-      "item": "forestry:hardened_machine",
+      "item": "forestry:hardened_casing",
       "item2": "forestry:impregnated_casing"
     },
     {

@@ -1,0 +1,16 @@
+{
+  "dominant": true,
+  "genome": {
+    "forestry:size": {
+      "value": 0.4
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.6
+    }
+  },
+  "genus": "speyeria",
+  "rarity": 0.6,
+  "serum_color": 16755717,
+  "species": "diana"
+}

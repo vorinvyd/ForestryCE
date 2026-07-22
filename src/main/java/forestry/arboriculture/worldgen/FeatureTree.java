@@ -1,6 +1,7 @@
 package forestry.arboriculture.worldgen;
 
 import forestry.api.arboriculture.ITreeGenData;
+import forestry.api.arboriculture.genetics.IFruit;
 import forestry.api.genetics.IGenome;
 import forestry.api.genetics.alleles.TreeChromosomes;
 import forestry.core.worldgen.FeatureHelper;
@@ -51,7 +52,8 @@ public abstract class FeatureTree extends FeatureArboriculture {
 
 	@Override
 	protected void generateExtras(IGenome genome, LevelAccessor level, RandomSource rand, BlockPos startPos, TreeContour contour) {
-		if (genome.getActiveValue(TreeChromosomes.FRUIT).requiresFruitBlocks()) {
+		IFruit fruit = genome.resolveActive(TreeChromosomes.FRUIT);
+		if (fruit.requiresFruitBlocks()) {
 			FeatureHelper.generatePods(genome, level, rand, startPos, this.height, minPodHeight, this.girth, contour, FeatureHelper.EnumReplaceMode.AIR);
 		}
 	}

@@ -4,6 +4,12 @@ import forestry.apiculture.network.packets.PacketAlvearyChange;
 import forestry.apiculture.network.packets.PacketBeeLogicActive;
 import forestry.apiculture.network.packets.PacketHabitatBiomePointer;
 import forestry.arboriculture.network.PacketRipeningUpdate;
+import forestry.core.network.packets.BeeSpeciesSyncPacket;
+import forestry.core.network.packets.ButterflySpeciesSyncPacket;
+import forestry.core.network.packets.BeeEffectSyncPacket;
+import forestry.core.network.packets.FlowerTypeSyncPacket;
+import forestry.core.network.packets.TaxonSyncPacket;
+import forestry.core.network.packets.TreeSpeciesSyncPacket;
 import forestry.core.network.packets.PacketActiveUpdate;
 import forestry.core.network.packets.PacketErrorUpdate;
 import forestry.core.network.packets.PacketGenomeTrackerSync;
@@ -55,8 +61,15 @@ public class PacketIdClient {
 	public static final CustomPacketPayload.Type<PacketBeeLogicActive> BEE_LOGIC_ACTIVE = type("bee_logic_active");
 	public static final CustomPacketPayload.Type<PacketHabitatBiomePointer> HABITAT_BIOME_POINTER = type("habitat_biome_pointer");
 	public static final CustomPacketPayload.Type<PacketAlvearyChange> ALVEARY_CONTROLLER_CHANGE = type("alveary_controller_change");
+	public static final CustomPacketPayload.Type<BeeSpeciesSyncPacket> BEE_SPECIES_SYNC = type("bee_species_sync");
+	public static final CustomPacketPayload.Type<FlowerTypeSyncPacket> FLOWER_TYPE_SYNC = type("flower_type_sync");
+	public static final CustomPacketPayload.Type<BeeEffectSyncPacket> BEE_EFFECT_SYNC = type("bee_effect_sync");
+	public static final CustomPacketPayload.Type<TaxonSyncPacket> TAXON_SYNC = type("taxon_sync");
 	// Arboriculture
 	public static final CustomPacketPayload.Type<PacketRipeningUpdate> RIPENING_UPDATE = type("ripening_update");
+	public static final CustomPacketPayload.Type<TreeSpeciesSyncPacket> TREE_SPECIES_SYNC = type("tree_species_sync");
+	// Lepidopterology
+	public static final CustomPacketPayload.Type<ButterflySpeciesSyncPacket> BUTTERFLY_SPECIES_SYNC = type("butterfly_species_sync");
 	// Mail
 	public static final CustomPacketPayload.Type<PacketTraderAddressResponse> TRADING_ADDRESS_RESPONSE = type("trading_address_response");
 	public static final CustomPacketPayload.Type<PacketLetterInfoResponsePlayer> LETTER_INFO_RESPONSE_PLAYER = type("letter_info_response_player");

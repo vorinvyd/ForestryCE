@@ -86,7 +86,7 @@ public final class ForestryLeafType implements IBlockSubtype {
 	}
 
 	public void setSpecies(ITreeSpecies species) {
-		this.fruit = species.getDefaultGenome().getActiveValue(TreeChromosomes.FRUIT);
+		this.fruit = species.getDefaultGenome().resolveActive(TreeChromosomes.FRUIT);
 		this.individual = species.createIndividual();
 	}
 

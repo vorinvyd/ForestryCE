@@ -1,0 +1,29 @@
+{
+  "type": "forestry:carpenter",
+  "box": {
+    "item": "forestry:crate"
+  },
+  "id": "forestry:carpenter/crates/pack/forestry/tin_ingot",
+  "liquid": {
+    "amount": 100,
+    "id": "minecraft:water"
+  },
+  "recipe": {
+    "category": "misc",
+    "key": {
+      "#": {
+        "tag": "c:ingots/tin"
+      }
+    },
+    "pattern": [
+      "###",
+      "###",
+      "###"
+    ],
+    "result": {
+      "count": 1,
+      "id": "forestry:crated_tin"
+    }
+  },
+  "time": 5
+}

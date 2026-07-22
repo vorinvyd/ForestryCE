@@ -6,12 +6,12 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "forestry:kit_pickaxe",
+          "name": "forestry:pickaxe_kit",
           "weight": 30
         },
         {
           "type": "minecraft:item",
-          "name": "forestry:kit_shovel",
+          "name": "forestry:shovel_kit",
           "weight": 10
         },
         {

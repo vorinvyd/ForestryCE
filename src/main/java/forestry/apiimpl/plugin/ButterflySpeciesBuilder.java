@@ -22,8 +22,8 @@ public class ButterflySpeciesBuilder extends SpeciesBuilder<IButterflySpeciesTyp
 	@Nullable
 	private TagKey<Biome> spawnBiomes = null;
 
-	public ButterflySpeciesBuilder(ResourceLocation id, String genus, String species, MutationsRegistration mutations) {
-		super(id, genus, species, mutations);
+	public ButterflySpeciesBuilder(ResourceLocation id, String genus, String species) {
+		super(id, genus, species);
 	}
 
 	@Override

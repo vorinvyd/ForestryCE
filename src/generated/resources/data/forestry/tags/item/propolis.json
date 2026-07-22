@@ -1,7 +1,7 @@
 {
   "values": [
-    "forestry:propolis_normal",
-    "forestry:propolis_pulsating",
-    "forestry:propolis_silky"
+    "forestry:propolis",
+    "forestry:pulsating_propolis",
+    "forestry:silky_propolis"
   ]
 }

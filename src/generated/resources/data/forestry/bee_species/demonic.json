@@ -1,0 +1,31 @@
+{
+  "body": 10101539,
+  "genome": {
+    "forestry:bee_effect": {
+      "value": "forestry:bee_effect_ignition"
+    },
+    "forestry:lifespan": {
+      "value": 60
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.6
+    }
+  },
+  "genus": "diapis",
+  "glint": true,
+  "humidity": "arid",
+  "outline": 16049152,
+  "products": [
+    {
+      "chance": 0.45,
+      "item": "forestry:simmering_comb"
+    },
+    {
+      "chance": 0.15,
+      "item": "minecraft:glowstone_dust"
+    }
+  ],
+  "species": "draco",
+  "temperature": "hellish"
+}

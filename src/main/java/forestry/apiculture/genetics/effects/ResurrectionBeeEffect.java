@@ -1,30 +1,61 @@
 package forestry.apiculture.genetics.effects;
 
-import forestry.api.apiculture.IBeeHousing;
-import forestry.api.genetics.IEffectData;
-import forestry.api.genetics.IGenome;
-import forestry.core.utils.EntityUtil;
-import forestry.core.utils.ItemStackUtil;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.boss.enderdragon.phases.EnderDragonPhase;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.function.Consumer;
+import forestry.api.apiculture.IBeeHousing;
+import forestry.api.apiculture.genetics.IBeeEffect;
+import forestry.api.genetics.IEffectData;
+import forestry.api.genetics.IGenome;
+import forestry.core.utils.EntityUtil;
+import forestry.core.utils.ItemStackUtil;
 
-// Finds mob drops on the floor and resurrects them into their creature counterparts. Even works on the Dragon Egg!
+/**
+ * The {@code forestry:resurrect} primitive: finds mob drops on the floor and resurrects them into their creature
+ * counterparts, consuming one item per resurrection. Even works on the Dragon Egg!
+ * <p>
+ * The item&rarr;mob table is a datapack parameter, so the two built-ins that share this behaviour differ only by their
+ * list: {@code REANIMATION} (bones/flesh &rarr; skeletons/zombies/blazes) and {@code RESURRECTION} (gunpowder, ender
+ * pearls, the dragon egg &rarr; creepers, endermen, the Ender Dragon). Both are datapack-defined by
+ * {@code BeeEffectProvider} from {@link #getReanimationList()} / {@link #getResurrectionList()}.
+ */
 public class ResurrectionBeeEffect extends ThrottledBeeEffect {
-	private final List<Resurrectable<? extends Mob>> resurrectables;
+	public static final MapCodec<ResurrectionBeeEffect> MAP_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+		ThrottleSettings.codec(40, true, true).forGetter(ThrottledBeeEffect::settings),
+		Resurrectable.CODEC.listOf().fieldOf("entries").forGetter(effect -> effect.resurrectables)
+	).apply(instance, ResurrectionBeeEffect::new));
 
-	public ResurrectionBeeEffect(List<Resurrectable<? extends Mob>> resurrectables) {
-		super(true, 40, true, true);
-		this.resurrectables = resurrectables;
+	private final List<Resurrectable> resurrectables;
+
+	public ResurrectionBeeEffect(boolean dominant, int throttle, List<Resurrectable> resurrectables) {
+		this(new ThrottleSettings(dominant, throttle, true, true), resurrectables);
+	}
+
+	public ResurrectionBeeEffect(ThrottleSettings settings, List<Resurrectable> resurrectables) {
+		super(settings);
+		// Copied into a mutable list: doEffectThrottled shuffles it in place, and a codec-decoded list is immutable.
+		this.resurrectables = new ArrayList<>(resurrectables);
+	}
+
+	@Override
+	public MapCodec<? extends IBeeEffect> codec() {
+		return MAP_CODEC;
 	}
 
 	@Override
@@ -51,8 +82,8 @@ public class ResurrectionBeeEffect extends ThrottledBeeEffect {
 		}
 
 		ItemStack contained = entity.getItem();
-		for (Resurrectable<? extends Mob> entry : this.resurrectables) {
-			if (ItemStackUtil.isIdenticalItem(entry.res, contained)) {
+		for (Resurrectable entry : this.resurrectables) {
+			if (entry.matches(contained)) {
 				if (entry.spawnAndTransform(entity)) {
 					contained.shrink(1);
 
@@ -68,52 +99,55 @@ public class ResurrectionBeeEffect extends ThrottledBeeEffect {
 		return false;
 	}
 
-	public static List<Resurrectable<? extends Mob>> getReanimationList() {
-		ArrayList<Resurrectable<? extends Mob>> list = new ArrayList<>();
-		list.add(new Resurrectable<>(new ItemStack(Items.BONE), EntityType.SKELETON));
-		list.add(new Resurrectable<>(new ItemStack(Items.ARROW), EntityType.SKELETON));
-		list.add(new Resurrectable<>(new ItemStack(Items.ROTTEN_FLESH), EntityType.ZOMBIE));
-		list.add(new Resurrectable<>(new ItemStack(Items.BLAZE_ROD), EntityType.BLAZE));
+	public static List<Resurrectable> getReanimationList() {
+		List<Resurrectable> list = new ArrayList<>();
+		list.add(new Resurrectable(Items.BONE, EntityType.SKELETON));
+		list.add(new Resurrectable(Items.ARROW, EntityType.SKELETON));
+		list.add(new Resurrectable(Items.ROTTEN_FLESH, EntityType.ZOMBIE));
+		list.add(new Resurrectable(Items.BLAZE_ROD, EntityType.BLAZE));
 		return list;
 	}
 
-	public static List<Resurrectable<? extends Mob>> getResurrectionList() {
-		ArrayList<Resurrectable<?>> list = new ArrayList<>();
-		list.add(new Resurrectable<>(new ItemStack(Items.GUNPOWDER), EntityType.CREEPER));
-		list.add(new Resurrectable<>(new ItemStack(Items.ENDER_PEARL), EntityType.ENDERMAN));
-		list.add(new Resurrectable<>(new ItemStack(Items.STRING), EntityType.SPIDER));
-		list.add(new Resurrectable<>(new ItemStack(Items.SPIDER_EYE), EntityType.SPIDER));
-		list.add(new Resurrectable<>(new ItemStack(Items.STRING), EntityType.CAVE_SPIDER));
-		list.add(new Resurrectable<>(new ItemStack(Items.SPIDER_EYE), EntityType.CAVE_SPIDER));
-		list.add(new Resurrectable<>(new ItemStack(Items.GHAST_TEAR), EntityType.GHAST));
-		list.add(new Resurrectable<>(new ItemStack(Blocks.DRAGON_EGG), EntityType.ENDER_DRAGON, dragon -> dragon.getPhaseManager().setPhase(EnderDragonPhase.HOLDING_PATTERN)));
+	public static List<Resurrectable> getResurrectionList() {
+		List<Resurrectable> list = new ArrayList<>();
+		list.add(new Resurrectable(Items.GUNPOWDER, EntityType.CREEPER));
+		list.add(new Resurrectable(Items.ENDER_PEARL, EntityType.ENDERMAN));
+		list.add(new Resurrectable(Items.STRING, EntityType.SPIDER));
+		list.add(new Resurrectable(Items.SPIDER_EYE, EntityType.SPIDER));
+		list.add(new Resurrectable(Items.STRING, EntityType.CAVE_SPIDER));
+		list.add(new Resurrectable(Items.SPIDER_EYE, EntityType.CAVE_SPIDER));
+		list.add(new Resurrectable(Items.GHAST_TEAR, EntityType.GHAST));
+		list.add(new Resurrectable(Blocks.DRAGON_EGG.asItem(), EntityType.ENDER_DRAGON));
 		return list;
 	}
 
-	public static class Resurrectable<T extends Mob> {
-		private final ItemStack res;
-		private final EntityType<T> risen;
-		private final Consumer<T> risenTransformer;
+	/**
+	 * One item&rarr;mob mapping. The dropped item must match {@link #item} exactly (item and components), matching the
+	 * historical {@code new ItemStack(item)} comparison.
+	 */
+	public record Resurrectable(Item item, EntityType<?> entity) {
+		public static final Codec<Resurrectable> CODEC = RecordCodecBuilder.create(inst -> inst.group(
+			BuiltInRegistries.ITEM.byNameCodec().fieldOf("item").forGetter(Resurrectable::item),
+			BuiltInRegistries.ENTITY_TYPE.byNameCodec().fieldOf("entity").forGetter(Resurrectable::entity)
+		).apply(inst, Resurrectable::new));
 
-		private Resurrectable(ItemStack res, EntityType<T> risen) {
-			this(res, risen, e -> {
-			});
+		private boolean matches(ItemStack stack) {
+			return ItemStackUtil.isIdenticalItem(new ItemStack(this.item), stack);
 		}
 
-		private Resurrectable(ItemStack res, EntityType<T> risen, Consumer<T> risenTransformer) {
-			this.res = res;
-			this.risen = risen;
-			this.risenTransformer = risenTransformer;
-		}
-
-
-		private boolean spawnAndTransform(ItemEntity entity) {
-			T spawnedEntity = EntityUtil.spawnEntity(entity.level(), this.risen, entity.getX(), entity.getY(), entity.getZ());
-			if (spawnedEntity != null) {
-				this.risenTransformer.accept(spawnedEntity);
-				return true;
+		private boolean spawnAndTransform(ItemEntity at) {
+			// Entries are always mobs (see the built-in lists); EntityUtil#spawnEntity requires EntityType<? extends Mob>.
+			@SuppressWarnings("unchecked")
+			EntityType<? extends Mob> mobType = (EntityType<? extends Mob>) this.entity;
+			Mob spawned = EntityUtil.spawnEntity(at.level(), mobType, at.getX(), at.getY(), at.getZ());
+			if (spawned == null) {
+				return false;
 			}
-			return false;
+			// Resurrected dragons patrol rather than hover in place (preserves the historical dragon-egg behaviour).
+			if (spawned instanceof EnderDragon dragon) {
+				dragon.getPhaseManager().setPhase(EnderDragonPhase.HOLDING_PATTERN);
+			}
+			return true;
 		}
 	}
 }

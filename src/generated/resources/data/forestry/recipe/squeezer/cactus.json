@@ -3,8 +3,10 @@
   "chance": 0.0,
   "id": "forestry:squeezer/cactus",
   "output": {
-    "amount": 500,
-    "id": "minecraft:water"
+    "stack": {
+      "amount": 500,
+      "id": "minecraft:water"
+    }
   },
   "resources": [
     {

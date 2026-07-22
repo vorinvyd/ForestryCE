@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "forestry:block/mailbox.0",
+    "east": "forestry:block/mailbox.2",
+    "north": "forestry:block/mailbox.2",
+    "particle": "forestry:block/mailbox.2",
+    "south": "forestry:block/mailbox.2",
+    "up": "forestry:block/mailbox.1",
+    "west": "forestry:block/mailbox.2"
+  }
+}

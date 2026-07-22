@@ -8,9 +8,9 @@ import forestry.core.tiles.TileNaturalistChest;
 import forestry.modules.features.FeatureTileType;
 
 public enum NaturalistChestBlockType implements IBlockType {
-	APIARIST_CHEST("bee_chest", CoreTiles.APIARIST_CHEST),
-	ARBORIST_CHEST("tree_chest", CoreTiles.ARBORIST_CHEST),
-	LEPIDOPTERIST_CHEST("butterfly_chest", CoreTiles.LEPIDOPTERIST_CHEST);
+	APIARIST_CHEST("apiarists_chest", CoreTiles.APIARIST_CHEST),
+	ARBORIST_CHEST("arborists_chest", CoreTiles.ARBORIST_CHEST),
+	LEPIDOPTERIST_CHEST("lepidopterists_chest", CoreTiles.LEPIDOPTERIST_CHEST);
 
 	private final MachineProperties<?> machineProperties;
 

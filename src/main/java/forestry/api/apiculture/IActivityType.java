@@ -1,7 +1,6 @@
 package forestry.api.apiculture;
 
 import forestry.api.core.IError;
-import forestry.api.genetics.alleles.IRegistryAlleleValue;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.storage.LevelData;
@@ -11,11 +10,16 @@ import net.minecraft.world.level.storage.LevelData;
  *
  * @see ForestryActivityTypes For the default activity types added by Forestry.
  */
-public interface IActivityType extends IRegistryAlleleValue {
+public interface IActivityType {
 	/**
 	 * @since 2.6.1 The hardcoded time used to represent night time.
 	 */
 	long NIGHT_TIME = 15000L;
+
+	/**
+	 * @return Whether the allele for this value is dominant or recessive.
+	 */
+	boolean isDominant();
 
 	/**
 	 * Determines whether this bee can be active and work at the current time of day.

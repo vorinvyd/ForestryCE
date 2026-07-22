@@ -1,0 +1,13 @@
+{
+  "dominant": true,
+  "genus": "paludapis",
+  "humidity": "damp",
+  "outline": 5531174,
+  "products": [
+    {
+      "chance": 0.3,
+      "item": "forestry:mossy_comb"
+    }
+  ],
+  "species": "adorasti"
+}

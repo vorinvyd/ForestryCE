@@ -1,0 +1,38 @@
+{
+  "authority": "EnderiumSmith",
+  "dominant": true,
+  "genome": {
+    "forestry:lifespan": {
+      "dominant": true,
+      "value": 30
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.6
+    },
+    "forestry:territory": {
+      "value": [
+        11,
+        8,
+        11
+      ]
+    }
+  },
+  "genus": "afrapis",
+  "humidity": "arid",
+  "outline": 11554319,
+  "products": [
+    {
+      "chance": 0.2,
+      "item": "forestry:parched_comb"
+    }
+  ],
+  "specialties": [
+    {
+      "chance": 0.1,
+      "item": "minecraft:red_sand"
+    }
+  ],
+  "species": "scutellata",
+  "temperature": "warm"
+}

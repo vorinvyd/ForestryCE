@@ -1,0 +1,28 @@
+{
+  "genome": {
+    "forestry:lifespan": {
+      "value": 40
+    },
+    "forestry:pollination": {
+      "value": 25
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.6
+    }
+  },
+  "genus": "industrapis",
+  "glint": true,
+  "outline": 16777215,
+  "products": [
+    {
+      "chance": 0.2,
+      "item": "forestry:stringy_comb"
+    },
+    {
+      "chance": 0.15,
+      "item": "forestry:pollen_cluster"
+    }
+  ],
+  "species": "industria"
+}

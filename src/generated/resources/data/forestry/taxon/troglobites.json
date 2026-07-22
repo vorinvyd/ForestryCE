@@ -1,0 +1,21 @@
+{
+  "type": "forestry:bee_species",
+  "parent": "apidae",
+  "alleles": {
+    "forestry:activity": {
+      "value": "forestry:activity_cathemeral"
+    },
+    "forestry:cave_dwelling": {
+      "dominant": true,
+      "value": true
+    },
+    "forestry:fertility": {
+      "value": 3
+    },
+    "forestry:flower_type": {
+      "value": "forestry:flower_type_cave"
+    }
+  },
+  "name": "troglobites",
+  "rank": "genus"
+}

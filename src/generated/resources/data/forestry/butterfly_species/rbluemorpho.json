@@ -1,0 +1,22 @@
+{
+  "dominant": true,
+  "genome": {
+    "forestry:butterfly_lifespan": {
+      "dominant": true,
+      "value": 10
+    },
+    "forestry:fertility": {
+      "dominant": true,
+      "value": 2
+    },
+    "forestry:size": {
+      "value": 0.9
+    }
+  },
+  "genus": "morpho",
+  "humidity": "damp",
+  "rarity": 0.1,
+  "serum_color": 48888,
+  "species": "rhetenor",
+  "temperature": "warm"
+}

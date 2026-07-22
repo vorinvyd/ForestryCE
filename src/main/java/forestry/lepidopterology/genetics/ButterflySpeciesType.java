@@ -2,13 +2,13 @@ package forestry.lepidopterology.genetics;
 
 import com.google.common.collect.ImmutableMap;
 import com.mojang.authlib.GameProfile;
-import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import forestry.api.core.IProduct;
 import forestry.api.genetics.*;
-import forestry.api.genetics.alleles.ButterflyChromosomes;
 import forestry.api.genetics.alleles.IKaryotype;
 import forestry.api.genetics.capability.IIndividualHandlerItem;
+import forestry.api.lepidopterology.IButterflyCocoon;
+import forestry.api.lepidopterology.IButterflyEffect;
 import forestry.api.lepidopterology.IButterflyNursery;
 import forestry.api.lepidopterology.ILepidopteristTracker;
 import forestry.api.lepidopterology.genetics.ButterflyLifeStage;
@@ -45,27 +45,59 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class ButterflySpeciesType extends SpeciesType<IButterflySpecies, IButterfly> implements IButterflySpeciesType {
+	// Reference-value registries backing the cocoon and butterfly_effect chromosomes.
+	@Nullable
+	private ImmutableMap<ResourceLocation, IButterflyCocoon> cocoons;
+	@Nullable
+	private ImmutableMap<ResourceLocation, IButterflyEffect> butterflyEffects;
+
 	public ButterflySpeciesType(IKaryotype karyotype, ISpeciesTypeBuilder builder) {
 		super(ForestrySpeciesTypes.BUTTERFLY, karyotype, builder);
 	}
 
 	@Override
-	public Pair<ImmutableMap<ResourceLocation, IButterflySpecies>, IMutationManager<IButterflySpecies>> handleSpeciesRegistration(List<IForestryPlugin> plugins) {
+	public IButterflyCocoon getCocoon(ResourceLocation id) {
+		return requireValue(this.cocoons, id, "cocoon");
+	}
+
+	@Nullable
+	@Override
+	public IButterflyCocoon getCocoonSafe(ResourceLocation id) {
+		return valueSafe(this.cocoons, id);
+	}
+
+	@Override
+	public IButterflyEffect getButterflyEffect(ResourceLocation id) {
+		return requireValue(this.butterflyEffects, id, "butterfly effect");
+	}
+
+	@Nullable
+	@Override
+	public IButterflyEffect getButterflyEffectSafe(ResourceLocation id) {
+		return valueSafe(this.butterflyEffects, id);
+	}
+
+	@Override
+	public ImmutableMap<ResourceLocation, IButterflySpecies> handleSpeciesRegistration(List<IForestryPlugin> plugins) {
 		LepidopterologyRegistration registration = new LepidopterologyRegistration(this);
 
 		for (IForestryPlugin plugin : plugins) {
 			plugin.registerLepidopterology(registration);
 		}
 
-		ButterflyChromosomes.EFFECT.populate(registration.getEffects());
-		ButterflyChromosomes.COCOON.populate(registration.getCocoons());
+		// store the reference-value registries backing the cocoon and butterfly_effect chromosomes
+		this.butterflyEffects = registration.getEffects();
+		this.cocoons = registration.getCocoons();
 
-		return registration.buildAll();
+		// Butterfly species now come solely from the butterfly_species datapack loader (see
+		// GeneticsReloadHandler#rebuildButterflySpecies), populated by the real AddReloadListenerEvent/reload cycle
+		// once setup completes - not from the code-side builders collected above.
+		return ImmutableMap.of();
 	}
 
 	@Override
-	public void onSpeciesRegistered(ImmutableMap<ResourceLocation, IButterflySpecies> allSpecies, IMutationManager<IButterflySpecies> mutations) {
-		super.onSpeciesRegistered(allSpecies, mutations);
+	public void onSpeciesRegistered(ImmutableMap<ResourceLocation, IButterflySpecies> allSpecies) {
+		super.onSpeciesRegistered(allSpecies);
 
 		if (ModuleLepidopterology.spawnButterflysFromLeaves) {
 			SpeciesUtil.TREE_TYPE.get().registerLeafTickHandler(new ButterflySpawner());

@@ -1,7 +1,6 @@
 package forestry.apiculture;
 
 import com.google.common.base.Preconditions;
-import forestry.api.apiculture.IActivityType;
 import forestry.api.apiculture.IBeeHousing;
 import forestry.api.apiculture.IBeeJubilance;
 import forestry.api.apiculture.genetics.IBee;
@@ -14,7 +13,6 @@ import forestry.api.genetics.ClimateHelper;
 import forestry.api.genetics.IGenome;
 import forestry.api.genetics.alleles.BeeChromosomes;
 import forestry.api.genetics.alleles.ForestryAlleles;
-import forestry.api.genetics.alleles.IValueAllele;
 import forestry.api.plugin.IBeeSpeciesBuilder;
 import forestry.apiculture.genetics.Bee;
 import forestry.core.genetics.Species;
@@ -24,6 +22,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Rarity;
 
 import java.util.List;
+import forestry.api.apiculture.ForestryActivityTypes;
+import forestry.core.utils.GeneticsUtil;
 
 public class BeeSpecies extends Species<IBeeSpeciesType, IBee> implements IBeeSpecies {
 	private final List<IProduct> products;
@@ -129,21 +129,21 @@ public class BeeSpecies extends Species<IBeeSpeciesType, IBee> implements IBeeSp
 			tooltip.add(Component.translatable("for.gui.beealyzer.generations", generation).withStyle(rarity.getStyleModifier()));
 		}
 
-		tooltip.add(genome.getActiveName(BeeChromosomes.LIFESPAN).append(" ").append(Component.translatable("for.gui.life")).withStyle(ChatFormatting.GRAY));
-		tooltip.add(genome.getActiveName(BeeChromosomes.SPEED).append(" ").append(Component.translatable("for.gui.worker")).withStyle(ChatFormatting.GRAY));
+		tooltip.add(GeneticsUtil.getActiveName(genome, BeeChromosomes.LIFESPAN).append(" ").append(Component.translatable("for.gui.life")).withStyle(ChatFormatting.GRAY));
+		tooltip.add(GeneticsUtil.getActiveName(genome, BeeChromosomes.SPEED).append(" ").append(Component.translatable("for.gui.worker")).withStyle(ChatFormatting.GRAY));
 
-		Component tempToleranceAllele = genome.getActiveName(BeeChromosomes.TEMPERATURE_TOLERANCE);
-		Component humidToleranceAllele = genome.getActiveName(BeeChromosomes.HUMIDITY_TOLERANCE);
-		IBeeSpecies active = genome.getActiveValue(BeeChromosomes.SPECIES);
+		Component tempToleranceAllele = GeneticsUtil.getActiveName(genome, BeeChromosomes.TEMPERATURE_TOLERANCE);
+		Component humidToleranceAllele = GeneticsUtil.getActiveName(genome, BeeChromosomes.HUMIDITY_TOLERANCE);
+		IBeeSpecies active = genome.resolveActive(BeeChromosomes.SPECIES);
 
 		tooltip.add(Component.literal("T: ").append(ClimateHelper.toDisplay(active.getTemperature())).append(" / ").append(tempToleranceAllele).withStyle(ChatFormatting.GREEN));
 		tooltip.add(Component.literal("H: ").append(ClimateHelper.toDisplay(active.getHumidity())).append(" / ").append(humidToleranceAllele).withStyle(ChatFormatting.GREEN));
 
-		tooltip.add(genome.getActiveName(BeeChromosomes.FLOWER_TYPE).withStyle(ChatFormatting.GRAY));
+		tooltip.add(GeneticsUtil.getActiveName(genome, BeeChromosomes.FLOWER_TYPE).withStyle(ChatFormatting.GRAY));
 
-		IValueAllele<IActivityType> activityAllele = genome.getActiveAllele(BeeChromosomes.ACTIVITY);
-		if (activityAllele != ForestryAlleles.ACTIVITY_DIURNAL) {
-			tooltip.add(BeeChromosomes.ACTIVITY.getDisplayName(activityAllele).withStyle(ChatFormatting.GOLD));
+		ResourceLocation activity = genome.getActiveValue(BeeChromosomes.ACTIVITY);
+		if (!activity.equals(ForestryActivityTypes.DIURNAL)) {
+			tooltip.add(GeneticsUtil.getActiveName(genome, BeeChromosomes.ACTIVITY).withStyle(ChatFormatting.GOLD));
 		}
 
 		if (genome.getActiveValue(BeeChromosomes.TOLERATES_RAIN)) {

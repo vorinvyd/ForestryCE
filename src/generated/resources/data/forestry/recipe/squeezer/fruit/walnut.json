@@ -3,8 +3,10 @@
   "chance": 0.05,
   "id": "forestry:squeezer/fruit/walnut",
   "output": {
-    "amount": 50,
-    "id": "forestry:seed_oil"
+    "stack": {
+      "amount": 50,
+      "id": "forestry:seed_oil"
+    }
   },
   "remnant": {
     "count": 1,
@@ -12,7 +14,7 @@
   },
   "resources": [
     {
-      "tag": "forge:fruits/walnut"
+      "tag": "c:fruits/walnut"
     }
   ],
   "time": 60

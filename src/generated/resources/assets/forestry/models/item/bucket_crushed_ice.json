@@ -1,0 +1,5 @@
+{
+  "parent": "neoforge:item/bucket",
+  "fluid": "forestry:crushed_ice",
+  "loader": "neoforge:fluid_container"
+}

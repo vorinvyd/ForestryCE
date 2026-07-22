@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "#": {
-      "item": "forestry:electron_tube_bronze"
+      "item": "forestry:bronze_electron_tube"
     },
     "W": {
       "type": "neoforge:components",
@@ -22,17 +22,17 @@
         "minecraft:rarity": "common",
         "minecraft:repair_cost": 0
       },
-      "items": "forestry:circuit_board_refined",
+      "items": "forestry:refined_circuit_board",
       "strict": true
     },
     "X": {
       "tag": "c:chests/wooden"
     },
     "Y": {
-      "item": "forestry:sturdy_machine"
+      "item": "forestry:sturdy_casing"
     },
     "Z": {
-      "item": "forestry:electron_tube_iron"
+      "item": "forestry:iron_electron_tube"
     }
   },
   "pattern": [

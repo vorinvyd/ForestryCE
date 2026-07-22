@@ -1,0 +1,30 @@
+{
+  "dominant": true,
+  "escritoire_color": 8694327,
+  "genome": {
+    "forestry:fruits": {
+      "value": "forestry:fruit_cherry"
+    },
+    "forestry:height": {
+      "value": 0.5
+    },
+    "forestry:maturation": {
+      "value": 3
+    },
+    "forestry:saplings": {
+      "dominant": true,
+      "value": 0.035
+    },
+    "forestry:sappiness": {
+      "dominant": true,
+      "value": 0.3
+    },
+    "forestry:yield": {
+      "dominant": true,
+      "value": 0.2
+    }
+  },
+  "genus": "prunus",
+  "rarity": 0.0015,
+  "species": "cerasus"
+}

@@ -5,8 +5,6 @@ import com.google.common.collect.ImmutableMultimap;
 import com.mojang.datafixers.util.Pair;
 import forestry.Forestry;
 import forestry.api.IForestryApi;
-import forestry.api.apiculture.genetics.IBeeSpecies;
-import forestry.api.arboriculture.ITreeSpecies;
 import forestry.api.circuits.CircuitHolder;
 import forestry.api.circuits.ICircuit;
 import forestry.api.circuits.ICircuitLayout;
@@ -16,11 +14,9 @@ import forestry.api.client.arboriculture.ILeafTint;
 import forestry.api.client.genetics.IAnalyzerPlugin;
 import forestry.api.core.IError;
 import forestry.api.genetics.ILifeStage;
-import forestry.api.genetics.IMutationManager;
 import forestry.api.genetics.ISpeciesType;
 import forestry.api.genetics.ITaxon;
 import forestry.api.genetics.pollen.IPollenType;
-import forestry.api.lepidopterology.genetics.IButterflySpecies;
 import forestry.api.plugin.IForestryPlugin;
 import forestry.api.plugin.IPollenRegistration;
 import forestry.apiimpl.ForestryApiImpl;
@@ -31,12 +27,10 @@ import forestry.apiimpl.client.ForestryClientApiImpl;
 import forestry.apiimpl.client.TreeClientManager;
 import forestry.apiimpl.client.genetics.GeneticClientManager;
 import forestry.apiimpl.client.plugin.ClientRegistration;
-import forestry.arboriculture.client.FixedLeafTint;
 import forestry.core.circuits.CircuitLayout;
 import forestry.core.circuits.CircuitManager;
 import forestry.core.errors.ErrorManager;
 import forestry.core.genetics.PollenManager;
-import forestry.core.genetics.alleles.AlleleManager;
 import forestry.core.utils.SpeciesUtil;
 import forestry.farming.FarmingManager;
 import forestry.plugin.DefaultForestryPlugin;
@@ -161,49 +155,43 @@ public class PluginManager {
 
 		Forestry.LOGGER.debug("Registered {} species types: {}", speciesTypes.size(), Arrays.toString(speciesTypes.keySet().toArray(new ResourceLocation[0])));
 
+		// Register the built-in mutation condition types so their `type` ids are known before any
+		// datapack/recipe parse populates the mutation managers in a later reload handler.
+		forestry.core.genetics.mutations.MutationConditionTypes.registerBuiltins();
+		forestry.apiculture.genetics.FlowerTypeTypes.registerBuiltins();
+
+		// Register the built-in product types so the optional `type` key on species products (e.g. the
+		// Patriotic bee's randomized firework) resolves before any species JSON parse or network sync.
+		forestry.core.genetics.ProductTypes.registerBuiltins();
+
+		// Register the built-in fluid product types so the optional `type` key on machine fluid outputs (e.g. the
+		// squeezer) resolves before any recipe JSON parse or network sync.
+		forestry.core.FluidProductTypes.registerBuiltins();
+
 		ForestryApiImpl api = (ForestryApiImpl) IForestryApi.INSTANCE;
-		AlleleManager alleleManager = ((AlleleManager) api.getAlleleManager());
 		GeneticManager geneticManager = new GeneticManager(taxa, speciesTypes);
 		api.setGeneticManager(geneticManager);
 		api.setFilterManager(new FilterManager(registration.getFilterRuleTypes()));
 
-		// block registration of new chromosomes
-		alleleManager.setRegistrationState(AlleleManager.REGISTRATION_CHROMOSOMES_COMPLETE);
-
 		// Register SPECIES for each type
 		LinkedHashMap<ISpeciesType<?, ?>, ImmutableMap<ResourceLocation, ?>> allSpecies = new LinkedHashMap<>(speciesTypes.size());
-		IdentityHashMap<ISpeciesType<?, ?>, IMutationManager<?>> allMutations = new IdentityHashMap<>(speciesTypes.size());
 
 		// go through species builders and build each species
 		for (ISpeciesType<?, ?> speciesType : speciesTypes.values()) {
-			// species and mutations
-			Pair<? extends ImmutableMap<ResourceLocation, ?>, ? extends IMutationManager<?>> pair = speciesType.handleSpeciesRegistration(LOADED_PLUGINS);
-			ImmutableMap<ResourceLocation, ?> species = pair.getFirst();
-			IMutationManager<?> mutations = pair.getSecond();
+			ImmutableMap<ResourceLocation, ?> species = speciesType.handleSpeciesRegistration(LOADED_PLUGINS);
 
 			allSpecies.put(speciesType, species);
-			allMutations.put(speciesType, mutations);
 
 			Forestry.LOGGER.debug("Registered {} species for species type {}", species.size(), speciesType.id());
-			Forestry.LOGGER.debug("Registered {} mutations for species type {}", mutations.getAllMutations().size(), speciesType.id());
 		}
-
-		// block registration of new alleles and verify all registry alleles have values
-		alleleManager.setRegistrationState(AlleleManager.REGISTRATION_ALLELES_COMPLETE);
 
 		for (Map.Entry<ISpeciesType<?, ?>, ImmutableMap<ResourceLocation, ?>> entry : allSpecies.entrySet()) {
 			ISpeciesType<?, ?> speciesType = entry.getKey();
 
-			speciesType.onSpeciesRegistered((ImmutableMap) entry.getValue(), (IMutationManager) allMutations.get(speciesType));
-
-			if (speciesType.getAllSpecies().isEmpty()) {
-				throw new IllegalStateException("Failed to register species for type " + speciesType.id());
-			}
-			// this will throw an exception if mutations aren't populated
-			speciesType.getMutations();
+			// Data-driven species types (e.g. bees) are legitimately empty here; their species map
+			// is populated later by a datapack reload listener, so no empty-species guard is enforced.
+			speciesType.onSpeciesRegistered((ImmutableMap) entry.getValue());
 		}
-
-		geneticManager.setMutations(ImmutableMap.copyOf(allMutations));
 	}
 
 	public static void registerFarming() {
@@ -263,82 +251,51 @@ public class PluginManager {
 		}
 
 		// Bees
-		List<IBeeSpecies> beeSpecies = SpeciesUtil.getAllBeeSpecies();
-		IdentityHashMap<ILifeStage, Map<IBeeSpecies, ResourceLocation>> beeModels = new IdentityHashMap<>();
+		// id-keyed: resolving a specific species happens at render time, so the (possibly
+		// datapack-driven) species list is not needed here.
+		IdentityHashMap<ILifeStage, ResourceLocation> defaultBeeModels = new IdentityHashMap<>();
+		IdentityHashMap<ILifeStage, Map<ResourceLocation, ResourceLocation>> customBeeModels = new IdentityHashMap<>();
 
 		for (ILifeStage stage : SpeciesUtil.BEE_TYPE.get().getLifeStages()) {
-			Map<ResourceLocation, ResourceLocation> locationsByStage = registration.getBeeModels().getOrDefault(stage, Map.of());
-			Map<IBeeSpecies, ResourceLocation> modelsByStage = new IdentityHashMap<>(locationsByStage.size());
-
-			for (IBeeSpecies species : beeSpecies) {
-				ResourceLocation modelLocation = locationsByStage.get(species.id());
-
-				if (modelLocation == null) {
-					// use default model location
-					modelLocation = Objects.requireNonNull(registration.getDefaultBeeModel(stage), "IClientRegistration.setDefaultBeeModel has not been called for life stage " + stage.getSerializedName() + ", unable to resolve bee default model");
-				}
-
-				modelsByStage.put(species, modelLocation);
-			}
-
-			beeModels.put(stage, modelsByStage);
+			ResourceLocation defaultModel = Objects.requireNonNull(registration.getDefaultBeeModel(stage), "IClientRegistration.setDefaultBeeModel has not been called for life stage " + stage.getSerializedName() + ", unable to resolve bee default model");
+			defaultBeeModels.put(stage, defaultModel);
+			customBeeModels.put(stage, registration.getBeeModels().getOrDefault(stage, Map.of()));
 		}
-		((ForestryClientApiImpl) IForestryClientApi.INSTANCE).setBeeManager(new BeeClientManager(beeModels));
+		((ForestryClientApiImpl) IForestryClientApi.INSTANCE).setBeeManager(new BeeClientManager(defaultBeeModels, customBeeModels));
 
 		// Trees
+		// id-keyed: resolving a species happens at render time by id, so the (datapack-driven) species list is not
+		// needed to build the sprite/model maps below.
 		HashMap<ResourceLocation, ILeafSprite> spritesById = registration.getLeafSprites();
 		HashMap<ResourceLocation, ILeafTint> tintsById = registration.getTints();
 		HashMap<ResourceLocation, Pair<ResourceLocation, ResourceLocation>> modelsById = registration.getSaplingModels();
-		List<ITreeSpecies> treeSpecies = SpeciesUtil.getAllTreeSpecies();
-		// Copy everything over to identity maps to minimize Map.get overhead during rendering
-		IdentityHashMap<ITreeSpecies, ILeafSprite> sprites = new IdentityHashMap<>(treeSpecies.size());
-		IdentityHashMap<ITreeSpecies, ILeafTint> tints = new IdentityHashMap<>(treeSpecies.size());
-		IdentityHashMap<ITreeSpecies, Pair<ResourceLocation, ResourceLocation>> models = new IdentityHashMap<>(treeSpecies.size());
 
-		for (ITreeSpecies species : treeSpecies) {
-			ResourceLocation id = species.id();
+		// The escritoire-color tint fallback (for the ~40 built-in species that register no explicit client tint) is
+		// applied lazily at render time in TreeClientManager#getTint from the species object itself, so no species-list
+		// iteration is needed here and datapack-added species get the same fallback reloadably.
 
-			ILeafSprite sprite = Objects.requireNonNull(spritesById.get(id), "No leaf sprite registered for tree species " + id + ", did you call IClientRegistration.setLeafSprite ?");
-			ILeafTint tint = tintsById.getOrDefault(id, new FixedLeafTint(species.getEscritoireColor()));
-			Pair<ResourceLocation, ResourceLocation> modelPair = modelsById.get(id);
-
-			sprites.put(species, sprite);
-			tints.put(species, tint);
-
-			if (modelPair != null) {
-				models.put(species, modelPair);
-			} else {
-				// default sapling block and item models (removes the "tree_" prefix)
-				String path = id.getPath().replace("tree_", "");
-				models.put(species, Pair.of(
-					ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "block/" + path + "_sapling"),
-					ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "item/" + path + "_sapling")
-				));
-			}
+		// For any species id that has a leaf sprite but no explicit sapling model, synthesize the default-path pair
+		// (removing the "tree_" prefix), exactly as the old per-species loop did.
+		Map<ResourceLocation, Pair<ResourceLocation, ResourceLocation>> models = new HashMap<>(modelsById);
+		for (ResourceLocation id : spritesById.keySet()) {
+			models.computeIfAbsent(id, sid -> {
+				String path = sid.getPath().replace("tree_", "");
+				return Pair.of(
+					ResourceLocation.fromNamespaceAndPath(sid.getNamespace(), "block/" + path + "_sapling"),
+					ResourceLocation.fromNamespaceAndPath(sid.getNamespace(), "item/" + path + "_sapling")
+				);
+			});
 		}
 
-		((ForestryClientApiImpl) IForestryClientApi.INSTANCE).setTreeManager(new TreeClientManager(sprites, tints, models));
+		((ForestryClientApiImpl) IForestryClientApi.INSTANCE).setTreeManager(new TreeClientManager(
+			new HashMap<>(spritesById), new HashMap<>(tintsById), models
+		));
 
 		// Butterflies
-		HashMap<ResourceLocation, Pair<ResourceLocation, ResourceLocation>> butterflyTexturesById = registration.getButterflyTextures();
-		List<IButterflySpecies> butterflySpecies = SpeciesUtil.BUTTERFLY_TYPE.get().getAllSpecies();
-		IdentityHashMap<IButterflySpecies, Pair<ResourceLocation, ResourceLocation>> butterflyTextures = new IdentityHashMap<>(butterflySpecies.size());
-
-		for (IButterflySpecies species : butterflySpecies) {
-			ResourceLocation id = species.id();
-			Pair<ResourceLocation, ResourceLocation> texturePair = modelsById.get(id);
-
-			if (texturePair != null) {
-				butterflyTextures.put(species, texturePair);
-			} else {
-				// default butterfly item and entity textures
-				String path = id.getPath().replace("butterfly_", "");
-				butterflyTextures.put(species, butterflyTexturesById.getOrDefault(id, Pair.of(
-					ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "item/butterfly/" + path),
-					ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "textures/entity/butterfly/" + path + ".png")
-				)));
-			}
-		}
+		// id-keyed: resolving a species happens at render time by id (ButterflyClientManager#getTextures falls back
+		// to the default naming convention, computed from the id alone, for any id with no explicit registration),
+		// so the (datapack-driven) species list is not needed to build this map.
+		Map<ResourceLocation, Pair<ResourceLocation, ResourceLocation>> butterflyTextures = new HashMap<>(registration.getButterflyTextures());
 		((ForestryClientApiImpl) IForestryClientApi.INSTANCE).setButterflyManager(new ButterflyClientManager(butterflyTextures));
 
 		HashMap<ResourceLocation, IAnalyzerPlugin<?, ?>> analyzerPluginsById = registration.getAnalyzerPlugins();

@@ -2,54 +2,104 @@
   "type": "forestry:centrifuge",
   "id": "forestry:centrifuge/amber_sapling",
   "input": {
-    "item": "forestry:amber_sapling"
+    "item": "forestry:amber_sapling_fossil"
   },
   "products": [
     {
       "chance": 0.25,
-      "item": "forestry:sapling",
+      "item": "forestry:tree_sapling",
       "tag": {
         "forestry:genome": {
           "genome": {
             "forestry:fireproof": {
-              "active": "forestry:falsed",
-              "inactive": "forestry:falsed"
+              "active": {
+                "dominant": true,
+                "value": false
+              },
+              "inactive": {
+                "dominant": true,
+                "value": false
+              }
             },
             "forestry:fruits": {
-              "active": "forestry:fruit_none",
-              "inactive": "forestry:fruit_none"
+              "active": {
+                "value": "forestry:fruit_none"
+              },
+              "inactive": {
+                "value": "forestry:fruit_none"
+              }
             },
             "forestry:girth": {
-              "active": "forestry:1i",
-              "inactive": "forestry:1i"
+              "active": {
+                "value": 1
+              },
+              "inactive": {
+                "value": 1
+              }
             },
             "forestry:height": {
-              "active": "forestry:1.25f",
-              "inactive": "forestry:1.25f"
+              "active": {
+                "value": 1.25
+              },
+              "inactive": {
+                "value": 1.25
+              }
             },
             "forestry:maturation": {
-              "active": "forestry:5id",
-              "inactive": "forestry:5id"
+              "active": {
+                "dominant": true,
+                "value": 5
+              },
+              "inactive": {
+                "dominant": true,
+                "value": 5
+              }
             },
             "forestry:saplings": {
-              "active": "forestry:0.01fd",
-              "inactive": "forestry:0.01fd"
+              "active": {
+                "dominant": true,
+                "value": 0.01
+              },
+              "inactive": {
+                "dominant": true,
+                "value": 0.01
+              }
             },
             "forestry:sappiness": {
-              "active": "forestry:0.8f",
-              "inactive": "forestry:0.8f"
+              "active": {
+                "value": 0.8
+              },
+              "inactive": {
+                "value": 0.8
+              }
             },
             "forestry:tree_effect": {
-              "active": "forestry:tree_effect_none",
-              "inactive": "forestry:tree_effect_none"
+              "active": {
+                "value": "forestry:tree_effect_none"
+              },
+              "inactive": {
+                "value": "forestry:tree_effect_none"
+              }
             },
             "forestry:tree_species": {
-              "active": "forestry:tree_ginkgo",
-              "inactive": "forestry:tree_ginkgo"
+              "active": {
+                "dominant": true,
+                "value": "forestry:ginkgo"
+              },
+              "inactive": {
+                "dominant": true,
+                "value": "forestry:ginkgo"
+              }
             },
             "forestry:yield": {
-              "active": "forestry:0.025fd",
-              "inactive": "forestry:0.025fd"
+              "active": {
+                "dominant": true,
+                "value": 0.025
+              },
+              "inactive": {
+                "dominant": true,
+                "value": 0.025
+              }
             }
           },
           "karyotype": "forestry:tree_species"

@@ -1,28 +1,23 @@
 package forestry.apiimpl.plugin;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableMap;
 import forestry.api.core.HumidityType;
 import forestry.api.core.TemperatureType;
 import forestry.api.genetics.IGenome;
-import forestry.api.genetics.IMutation;
 import forestry.api.genetics.ISpecies;
 import forestry.api.genetics.ISpeciesType;
 import forestry.api.plugin.IGenomeBuilder;
-import forestry.api.plugin.IMutationsRegistration;
 import forestry.api.plugin.ISpeciesBuilder;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nullable;
-import java.util.List;
 import java.util.function.Consumer;
 
 public abstract class SpeciesBuilder<T extends ISpeciesType<S, ?>, S extends ISpecies<?>, B extends ISpeciesBuilder<T, S, B>> implements ISpeciesBuilder<T, S, B> {
 	protected final ResourceLocation id;
 	protected final String genus;
 	protected final String species;
-	protected final MutationsRegistration mutations;
 
 	protected TemperatureType temperature = TemperatureType.NORMAL;
 	protected HumidityType humidity = HumidityType.NORMAL;
@@ -36,11 +31,10 @@ public abstract class SpeciesBuilder<T extends ISpeciesType<S, ?>, S extends ISp
 	protected ISpeciesFactory<T, S, B> factory;
 	protected int escritoireColor = -1;
 
-	public SpeciesBuilder(ResourceLocation id, String genus, String species, MutationsRegistration mutations) {
+	public SpeciesBuilder(ResourceLocation id, String genus, String species) {
 		this.id = id;
 		this.genus = genus;
 		this.species = species;
-		this.mutations = mutations;
 		this.factory = createSpeciesFactory();
 	}
 
@@ -53,12 +47,6 @@ public abstract class SpeciesBuilder<T extends ISpeciesType<S, ?>, S extends ISp
 	@Override
 	public B setGenome(Consumer<IGenomeBuilder> genome) {
 		this.genome = this.genome == null ? genome : this.genome.andThen(genome);
-		return self();
-	}
-
-	@Override
-	public B addMutations(Consumer<IMutationsRegistration> mutations) {
-		mutations.accept(this.mutations);
 		return self();
 	}
 
@@ -175,10 +163,5 @@ public abstract class SpeciesBuilder<T extends ISpeciesType<S, ?>, S extends ISp
 	@Override
 	public String getAuthority() {
 		return this.authority;
-	}
-
-	@Override
-	public List<IMutation<S>> buildMutations(ISpeciesType<S, ?> speciesType, ImmutableMap<ResourceLocation, S> speciesLookup) {
-		return this.mutations.build(speciesType, speciesLookup);
 	}
 }

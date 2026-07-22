@@ -2,6 +2,7 @@ package forestry.arboriculture;
 
 import forestry.api.arboriculture.ITreeGenerator;
 import forestry.api.arboriculture.ITreeSpecies;
+import forestry.api.arboriculture.genetics.IFruit;
 import forestry.api.arboriculture.genetics.ITree;
 import forestry.api.arboriculture.genetics.ITreeSpeciesType;
 import forestry.api.arboriculture.genetics.TreeLifeStage;
@@ -10,7 +11,6 @@ import forestry.api.core.IProduct;
 import forestry.api.core.TemperatureType;
 import forestry.api.genetics.IGenome;
 import forestry.api.genetics.ILifeStage;
-import forestry.api.genetics.alleles.ForestryAlleles;
 import forestry.api.genetics.alleles.TreeChromosomes;
 import forestry.api.plugin.ITreeSpeciesBuilder;
 import forestry.arboriculture.blocks.BlockDefaultLeavesFruit;
@@ -36,6 +36,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import forestry.api.ForestryConstants;
+import forestry.api.arboriculture.ForestryFruits;
+import forestry.core.utils.GeneticsUtil;
 
 public class TreeSpecies extends Species<ITreeSpeciesType, ITree> implements ITreeSpecies {
 	private final TemperatureType temperature;
@@ -132,26 +135,26 @@ public class TreeSpecies extends Species<ITreeSpeciesType, ITree> implements ITr
 		// You analyzed it? Juicy tooltip coming up!
 		addHybridTooltip(tooltip, genome, TreeChromosomes.SPECIES, "for.trees.hybrid");
 
-		Component saplingsAndMaturation = Component.literal("S: ").append(genome.getActiveName(TreeChromosomes.SAPLINGS)).append(", ").withStyle(ChatFormatting.YELLOW)
-			.append(Component.literal("M: ").append(genome.getActiveName(TreeChromosomes.MATURATION)).withStyle(ChatFormatting.RED));
-		Component heightAndGirth = Component.literal("H: ").append(genome.getActiveName(TreeChromosomes.HEIGHT)).append(", ").withStyle(ChatFormatting.LIGHT_PURPLE)
-			.append(Component.literal("G: ").append(genome.getActiveName(TreeChromosomes.GIRTH)).withStyle(ChatFormatting.AQUA));
-		Component yieldAndSappiness = Component.literal("Y: ").append(genome.getActiveName(TreeChromosomes.YIELD)).append(", ").withStyle(ChatFormatting.WHITE)
-			.append(Component.literal("S: ").append(genome.getActiveName(TreeChromosomes.SAPPINESS)).withStyle(ChatFormatting.GOLD));
+		Component saplingsAndMaturation = Component.literal("S: ").append(GeneticsUtil.getActiveName(genome, TreeChromosomes.SAPLINGS)).append(", ").withStyle(ChatFormatting.YELLOW)
+			.append(Component.literal("M: ").append(GeneticsUtil.getActiveName(genome, TreeChromosomes.MATURATION)).withStyle(ChatFormatting.RED));
+		Component heightAndGirth = Component.literal("H: ").append(GeneticsUtil.getActiveName(genome, TreeChromosomes.HEIGHT)).append(", ").withStyle(ChatFormatting.LIGHT_PURPLE)
+			.append(Component.literal("G: ").append(GeneticsUtil.getActiveName(genome, TreeChromosomes.GIRTH)).withStyle(ChatFormatting.AQUA));
+		Component yieldAndSappiness = Component.literal("Y: ").append(GeneticsUtil.getActiveName(genome, TreeChromosomes.YIELD)).append(", ").withStyle(ChatFormatting.WHITE)
+			.append(Component.literal("S: ").append(GeneticsUtil.getActiveName(genome, TreeChromosomes.SAPPINESS)).withStyle(ChatFormatting.GOLD));
 		tooltip.add(saplingsAndMaturation);
 		tooltip.add(heightAndGirth);
 		tooltip.add(yieldAndSappiness);
 
 		if (genome.getActiveValue(TreeChromosomes.FIREPROOF)) {
-			tooltip.add(TreeChromosomes.FIREPROOF.getChromosomeDisplayName().withStyle(ChatFormatting.RED));
+			tooltip.add(GeneticsUtil.getChromosomeName(TreeChromosomes.FIREPROOF).withStyle(ChatFormatting.RED));
 		}
 
 		MutableComponent fruitAndEffect = null;
-		if (genome.getActiveAllele(TreeChromosomes.FRUIT) != ForestryAlleles.FRUIT_NONE) {
-			fruitAndEffect = Component.literal("F: ").append(genome.getActiveName(TreeChromosomes.FRUIT)).withStyle(ChatFormatting.GREEN);
+		if (!genome.getActiveValue(TreeChromosomes.FRUIT).equals(ForestryFruits.NONE)) {
+			fruitAndEffect = Component.literal("F: ").append(GeneticsUtil.getActiveName(genome, TreeChromosomes.FRUIT)).withStyle(ChatFormatting.GREEN);
 		}
-		if (genome.getActiveAllele(TreeChromosomes.EFFECT) != ForestryAlleles.TREE_EFFECT_NONE) {
-			MutableComponent effect = Component.literal("E: ").append(genome.getActiveName(TreeChromosomes.EFFECT)).withStyle(ChatFormatting.DARK_AQUA);
+		if (!genome.getActiveValue(TreeChromosomes.EFFECT).equals(ForestryConstants.forestry("tree_effect_none"))) {
+			MutableComponent effect = Component.literal("E: ").append(GeneticsUtil.getActiveName(genome, TreeChromosomes.EFFECT)).withStyle(ChatFormatting.DARK_AQUA);
 
 			if (fruitAndEffect != null) {
 				fruitAndEffect.append(Component.literal(", ")).append(effect);
@@ -213,16 +216,19 @@ public class TreeSpecies extends Species<ITreeSpeciesType, ITree> implements ITr
 
 	@Override
 	public boolean trySpawnFruitBlock(IGenome genome, LevelAccessor level, RandomSource rand, BlockPos pos) {
-		return genome.getActiveValue(TreeChromosomes.FRUIT).trySpawnFruitBlock(genome, level, rand, pos);
+		IFruit fruit = genome.resolveActive(TreeChromosomes.FRUIT);
+		return fruit.trySpawnFruitBlock(genome, level, rand, pos);
 	}
 
 	@Override
 	public List<IProduct> getProducts() {
-		return this.defaultGenome.getActiveValue(TreeChromosomes.FRUIT).getProducts();
+		IFruit fruit = this.defaultGenome.resolveActive(TreeChromosomes.FRUIT);
+		return fruit.getProducts();
 	}
 
 	@Override
 	public List<IProduct> getSpecialties() {
-		return this.defaultGenome.getActiveValue(TreeChromosomes.FRUIT).getSpecialties();
+		IFruit fruit = this.defaultGenome.resolveActive(TreeChromosomes.FRUIT);
+		return fruit.getSpecialties();
 	}
 }

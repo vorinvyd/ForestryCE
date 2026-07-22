@@ -1,6 +1,6 @@
 package forestry.api.recipes;
 
-import forestry.api.core.Product;
+import forestry.api.core.IProduct;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -35,5 +35,5 @@ public interface ICentrifugeRecipe extends IForestryRecipe {
 	 * Returns a list of all possible products and their estimated probabilities (0.0 to 1.0],
 	 * to help mods that display recipes
 	 **/
-	List<Product> getAllProducts();
+	List<IProduct> getAllProducts();
 }

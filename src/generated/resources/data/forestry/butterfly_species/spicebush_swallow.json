@@ -1,0 +1,14 @@
+{
+  "dominant": true,
+  "genome": {
+    "forestry:size": {
+      "value": 0.6
+    }
+  },
+  "genus": "papilio",
+  "humidity": "damp",
+  "rarity": 0.5,
+  "serum_color": 15662847,
+  "species": "troilus",
+  "temperature": "warm"
+}

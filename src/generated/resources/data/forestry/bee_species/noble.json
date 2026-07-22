@@ -1,0 +1,24 @@
+{
+  "genome": {
+    "forestry:lifespan": {
+      "dominant": true,
+      "value": 30
+    },
+    "forestry:pollination": {
+      "value": 15
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.6
+    }
+  },
+  "genus": "probapis",
+  "outline": 15505945,
+  "products": [
+    {
+      "chance": 0.2,
+      "item": "forestry:dripping_comb"
+    }
+  ],
+  "species": "nobilis"
+}

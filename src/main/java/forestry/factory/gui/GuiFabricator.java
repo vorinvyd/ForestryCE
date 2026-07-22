@@ -12,7 +12,7 @@ public class GuiFabricator extends GuiForestryTitled<ContainerFabricator> {
 	private final TileFabricator tile;
 
 	public GuiFabricator(ContainerFabricator container, Inventory player, Component title) {
-		super(Constants.TEXTURE_PATH_GUI + "/fabricator.png", container, player, title);
+		super(Constants.TEXTURE_PATH_GUI + "/thermionic_fabricator.png", container, player, title);
 
 		this.tile = container.getTile();
 		this.imageHeight = 211;

@@ -1,0 +1,28 @@
+{
+  "type": "forestry:fabricator",
+  "id": "forestry:fabricator/fireproof/stripped_wood/lemon",
+  "molten": {
+    "amount": 500,
+    "id": "forestry:liquid_glass"
+  },
+  "recipe": {
+    "category": "building",
+    "key": {
+      "#": {
+        "item": "forestry:refractory_wax"
+      },
+      "X": {
+        "item": "forestry:lemon_stripped_wood"
+      }
+    },
+    "pattern": [
+      "   ",
+      "X#X",
+      "   "
+    ],
+    "result": {
+      "count": 2,
+      "id": "forestry:lemon_fireproof_stripped_wood"
+    }
+  }
+}

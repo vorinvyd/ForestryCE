@@ -24,6 +24,7 @@ import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.fluids.FluidStack;
 
 import java.util.List;
 
@@ -65,14 +66,16 @@ public class SqueezerRecipeCategory extends ForestryRecipeCategory<ISqueezerReci
 			.addRichTooltipCallback(new ChanceTooltipCallback(recipe.getRemnantsChance()))
 			.addItemStack(recipe.getRemnants());
 
+		FluidStack displayFluid = recipe.getFluidOutput().createFluidStack();
 		builder.addSlot(RecipeIngredientRole.OUTPUT, 113, 2)
 			.setFluidRenderer(10000, false, 16, 58)
 			.setOverlay(this.tankOverlay, 0, 0)
-			.addFluidStack(recipe.getFluidOutput().getFluid(), recipe.getFluidOutput().getAmount());
+			.addFluidStack(displayFluid.getFluid(), displayFluid.getAmount());
 	}
 
 	@Override
 	public void draw(ISqueezerRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double mouseX, double mouseY) {
+		super.draw(recipe, recipeSlotsView, graphics, mouseX, mouseY);
 		this.arrow.draw(graphics, 67, 25);
 	}
 }

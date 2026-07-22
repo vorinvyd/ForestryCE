@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "#forge:storage_blocks/charcoal"
+            "items": "#c:storage_blocks/charcoal"
           }
         ]
       },

@@ -1,0 +1,13 @@
+{
+  "dominant": true,
+  "genome": {
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.6
+    }
+  },
+  "genus": "pontia",
+  "rarity": 0.3,
+  "serum_color": 7634248,
+  "species": "edusa"
+}

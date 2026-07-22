@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "c:glass_blocks/colorless"
+    },
+    "X": {
+      "tag": "c:ingots/gold"
+    },
+    "Y": {
+      "item": "forestry:sturdy_casing"
+    },
+    "Z": {
+      "tag": "c:chests/wooden"
+    }
+  },
+  "pattern": [
+    "X#X",
+    "#Y#",
+    "XZX"
+  ],
+  "result": {
+    "count": 1,
+    "id": "forestry:thermionic_fabricator"
+  }
+}

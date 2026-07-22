@@ -8,6 +8,7 @@ import forestry.api.genetics.IGeneticManager;
 import forestry.api.genetics.ISpecies;
 import forestry.api.genetics.ISpeciesType;
 import forestry.api.genetics.alleles.*;
+import forestry.core.utils.GeneticsUtil;
 import forestry.core.utils.SpeciesUtil;
 import forestry.core.utils.Translator;
 import net.minecraft.commands.CommandSourceStack;
@@ -16,7 +17,6 @@ import net.minecraft.network.chat.Component;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.loading.FMLEnvironment;
 
-import java.util.Collection;
 import java.util.List;
 
 // Test command to make sure things aren't broken after the API rewrite.
@@ -56,21 +56,11 @@ public class DiagnosticsCommand {
 				IKaryotype karyotype = type.getKaryotype();
 
 				for (IChromosome<?> chromosome : karyotype.getChromosomes()) {
-					if (chromosome == karyotype.getSpeciesChromosome() || chromosome instanceof IBooleanChromosome || chromosome == BeeChromosomes.FERTILITY || chromosome == ButterflyChromosomes.FERTILITY) {
+					if (chromosome == karyotype.getSpeciesChromosome() || karyotype.getDefaultAllele(chromosome).value() instanceof Boolean || chromosome == BeeChromosomes.FERTILITY || chromosome == ButterflyChromosomes.FERTILITY) {
 						continue;
 					}
 
-					Collection<? extends IAllele> alleles = karyotype.getAlleles(chromosome);
-
-					Forestry.LOGGER.info("Chromosome {} has {} alleles", chromosome.id(), alleles.size());
-
-					for (IAllele allele : alleles) {
-						String translationKey = chromosome.getTranslationKey(allele.cast());
-
-						if (!Translator.canTranslateToLocal(translationKey)) {
-							Forestry.LOGGER.error("Allele for chromosome {} is missing a translation - {}", chromosome.id(), translationKey);
-						}
-					}
+					checkAlleleTranslations(chromosome);
 				}
 			}
 		}
@@ -78,5 +68,19 @@ public class DiagnosticsCommand {
 		source.sendSystemMessage(Component.literal("Diagnostics complete. Check log for details"));
 
 		return 0;
+	}
+
+	private static <V> void checkAlleleTranslations(IChromosome<V> chromosome) {
+		List<Allele<V>> alleles = GeneticsUtil.getKnownAlleles(chromosome);
+
+		Forestry.LOGGER.info("Chromosome {} has {} alleles", chromosome.id(), alleles.size());
+
+		for (Allele<V> allele : alleles) {
+			String translationKey = chromosome.translationKey(allele.value());
+
+			if (!Translator.canTranslateToLocal(translationKey)) {
+				Forestry.LOGGER.error("Allele for chromosome {} is missing a translation - {}", chromosome.id(), translationKey);
+			}
+		}
 	}
 }

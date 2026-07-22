@@ -2,7 +2,7 @@
   "type": "forestry:centrifuge",
   "id": "forestry:centrifuge/vintage_comb",
   "input": {
-    "item": "forestry:bee_comb_vintage"
+    "item": "forestry:vintage_comb"
   },
   "products": [
     {

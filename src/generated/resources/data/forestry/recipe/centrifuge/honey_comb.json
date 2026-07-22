@@ -2,7 +2,7 @@
   "type": "forestry:centrifuge",
   "id": "forestry:centrifuge/honey_comb",
   "input": {
-    "item": "forestry:bee_comb_honey"
+    "item": "forestry:honey_comb"
   },
   "products": [
     {

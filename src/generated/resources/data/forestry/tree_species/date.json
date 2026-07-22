@@ -1,0 +1,29 @@
+{
+  "dominant": true,
+  "escritoire_color": 13356409,
+  "genome": {
+    "forestry:fruits": {
+      "value": "forestry:fruit_dates"
+    },
+    "forestry:height": {
+      "value": 1.0
+    },
+    "forestry:saplings": {
+      "dominant": true,
+      "value": 0.035
+    },
+    "forestry:sappiness": {
+      "dominant": true,
+      "value": 0.3
+    },
+    "forestry:yield": {
+      "dominant": true,
+      "value": 0.1
+    }
+  },
+  "genus": "phoenix",
+  "humidity": "damp",
+  "rarity": 0.005,
+  "species": "dactylifera",
+  "temperature": "warm"
+}

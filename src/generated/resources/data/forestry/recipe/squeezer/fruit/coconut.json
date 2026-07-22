@@ -3,8 +3,10 @@
   "chance": 0.25,
   "id": "forestry:squeezer/fruit/coconut",
   "output": {
-    "amount": 500,
-    "id": "minecraft:milk"
+    "stack": {
+      "amount": 500,
+      "id": "minecraft:milk"
+    }
   },
   "remnant": {
     "count": 1,
@@ -12,7 +14,7 @@
   },
   "resources": [
     {
-      "tag": "forge:fruits/coconut"
+      "tag": "c:fruits/coconut"
     }
   ],
   "time": 10

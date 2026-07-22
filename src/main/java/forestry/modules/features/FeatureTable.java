@@ -90,6 +90,8 @@ public abstract class FeatureTable<B extends FeatureTable.Builder<R, C, ? extend
 		protected final Set<C> columnTypes = new LinkedHashSet<>();
 		protected IdentifierType identifierType = IdentifierType.TYPE_ONLY;
 		protected String identifier = StringUtils.EMPTY;
+		@org.jetbrains.annotations.Nullable
+		protected java.util.function.BiFunction<R, C, String> identifierFunction = null;
 
 		public Builder(FeatureRegistry registry) {
 			this.registry = registry;
@@ -102,6 +104,15 @@ public abstract class FeatureTable<B extends FeatureTable.Builder<R, C, ? extend
 		public Builder<R, C, G> identifier(String identifier, IdentifierType type) {
 			this.identifier = identifier;
 			this.identifierType = type;
+			return this;
+		}
+
+		/**
+		 * Assigns a fully custom registry identifier per (row, column) pair, bypassing the
+		 * prefix/suffix {@link IdentifierType} scheme.
+		 */
+		public Builder<R, C, G> identifier(java.util.function.BiFunction<R, C, String> identifierFunction) {
+			this.identifierFunction = identifierFunction;
 			return this;
 		}
 
@@ -133,7 +144,10 @@ public abstract class FeatureTable<B extends FeatureTable.Builder<R, C, ? extend
 			return this;
 		}
 
-		protected String getIdentifier(IFeatureSubtype rowType, IFeatureSubtype columnType) {
+		protected String getIdentifier(R rowType, C columnType) {
+			if (this.identifierFunction != null) {
+				return this.identifierFunction.apply(rowType, columnType);
+			}
 			return this.identifierType.apply(this.identifier, rowType.getSerializedName() + "_" + columnType.getSerializedName());
 		}
 

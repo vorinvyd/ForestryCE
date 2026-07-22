@@ -1,7 +1,7 @@
 package forestry.api.plugin;
 
 import forestry.api.apiculture.hives.IHiveDrop;
-import forestry.api.genetics.alleles.IAllele;
+import forestry.api.genetics.alleles.Allele;
 import forestry.api.genetics.alleles.IChromosome;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -30,7 +30,7 @@ public interface IHiveBuilder {
 	 * @param ignobleChance The chance that the princess dropped is Ignoble Stock instead of <i>Pristine Stock</i>.
 	 * @param alleles       A map of alleles to be set on the bee when it is dropped.
 	 */
-	IHiveBuilder addDrop(double chance, ResourceLocation speciesId, Supplier<List<ItemStack>> extraItems, float ignobleChance, Map<IChromosome<?>, IAllele> alleles);
+	IHiveBuilder addDrop(double chance, ResourceLocation speciesId, Supplier<List<ItemStack>> extraItems, float ignobleChance, Map<IChromosome<?>, Allele<?>> alleles);
 
 	/**
 	 * Used to add custom implementations of {@link IHiveDrop} to this hive's drops.

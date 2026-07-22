@@ -1,53 +1,44 @@
 package forestry.api.plugin;
 
-import forestry.api.genetics.ISpecies;
-import forestry.api.genetics.alleles.*;
+import forestry.api.genetics.alleles.Allele;
+import forestry.api.genetics.alleles.IChromosome;
 import net.minecraft.resources.ResourceLocation;
 
 /**
- * Used to configure the the default set of chromosomes, called the karyotype, of a species.
- * Also configures the default genome.
+ * Configures the chromosome set (karyotype) of a species type and the default allele for each chromosome.
+ * Validity is permissive: any value of a chromosome's type may appear in a genome, so there is no allele whitelist.
  */
 public interface IKaryotypeBuilder {
 	/**
-	 * Sets the species chromosome of the karyotype for this species type.
+	 * Sets the species chromosome of the karyotype.
 	 *
-	 * @param species   The species chromosome.
-	 * @param defaultId The ID of the default species, used as a fallback when a genome is not available or corrupt.
+	 * @param species   The species (reference) chromosome.
+	 * @param defaultId The ID of the default species, used as a fallback when a genome is unavailable or corrupt.
 	 */
-	void setSpecies(IRegistryChromosome<? extends ISpecies<?>> species, ResourceLocation defaultId);
+	void setSpecies(IChromosome<ResourceLocation> species, ResourceLocation defaultId);
 
 	/**
-	 * Sets the default allele of the chromosome in this karyotype and adds the chromosome if not already present.
-	 *
-	 * @param chromosome    The chromosome to add.
-	 * @param defaultAllele The default value of the chromosome.
+	 * Adds a data chromosome with the given default allele.
 	 */
-	default <A extends IAllele> IChromosomeBuilder<A> set(IChromosome<A> chromosome, A defaultAllele) {
-		return get(chromosome).setDefault(defaultAllele);
+	<V> IChromosomeBuilder<V> set(IChromosome<V> chromosome, Allele<V> defaultAllele);
+
+	/**
+	 * Shortcut for a dominant boolean default.
+	 */
+	default IChromosomeBuilder<Boolean> set(IChromosome<Boolean> chromosome, boolean value) {
+		return set(chromosome, Allele.of(value, true));
 	}
 
 	/**
-	 * Overload of {@link #set(IRegistryChromosome, ResourceLocation)} for booleans.
+	 * Adds a reference chromosome (species, flower type, effect, ...) with the given default value ID. The value's
+	 * declared dominance is resolved lazily, after registries are populated.
 	 */
-	default IChromosomeBuilder<IBooleanAllele> set(IBooleanChromosome chromosome, boolean defaultAllele) {
-		return set(chromosome, defaultAllele ? ForestryAlleles.TRUE : ForestryAlleles.FALSE)
-			.addAlleles(ForestryAlleles.DEFAULT_BOOLEANS);
-	}
+	IChromosomeBuilder<ResourceLocation> set(IChromosome<ResourceLocation> chromosome, ResourceLocation defaultId);
 
 	/**
-	 * Sets the default allele of the chromosome in this karyotype and adds the chromosome if not already present.
+	 * Returns the chromosome builder for an already-added chromosome (e.g. to set weak inheritance).
 	 *
-	 * @param chromosome The chromosome to add.
-	 * @param defaultId  The ID of the default allele.
+	 * @throws IllegalArgumentException If the chromosome has not been added.
 	 */
-	void set(IRegistryChromosome<?> chromosome, ResourceLocation defaultId);
-
-	/**
-	 * Used to modify a chromosome already added in {@link #set}.
-	 *
-	 * @return The {@link IChromosomeBuilder} for this chromosome in the karyotype.
-	 * @throws IllegalArgumentException If the chromosome is not contained in this genome.
-	 */
-	<A extends IAllele> IChromosomeBuilder<A> get(IChromosome<A> chromosome);
+	<V> IChromosomeBuilder<V> get(IChromosome<V> chromosome);
 }

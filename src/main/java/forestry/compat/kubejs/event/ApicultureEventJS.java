@@ -4,12 +4,12 @@ import com.mojang.datafixers.util.Function3;
 import dev.latvian.mods.kubejs.event.KubeEvent;
 import forestry.api.apiculture.IBeeHousing;
 import forestry.api.apiculture.LightPreference;
-import forestry.api.apiculture.hives.IHiveGen;
+import forestry.api.apiculture.hives.IHivePlacement;
 import forestry.api.core.HumidityType;
 import forestry.api.core.TemperatureType;
 import forestry.api.genetics.IEffectData;
 import forestry.api.genetics.IGenome;
-import forestry.api.genetics.alleles.IAllele;
+import forestry.api.genetics.alleles.Allele;
 import forestry.api.genetics.alleles.IChromosome;
 import forestry.api.plugin.IApicultureRegistration;
 import forestry.api.plugin.IBeeSpeciesBuilder;
@@ -64,11 +64,11 @@ public class ApicultureEventJS implements KubeEvent {
 		this.wrapped.modifySpecies(id, action);
 	}
 
-	public void addVillageBee(ResourceLocation speciesId, boolean rare, Map<IChromosome<?>, IAllele> alleles) {
+	public void addVillageBee(ResourceLocation speciesId, boolean rare, Map<IChromosome<?>, Allele<?>> alleles) {
 		this.wrapped.addVillageBee(speciesId, rare, alleles);
 	}
 
-	public IHiveBuilder registerCustomHive(ResourceLocation id, IHiveGen placement, BlockState hiveState, Predicate<Holder<Biome>> isGoodBiome, Predicate<HumidityType> isGoodHumidity, Predicate<TemperatureType> isGoodTemperature, float genChance, KubeHiveDefinition.PostGenFunction postGen) {
+	public IHiveBuilder registerCustomHive(ResourceLocation id, IHivePlacement placement, BlockState hiveState, Predicate<Holder<Biome>> isGoodBiome, Predicate<HumidityType> isGoodHumidity, Predicate<TemperatureType> isGoodTemperature, float genChance, KubeHiveDefinition.PostGenFunction postGen) {
 		IHiveBuilder builder = this.wrapped.registerHive(id, new KubeHiveDefinition(placement, hiveState, isGoodBiome, isGoodHumidity, isGoodTemperature, postGen));
 		builder.setGenerationChance(genChance);
 		return builder;

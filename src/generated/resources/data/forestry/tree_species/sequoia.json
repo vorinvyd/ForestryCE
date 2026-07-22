@@ -1,0 +1,25 @@
+{
+  "dominant": true,
+  "escritoire_color": 4296305,
+  "genome": {
+    "forestry:fireproof": {
+      "dominant": true,
+      "value": true
+    },
+    "forestry:girth": {
+      "value": 3
+    },
+    "forestry:height": {
+      "value": 1.75
+    },
+    "forestry:maturation": {
+      "value": 7
+    },
+    "forestry:sappiness": {
+      "dominant": true,
+      "value": 0.2
+    }
+  },
+  "genus": "sequoia",
+  "species": "sempervirens"
+}

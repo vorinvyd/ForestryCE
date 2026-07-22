@@ -1,7 +1,7 @@
 {
   "name": "for.gui.book.patchouli.entry.beekeeping.bees",
   "category": "forestry:beekeeping",
-  "icon": "forestry:bee_comb_honey",
+  "icon": "forestry:honey_comb",
   "pages": [
     {
       "type": "patchouli:text",

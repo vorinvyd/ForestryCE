@@ -59,12 +59,16 @@ public class SpeciesUtil {
 		return BUTTERFLY_TYPE.get().getAllSpecies();
 	}
 
-	// Retrieves a species of an arbitrary type based on its allele. Does not null check.
+	// Retrieves a species of an arbitrary type by its ID, searching all registered species types. Does not null check.
 	@Nullable
 	public static ISpecies<?> getAnySpecies(ResourceLocation id) {
-		@SuppressWarnings("unchecked")
-		IRegistryAllele<ISpecies<?>> allele = ((IRegistryAllele<ISpecies<?>>) ForestryAlleles.REGISTRY.getAllele(id));
-		return allele == null ? null : allele.value();
+		for (ISpeciesType<?, ?> type : IForestryApi.INSTANCE.getGeneticManager().getSpeciesTypes()) {
+			ISpecies<?> species = type.getSpeciesSafe(id);
+			if (species != null) {
+				return species;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -100,7 +104,7 @@ public class SpeciesUtil {
 	}
 
 	@Nullable
-	public static <S extends ISpecies<?>> ImmutableList<AllelePair<?>> mutateSpecies(Level level, BlockPos pos, @Nullable GameProfile profile, IGenome parent1, IGenome parent2, IRegistryChromosome<S> speciesChromosome, IMutationChanceGetter<S> chanceGetter) {
+	public static <S extends ISpecies<?>> ImmutableList<AllelePair<?>> mutateSpecies(Level level, BlockPos pos, @Nullable GameProfile profile, IGenome parent1, IGenome parent2, IChromosome<ResourceLocation> speciesChromosome, IMutationChanceGetter<S> chanceGetter) {
 		IGenome firstGenome;
 		IGenome secondGenome;
 
@@ -108,14 +112,14 @@ public class SpeciesUtil {
 		S secondParent;
 
 		if (level.random.nextBoolean()) {
-			firstParent = parent1.getActiveValue(speciesChromosome);
-			secondParent = parent2.getInactiveValue(speciesChromosome);
+			firstParent = parent1.resolveActive(speciesChromosome);
+			secondParent = parent2.resolveInactive(speciesChromosome);
 
 			firstGenome = parent1;
 			secondGenome = parent2;
 		} else {
-			firstParent = parent2.getActiveValue(speciesChromosome);
-			secondParent = parent1.getInactiveValue(speciesChromosome);
+			firstParent = parent2.resolveActive(speciesChromosome);
+			secondParent = parent1.resolveInactive(speciesChromosome);
 
 			firstGenome = parent2;
 			secondGenome = parent1;
@@ -181,14 +185,14 @@ public class SpeciesUtil {
 			// unchecked due to generics being a pain
 			AllelePair allele1 = parent1.get(i);
 			AllelePair allele2 = parent2.get(i);
-			IAllele defaultAllele = karyotype.getDefaultAllele(chromosome);
+			Allele<?> defaultAllele = karyotype.getDefaultAllele(chromosome);
 
 			if (!makeHaploid && karyotype.isWeaklyInherited(chromosome)) {
 				// Mutation Template is homozygous so only need to check active
-				if (didMutate1 && allele1.active() == defaultAllele) {
+				if (didMutate1 && allele1.active().equals(defaultAllele)) {
 					allele1 = self.getAllelePair(chromosome);
 				}
-				if (didMutate2 && allele2.active() == defaultAllele) {
+				if (didMutate2 && allele2.active().equals(defaultAllele)) {
 					allele2 = mate.getAllelePair(chromosome);
 				}
 			}

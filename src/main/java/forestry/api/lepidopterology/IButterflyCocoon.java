@@ -1,10 +1,14 @@
 package forestry.api.lepidopterology;
 
 import forestry.api.core.IProduct;
-import forestry.api.genetics.alleles.IRegistryAlleleValue;
 
 import java.util.List;
 
-public interface IButterflyCocoon extends IRegistryAlleleValue {
+public interface IButterflyCocoon {
+	/**
+	 * @return Whether the allele for this value is dominant or recessive.
+	 */
+	boolean isDominant();
+
 	List<IProduct> getProducts();
 }

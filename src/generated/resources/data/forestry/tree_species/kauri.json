@@ -1,0 +1,27 @@
+{
+  "authority": "Spear",
+  "dominant": true,
+  "escritoire_color": 9940836,
+  "genome": {
+    "forestry:girth": {
+      "value": 3
+    },
+    "forestry:height": {
+      "value": 1.75
+    },
+    "forestry:maturation": {
+      "dominant": true,
+      "value": 10
+    },
+    "forestry:saplings": {
+      "dominant": true,
+      "value": 0.01
+    },
+    "forestry:sappiness": {
+      "dominant": true,
+      "value": 0.6
+    }
+  },
+  "genus": "agathis",
+  "species": "australis"
+}

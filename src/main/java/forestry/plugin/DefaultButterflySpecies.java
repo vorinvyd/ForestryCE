@@ -9,6 +9,7 @@ import forestry.api.plugin.ILepidopterologyRegistration;
 import net.minecraft.network.chat.TextColor;
 
 import static forestry.api.genetics.ForestryTaxa.*;
+import forestry.api.lepidopterology.ForestryCocoons;
 
 public class DefaultButterflySpecies {
 	@SuppressWarnings("CodeBlock2Expr")
@@ -265,10 +266,7 @@ public class DefaultButterflySpecies {
 				genome.set(ButterflyChromosomes.SIZE, ForestryAlleles.SIZE_SMALLEST);
 				genome.set(ButterflyChromosomes.SPEED, ForestryAlleles.SPEED_SLOWER);
 				genome.set(ButterflyChromosomes.METABOLISM, ForestryAlleles.METABOLISM_SLOW);
-				genome.set(ButterflyChromosomes.COCOON, ForestryAlleles.COCOON_SILK);
-			})
-			.addMutations(mutations -> {
-				mutations.add(ForestryButterflySpecies.LATTICED_HEATH, ForestryButterflySpecies.BRIMSTONE, 0.07f);
+				genome.set(ButterflyChromosomes.COCOON, ForestryCocoons.SILK);
 			})
 			.setAuthority("Nedelosk");
 	}

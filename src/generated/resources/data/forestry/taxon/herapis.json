@@ -1,0 +1,15 @@
+{
+  "type": "forestry:bee_species",
+  "parent": "apidae",
+  "alleles": {
+    "forestry:activity": {
+      "value": "forestry:activity_cathemeral"
+    },
+    "forestry:cave_dwelling": {
+      "dominant": true,
+      "value": true
+    }
+  },
+  "name": "herapis",
+  "rank": "genus"
+}

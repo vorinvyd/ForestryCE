@@ -79,8 +79,17 @@ public class ModelDefaultLeaves extends ModelBlockCached<BlockDefaultLeaves, Mod
 	protected void bakeBlock(BlockDefaultLeaves block, ModelData extraData, Key key, ModelBaker baker, boolean inventory) {
 		ResourceLocation speciesId = key.speciesId;
 
-		ITreeSpecies species = SpeciesUtil.getTreeSpecies(speciesId);
+		// Resolve fail-soft: a datapack may have removed this species while its leaf block is still placed, so use
+		// getSpeciesSafe (not the throwing getTreeSpecies) and fall back to the default species.
+		ITreeSpecies species = SpeciesUtil.TREE_TYPE.get().getSpeciesSafe(speciesId);
+		if (species == null) {
+			species = SpeciesUtil.TREE_TYPE.get().getDefaultSpecies();
+		}
 		ILeafSprite leafSpriteProvider = IForestryClientApi.INSTANCE.getTreeManager().getLeafSprite(species);
+		if (leafSpriteProvider == null) {
+			species = SpeciesUtil.TREE_TYPE.get().getDefaultSpecies();
+			leafSpriteProvider = IForestryClientApi.INSTANCE.getTreeManager().getLeafSprite(species);
+		}
 
 		ResourceLocation leafSpriteLocation = leafSpriteProvider.get(false, key.fancy);
 		TextureAtlasSprite leafSprite = ResourceUtil.getBlockSprite(leafSpriteLocation);

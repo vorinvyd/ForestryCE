@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:chiseled_quartz_block"
+    },
+    "C": {
+      "item": "forestry:tin_electron_tube"
+    },
+    "I": {
+      "tag": "c:ingots/copper"
+    },
+    "W": {
+      "tag": "minecraft:wooden_slabs"
+    }
+  },
+  "pattern": [
+    "I#I",
+    "WCW"
+  ],
+  "result": {
+    "count": 1,
+    "id": "forestry:chiseled_quartz_farm_plain"
+  }
+}

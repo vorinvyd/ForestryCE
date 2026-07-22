@@ -4,6 +4,8 @@ import com.mojang.authlib.GameProfile;
 import forestry.api.arboriculture.ForestryTreeSpecies;
 import forestry.api.arboriculture.ITreeSpecies;
 import forestry.api.arboriculture.genetics.ITree;
+import forestry.api.arboriculture.genetics.ITreeSpeciesType;
+import forestry.api.arboriculture.genetics.ITreeEffect;
 import forestry.api.genetics.IGenome;
 import forestry.api.genetics.alleles.TreeChromosomes;
 import forestry.core.blocks.IColoredBlock;
@@ -82,9 +84,11 @@ public abstract class BlockAbstractLeaves extends BlockExtendedLeaves implements
 		ITree tree = getTree(world, pos);
 		ITreeSpecies species;
 		if (tree == null) {
-			species = SpeciesUtil.getTreeSpecies(ForestryTreeSpecies.OAK);
+			ITreeSpeciesType type = SpeciesUtil.TREE_TYPE.get();
+			ITreeSpecies oak = type.getSpeciesSafe(ForestryTreeSpecies.OAK);
+			species = oak != null ? oak : type.getDefaultSpecies();
 		} else {
-			species = tree.getGenome().getActiveValue(TreeChromosomes.SPECIES);
+			species = tree.getGenome().resolveActive(TreeChromosomes.SPECIES);
 		}
 		ItemStack decorativeLeaves = species.getDecorativeLeaves();
 		if (decorativeLeaves.isEmpty()) {
@@ -163,7 +167,8 @@ public abstract class BlockAbstractLeaves extends BlockExtendedLeaves implements
 
 		if (tree != null) {
 			IGenome genome = tree.getGenome();
-			genome.getActiveValue(TreeChromosomes.EFFECT).doAnimationEffect(genome, level, pos, rand);
+			ITreeEffect effect = genome.resolveActive(TreeChromosomes.EFFECT);
+			effect.doAnimationEffect(genome, level, pos, rand);
 		}
 	}
 }

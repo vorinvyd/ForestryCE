@@ -74,6 +74,8 @@ public abstract class FeatureGroup<B extends FeatureGroup.Builder<S, ? extends F
 		protected final SequencedSet<S> subTypes;
 		protected IdentifierType identifierType = IdentifierType.TYPE_ONLY;
 		protected String identifier = StringUtils.EMPTY;
+		@org.jetbrains.annotations.Nullable
+		protected java.util.function.Function<S, String> identifierFunction = null;
 
 		public Builder(FeatureRegistry registry, Collection<S> types) {
 			this.registry = registry;
@@ -87,6 +89,16 @@ public abstract class FeatureGroup<B extends FeatureGroup.Builder<S, ? extends F
 		public Builder<S, G> identifier(String identifier, IdentifierType type) {
 			this.identifier = identifier;
 			this.identifierType = type;
+			return this;
+		}
+
+		/**
+		 * Assigns a fully custom registry identifier per subtype, bypassing the prefix/suffix
+		 * {@link IdentifierType} scheme. Used where the desired ids do not follow a uniform
+		 * ordering or where individual subtypes need irregular names.
+		 */
+		public Builder<S, G> identifier(java.util.function.Function<S, String> identifierFunction) {
+			this.identifierFunction = identifierFunction;
 			return this;
 		}
 
@@ -104,7 +116,10 @@ public abstract class FeatureGroup<B extends FeatureGroup.Builder<S, ? extends F
 			return this;
 		}
 
-		protected String getIdentifier(IFeatureSubtype type) {
+		protected String getIdentifier(S type) {
+			if (this.identifierFunction != null) {
+				return this.identifierFunction.apply(type);
+			}
 			return this.identifierType.apply(this.identifier, type.getSerializedName());
 		}
 

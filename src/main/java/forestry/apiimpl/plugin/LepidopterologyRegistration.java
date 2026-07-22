@@ -37,8 +37,8 @@ public class LepidopterologyRegistration extends SpeciesRegistration<IButterflyS
 	}
 
 	@Override
-	protected ButterflySpeciesBuilder createSpeciesBuilder(ResourceLocation id, String genus, String species, MutationsRegistration mutations) {
-		return new ButterflySpeciesBuilder(id, genus, species, mutations);
+	protected ButterflySpeciesBuilder createSpeciesBuilder(ResourceLocation id, String genus, String species) {
+		return new ButterflySpeciesBuilder(id, genus, species);
 	}
 
 	public ImmutableMap<ResourceLocation, IButterflyCocoon> getCocoons() {

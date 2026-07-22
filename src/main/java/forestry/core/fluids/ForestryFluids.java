@@ -85,15 +85,22 @@ public enum ForestryFluids {
 
 	ForestryFluids(UnaryOperator<FeatureFluid.Builder> properties) {
 		IFeatureRegistry registry = ModFeatureRegistry.get(ForestryModuleIds.CORE);
+		String fluidId = switch (name()) {
+			case "GLASS" -> "liquid_glass";
+			case "ICE" -> "crushed_ice";
+			case "JUICE" -> "fruit_juice";
+			case "BIO_ETHANOL" -> "ethanol";
+			default -> name().toLowerCase(Locale.ENGLISH);
+		};
 		this.feature = properties.apply(registry
-				.fluid(name().toLowerCase(Locale.ENGLISH)))
+				.fluid(fluidId))
 			.bucket(this::getBucket)
 			.create();
 		this.bucket = registry
 			.item(() -> new BucketItem(getFluid(), new Item.Properties()
 					.craftRemainder(Items.BUCKET)
 					.stacksTo(1)),
-				"bucket_" + name().toLowerCase(Locale.ENGLISH)
+				"bucket_" + fluidId
 			);
 		this.tag = ForestryConstants.forestry(this.feature.getName());
 	}

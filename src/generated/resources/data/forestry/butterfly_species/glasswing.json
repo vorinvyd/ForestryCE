@@ -1,0 +1,24 @@
+{
+  "dominant": true,
+  "genome": {
+    "forestry:butterfly_lifespan": {
+      "dominant": true,
+      "value": 30
+    },
+    "forestry:fertility": {
+      "value": 5
+    },
+    "forestry:size": {
+      "value": 0.4
+    },
+    "forestry:temperature_tolerance": {
+      "dominant": true,
+      "value": "DOWN_1"
+    }
+  },
+  "genus": "greta",
+  "rarity": 0.1,
+  "serum_color": 5781298,
+  "species": "oto",
+  "temperature": "warm"
+}

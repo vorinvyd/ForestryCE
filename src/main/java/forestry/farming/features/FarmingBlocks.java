@@ -14,5 +14,16 @@ import forestry.modules.features.ModFeatureRegistry;
 public class FarmingBlocks {
 	private static final IFeatureRegistry REGISTRY = ModFeatureRegistry.get(ForestryModuleIds.FARMING);
 
-	public static final FeatureBlockTable<FarmBlock, EnumFarmBlockType, EnumFarmMaterial> FARM = REGISTRY.blockTable(FarmBlock::create, EnumFarmBlockType.values(), EnumFarmMaterial.values()).item(ItemBlockFarm::new).identifier("farm").create();
+	public static final FeatureBlockTable<FarmBlock, EnumFarmBlockType, EnumFarmMaterial> FARM = REGISTRY.blockTable(FarmBlock::create, EnumFarmBlockType.values(), EnumFarmMaterial.values()).item(ItemBlockFarm::new).identifier((part, material) -> {
+		String mat = switch (material) {
+			case SANDSTONE_CHISELED -> "chiseled_sandstone";
+			case BRICK_NETHER -> "nether_brick";
+			case BRICK_CHISELED -> "chiseled_stone_brick";
+			case QUARTZ_CHISELED -> "chiseled_quartz";
+			case QUARTZ_LINES -> "quartz_pillar";
+			default -> material.getSerializedName();
+		};
+		String partName = (part == EnumFarmBlockType.PLAIN && material == EnumFarmMaterial.STONE_BRICK) ? "block" : part.getSerializedName();
+		return mat + "_farm_" + partName;
+	}).create();
 }

@@ -1,0 +1,22 @@
+{
+  "dominant": true,
+  "genome": {
+    "forestry:lifespan": {
+      "value": 60
+    },
+    "forestry:speed": {
+      "value": 1.0
+    }
+  },
+  "genus": "punapis",
+  "humidity": "arid",
+  "outline": 12770816,
+  "products": [
+    {
+      "chance": 0.4,
+      "item": "forestry:parched_comb"
+    }
+  ],
+  "species": "punire",
+  "temperature": "warm"
+}

@@ -106,7 +106,7 @@ public class ForestryBlockLootTables extends BlockLootSubProvider {
 
 	public LootTable.Builder droppingWithChances(Block block, ForestryLeafType definition, float... chances) {
 		return createSilkTouchOrShearsDispatchTable(block,
-			applyExplosionCondition(block, LootItem.lootTableItem(ArboricultureItems.SAPLING)
+			applyExplosionCondition(block, LootItem.lootTableItem(ArboricultureItems.TREE_SAPLING)
 				.apply(OrganismFunction.fromId(SpeciesUtil.TREE_TYPE.get().id(), definition.getSpeciesId())))
 				.when(BonusLevelTableCondition.bonusLevelFlatChance(enchantments().getOrThrow(Enchantments.FORTUNE), chances)));
 	}

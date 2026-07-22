@@ -1,0 +1,18 @@
+{
+  "dominant": true,
+  "genome": {
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.6
+    }
+  },
+  "genus": "apis",
+  "outline": 11711154,
+  "products": [
+    {
+      "chance": 0.35,
+      "item": "forestry:honey_comb"
+    }
+  ],
+  "species": "cerana"
+}

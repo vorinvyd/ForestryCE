@@ -1,0 +1,25 @@
+{
+  "dominant": true,
+  "escritoire_color": 16711567,
+  "genome": {
+    "forestry:girth": {
+      "value": 3
+    },
+    "forestry:height": {
+      "value": 1.25
+    },
+    "forestry:maturation": {
+      "dominant": true,
+      "value": 5
+    },
+    "forestry:sappiness": {
+      "dominant": true,
+      "value": 0.2
+    }
+  },
+  "genus": "adansonia",
+  "humidity": "damp",
+  "rarity": 0.005,
+  "species": "grandidieri",
+  "temperature": "warm"
+}

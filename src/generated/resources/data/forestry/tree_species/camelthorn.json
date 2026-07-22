@@ -1,0 +1,25 @@
+{
+  "dominant": true,
+  "escritoire_color": 7638044,
+  "genome": {
+    "forestry:height": {
+      "value": 0.75
+    },
+    "forestry:maturation": {
+      "value": 7
+    },
+    "forestry:saplings": {
+      "dominant": true,
+      "value": 0.01
+    },
+    "forestry:sappiness": {
+      "dominant": true,
+      "value": 0.3
+    }
+  },
+  "genus": "vachellia",
+  "humidity": "arid",
+  "rarity": 0.005,
+  "species": "erioloba",
+  "temperature": "warm"
+}

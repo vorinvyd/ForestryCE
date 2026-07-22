@@ -1,0 +1,23 @@
+{
+  "authority": "Spear",
+  "dominant": true,
+  "escritoire_color": 16569674,
+  "genome": {
+    "forestry:height": {
+      "value": 1.25
+    },
+    "forestry:maturation": {
+      "dominant": true,
+      "value": 5
+    },
+    "forestry:saplings": {
+      "dominant": true,
+      "value": 0.01
+    },
+    "forestry:sappiness": {
+      "value": 0.8
+    }
+  },
+  "genus": "ginkgo",
+  "species": "bilboa"
+}

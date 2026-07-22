@@ -4,7 +4,7 @@
   "melting": 4800,
   "product": {
     "amount": 4000,
-    "id": "forestry:glass"
+    "id": "forestry:liquid_glass"
   },
   "resource": [
     {

@@ -1,0 +1,8 @@
+{
+  "type": "forestry:damage_entities",
+  "combinable": false,
+  "damage": 4.0,
+  "damage_type": "forestry:misanthrope",
+  "target": "players",
+  "throttle": 20
+}

@@ -3,7 +3,7 @@
   "id": "forestry:fabricator/fireproof/wood/kauri",
   "molten": {
     "amount": 500,
-    "id": "forestry:glass"
+    "id": "forestry:liquid_glass"
   },
   "recipe": {
     "category": "building",

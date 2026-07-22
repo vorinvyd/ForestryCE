@@ -1,0 +1,21 @@
+{
+  "dominant": true,
+  "escritoire_color": 6063145,
+  "genome": {
+    "forestry:fruits": {
+      "value": "forestry:fruit_lemon"
+    },
+    "forestry:height": {
+      "value": 0.25
+    },
+    "forestry:sappiness": {
+      "dominant": true,
+      "value": 0.3
+    },
+    "forestry:yield": {
+      "value": 0.3
+    }
+  },
+  "genus": "citrus",
+  "species": "limon"
+}

@@ -6,7 +6,7 @@
       "tag": "c:rods/wooden"
     },
     "B": {
-      "tag": "forge:ingots/bronze"
+      "tag": "c:ingots/bronze"
     }
   },
   "pattern": [

@@ -1,12 +1,16 @@
 package forestry.api.lepidopterology;
 
 import forestry.api.genetics.IEffectData;
-import forestry.api.genetics.alleles.IRegistryAlleleValue;
 
 /**
  * Unimplemented.
  */
-public interface IButterflyEffect extends IRegistryAlleleValue {
+public interface IButterflyEffect {
+	/**
+	 * @return Whether the allele for this value is dominant or recessive.
+	 */
+	boolean isDominant();
+
 	/**
 	 * Used by butterflies to trigger effects in the world.
 	 *

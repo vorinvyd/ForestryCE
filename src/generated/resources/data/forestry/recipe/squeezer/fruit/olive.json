@@ -3,8 +3,10 @@
   "chance": 0.02,
   "id": "forestry:squeezer/fruit/olive",
   "output": {
-    "amount": 100,
-    "id": "forestry:seed_oil"
+    "stack": {
+      "amount": 100,
+      "id": "forestry:seed_oil"
+    }
   },
   "remnant": {
     "count": 1,
@@ -12,7 +14,7 @@
   },
   "resources": [
     {
-      "tag": "forge:fruits/olive"
+      "tag": "c:fruits/olive"
     }
   ],
   "time": 70

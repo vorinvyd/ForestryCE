@@ -19,7 +19,7 @@
         "tag": "c:dusts/redstone"
       },
       "X": {
-        "tag": "forge:ingots/tin"
+        "tag": "c:ingots/tin"
       }
     },
     "pattern": [
@@ -29,7 +29,7 @@
     ],
     "result": {
       "count": 1,
-      "id": "forestry:portable_alyzer"
+      "id": "forestry:portable_analyzer"
     }
   },
   "time": 100

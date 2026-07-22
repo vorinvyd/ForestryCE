@@ -103,4 +103,24 @@ public class BeeHousingModifier implements IBeeModifier {
 		}
 		return false;
 	}
+
+	@Override
+	public boolean providesFlowers() {
+		for (IBeeModifier modifier : this.beeHousing.getBeeModifiers()) {
+			if (modifier.providesFlowers()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isClimateFullyTolerant() {
+		for (IBeeModifier modifier : this.beeHousing.getBeeModifiers()) {
+			if (modifier.isClimateFullyTolerant()) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

@@ -1,6 +1,6 @@
 {
   "loader": "forestry:filled_crate",
   "textures": {
-    "layer1": "forestry:item/ingot_tin"
+    "layer1": "forestry:item/tin_ingot"
   }
 }

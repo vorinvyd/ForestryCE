@@ -1,18 +1,16 @@
 package forestry.apiimpl.plugin;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.mojang.datafixers.util.Pair;
 import forestry.Forestry;
 import forestry.api.IForestryApi;
 import forestry.api.genetics.*;
 import forestry.api.genetics.alleles.*;
 import forestry.api.plugin.IGenomeBuilder;
 import forestry.api.plugin.ISpeciesBuilder;
-import forestry.core.genetics.MutationManager;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 /**
@@ -32,58 +30,66 @@ public abstract class SpeciesRegistration<I extends ISpeciesBuilder<? extends IS
 		this.type = type;
 	}
 
-	protected abstract B createSpeciesBuilder(ResourceLocation id, String genus, String species, MutationsRegistration mutations);
+	protected abstract B createSpeciesBuilder(ResourceLocation id, String genus, String species);
 
 	protected I register(ResourceLocation id, String genus, String species) {
-		return this.species.create(id, createSpeciesBuilder(id, genus, species, new MutationsRegistration(id)));
+		return this.species.create(id, createSpeciesBuilder(id, genus, species));
 	}
 
 	public void modifySpecies(ResourceLocation id, Consumer<I> action) {
 		this.species.modify(id, action);
 	}
 
-	// Creates final map of species, the mutations manager, and populates the species chromosome
-	public Pair<ImmutableMap<ResourceLocation, S>, IMutationManager<S>> buildAll() {
-		IKaryotype karyotype = this.type.getKaryotype();
-		IRegistryChromosome<? extends ISpecies<?>> speciesChromosome = karyotype.getSpeciesChromosome();
+	/**
+	 * Iterates the registered species builders in registration order, without building any species. Used by datagen
+	 * to read builder state (genus, products, genome overrides, ...) directly, bypassing
+	 * {@link #createDefaultGenomeBuilder}/{@link #buildAll} entirely.
+	 */
+	public void forEachSpeciesBuilder(BiConsumer<ResourceLocation, B> consumer) {
+		this.species.forEach(consumer);
+	}
 
-		ImmutableMap<ResourceLocation, S> allSpecies = this.species.build((id, builder) -> {
-			// create default genome builder
-			IGenomeBuilder defaultGenomeBuilder = karyotype.createGenomeBuilder();
-			ITaxon[] ancestry = IForestryApi.INSTANCE.getGeneticManager().getParentTaxa(builder.getGenus());
-
-			// apply default genomes from parent taxa
-			for (ITaxon taxon : ancestry) {
-				for (Map.Entry<IChromosome<?>, ITaxon.TaxonAllele> alleleEntry : taxon.alleles().entrySet()) {
-					IAllele allele = alleleEntry.getValue().allele();
-					IChromosome<?> chromosome = alleleEntry.getKey();
-
-					if (karyotype.isAlleleValid(chromosome, allele.cast())) {
-						defaultGenomeBuilder.set(alleleEntry.getKey(), allele.cast());
-					} else {
-						// If a taxa is shared by different species types, don't throw errors for incompatible default alleles
-						Forestry.LOGGER.warn("Default allele set by taxon {} skipped for species {} due to being invalid for its karyotype", taxon.name(), id);
-					}
+	// Builds the base genome (taxon defaults + species chromosome + remaining defaults) shared by
+	// the code-builder path and the data-driven JSON projector. Does not apply per-species overrides
+	// or call build().
+	@SuppressWarnings({"unchecked"})
+	public static IGenomeBuilder createDefaultGenomeBuilder(IKaryotype karyotype, ResourceLocation speciesId, String genus, boolean dominant) {
+		IChromosome<ResourceLocation> speciesChromosome = karyotype.getSpeciesChromosome();
+		IGenomeBuilder builder = karyotype.createGenomeBuilder();
+		ITaxon[] ancestry = IForestryApi.INSTANCE.getGeneticManager().getParentTaxa(genus);
+		for (ITaxon taxon : ancestry) {
+			for (Map.Entry<IChromosome<?>, ITaxon.TaxonAllele> e : taxon.alleles().entrySet()) {
+				IChromosome<?> chromosome = e.getKey();
+				ITaxon.TaxonAllele taxonAllele = e.getValue();
+				if (!karyotype.contains(chromosome)) {
+					Forestry.LOGGER.warn("Default allele set by taxon {} skipped for species {} due to being invalid for its karyotype", taxon.name(), speciesId);
+					continue;
+				}
+				ResourceLocation reference = taxonAllele.reference();
+				if (reference != null) {
+					builder.set((IChromosome<ResourceLocation>) chromosome, reference);
+				} else {
+					builder.setUnchecked(chromosome, AllelePair.both(taxonAllele.allele()));
 				}
 			}
+		}
+		builder.setUnchecked(speciesChromosome, AllelePair.both(new Allele<>(speciesId, dominant)));
+		builder.setRemainingDefault();
+		return builder;
+	}
 
-			// set default chromosomes that weren't overridden by taxa
-			defaultGenomeBuilder.setUnchecked(speciesChromosome, AllelePair.both(IForestryApi.INSTANCE.getAlleleManager().registryAllele(id, speciesChromosome)));
-			defaultGenomeBuilder.setRemainingDefault();
+	// Creates the final map of species. The species chromosome is a reference chromosome,
+	// so it no longer needs to be populated separately; it is resolved on demand via the species type.
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	public ImmutableMap<ResourceLocation, S> buildAll() {
+		IKaryotype karyotype = this.type.getKaryotype();
+
+		ImmutableMap<ResourceLocation, S> allSpecies = this.species.build((id, builder) -> {
+			IGenomeBuilder defaultGenomeBuilder = createDefaultGenomeBuilder(karyotype, id, builder.getGenus(), builder.isDominant());
 			IGenome defaultGenome = builder.buildGenome(defaultGenomeBuilder);
-
 			return builder.createSpeciesFactory().create(id, this.type.cast(), defaultGenome, builder);
 		});
 
-		// populate default species chromosome
-		speciesChromosome.populate((ImmutableMap) allSpecies);
-
-		// build mutations once species are available
-		ImmutableList.Builder<IMutation<S>> mutations = new ImmutableList.Builder<>();
-		for (Map.Entry<ResourceLocation, B> entry : this.species.getValues().entrySet()) {
-			mutations.addAll(entry.getValue().buildMutations(this.type, allSpecies));
-		}
-
-		return Pair.of(allSpecies, new MutationManager<>(mutations.build()));
+		return allSpecies;
 	}
 }

@@ -1,0 +1,22 @@
+{
+  "authority": "EnderiumSmith",
+  "body": 6613382,
+  "genome": {
+    "forestry:lifespan": {
+      "value": 70
+    },
+    "forestry:speed": {
+      "value": 1.4
+    }
+  },
+  "genus": "phytapis",
+  "glint": true,
+  "outline": 16774636,
+  "products": [
+    {
+      "chance": 0.3,
+      "item": "forestry:honey_comb"
+    }
+  ],
+  "species": "solaris"
+}

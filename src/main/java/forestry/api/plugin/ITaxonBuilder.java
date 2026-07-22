@@ -1,7 +1,8 @@
 package forestry.api.plugin;
 
-import forestry.api.genetics.alleles.IAllele;
+import forestry.api.genetics.alleles.Allele;
 import forestry.api.genetics.alleles.IChromosome;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.function.Consumer;
 
@@ -27,23 +28,41 @@ public interface ITaxonBuilder {
 	void defineSubTaxon(String name, Consumer<ITaxonBuilder> action);
 
 	/**
-	 * Sets the default allele for the given chromosome for all members of this taxon.
+	 * Sets the default allele of a data chromosome for all members of this taxon.
 	 *
 	 * @param chromosome The chromosome to set.
-	 * @param value      The default allele of the chromosome.
-	 * @throws UnsupportedOperationException If a member of this taxon does not have this chromosome.
+	 * @param allele     The default allele of the chromosome.
 	 */
-	default <A extends IAllele> void setDefaultChromosome(IChromosome<A> chromosome, A value) {
-		setDefaultChromosome(chromosome, value, true);
+	default <V> void setDefaultChromosome(IChromosome<V> chromosome, Allele<V> allele) {
+		setDefaultChromosome(chromosome, allele, true);
 	}
 
 	/**
-	 * Sets the default allele for the given chromosome for all members of this taxon.
+	 * Sets the default allele of a data chromosome for all members of this taxon.
 	 *
 	 * @param chromosome The chromosome to set.
-	 * @param value      The default allele of this chromosome.
-	 * @param required   If true, throws an exception if a member of the taxon does not have this chromosome.
-	 * @throws UnsupportedOperationException If required is {@code true} and a member of this taxon does not have this chromosome.
+	 * @param allele     The default allele of this chromosome.
+	 * @param required   If {@code true}, members of the taxon are expected to have this chromosome.
 	 */
-	<A extends IAllele> void setDefaultChromosome(IChromosome<A> chromosome, A value, boolean required);
+	<V> void setDefaultChromosome(IChromosome<V> chromosome, Allele<V> allele, boolean required);
+
+	/**
+	 * Sets the default value of a reference chromosome (species, flower type, effect, ...) for all members of this
+	 * taxon by the referenced value's ID. The value's declared dominance is resolved after registries are populated.
+	 *
+	 * @param chromosome The reference chromosome to set.
+	 * @param id         The ID of the default referenced value.
+	 */
+	default void setDefaultChromosome(IChromosome<ResourceLocation> chromosome, ResourceLocation id) {
+		setDefaultChromosome(chromosome, id, true);
+	}
+
+	/**
+	 * Sets the default value of a reference chromosome for all members of this taxon by the referenced value's ID.
+	 *
+	 * @param chromosome The reference chromosome to set.
+	 * @param id         The ID of the default referenced value.
+	 * @param required   If {@code true}, members of the taxon are expected to have this chromosome.
+	 */
+	void setDefaultChromosome(IChromosome<ResourceLocation> chromosome, ResourceLocation id, boolean required);
 }

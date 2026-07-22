@@ -136,7 +136,9 @@ public class TileSqueezer extends TilePowered implements ISocketable, WorldlyCon
 			return false;
 		}
 
-		FluidStack resultFluid = this.currentRecipe.getFluidOutput();
+		// createRandomFluidStack folds in any addon-defined per-cycle randomness (variable amount / chance of nothing).
+		// It may return less than createFluidStack() (the amount reserved below) or EMPTY, in which case fill is a no-op.
+		FluidStack resultFluid = this.currentRecipe.getFluidOutput().createRandomFluidStack(this.level.random);
 		this.productTank.fillInternal(resultFluid, IFluidHandler.FluidAction.EXECUTE);
 
 		float roll = this.level.random.nextFloat();
@@ -176,6 +178,12 @@ public class TileSqueezer extends TilePowered implements ISocketable, WorldlyCon
 					}
 				}
 			}
+
+			// A dynamic output (e.g. an addon tag product no loaded mod fills) resolves to an empty representative
+			// stack; refuse the recipe rather than consuming the input for no fluid.
+			if (matchingRecipe != null && matchingRecipe.getFluidOutput().createFluidStack().isEmpty()) {
+				matchingRecipe = null;
+			}
 		}
 
 		if (this.currentRecipe != matchingRecipe) {
@@ -204,7 +212,9 @@ public class TileSqueezer extends TilePowered implements ISocketable, WorldlyCon
 		if (hasResources) {
 			hasRecipe = this.currentRecipe != null;
 			if (hasRecipe) {
-				FluidStack resultFluid = this.currentRecipe.getFluidOutput();
+				// Reserve worst-case space: createFluidStack() is the MAX amount this product can emit, so the machine
+				// only starts if the tank can hold it, even if a given cycle later produces less.
+				FluidStack resultFluid = this.currentRecipe.getFluidOutput().createFluidStack();
 				canFill = this.productTank.fillInternal(resultFluid, IFluidHandler.FluidAction.SIMULATE) == resultFluid.getAmount();
 
 				if (!this.currentRecipe.getRemnants().isEmpty()) {

@@ -2,7 +2,7 @@
   "type": "forestry:centrifuge",
   "id": "forestry:centrifuge/mossy_comb",
   "input": {
-    "item": "forestry:bee_comb_mossy"
+    "item": "forestry:mossy_comb"
   },
   "products": [
     {

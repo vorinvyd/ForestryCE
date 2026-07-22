@@ -1,5 +1,5 @@
 {
-  "icon": "forestry:resource_storage_bronze",
+  "icon": "forestry:bronze_block",
   "name": "for.gui.book.patchouli.entry.core.resources",
   "category": "forestry:core",
   "pages": [
@@ -10,20 +10,20 @@
     {
       "type": "crafting",
       "title": "for.gui.book.patchouli.entry.core.resources2",
-      "recipe": "forestry:resource_storage_apatite",
+      "recipe": "forestry:apatite_block",
       "recipe2": "forestry:apatite_from_resource_storage_apatite"
     },
     {
       "type": "crafting",
       "title": "for.gui.book.patchouli.entry.core.resources4",
-      "recipe": "forestry:resource_storage_tin",
+      "recipe": "forestry:tin_block",
       "recipe2": "forestry:ingot_tin_from_resource_storage_tin"
     }
   ,
     {
       "type": "crafting",
       "title": "for.gui.book.patchouli.entry.core.resources5",
-      "recipe": "forestry:resource_storage_bronze",
+      "recipe": "forestry:bronze_block",
       "recipe2": "forestry:ingot_bronze_from_resource_storage_bronze"
     }
   ]

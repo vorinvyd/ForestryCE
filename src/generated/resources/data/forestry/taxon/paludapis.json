@@ -1,0 +1,18 @@
+{
+  "type": "forestry:bee_species",
+  "parent": "apidae",
+  "alleles": {
+    "forestry:flower_type": {
+      "value": "forestry:flower_type_mushrooms"
+    },
+    "forestry:pollination": {
+      "value": 10
+    },
+    "forestry:temperature_tolerance": {
+      "dominant": true,
+      "value": "BOTH_1"
+    }
+  },
+  "name": "paludapis",
+  "rank": "genus"
+}

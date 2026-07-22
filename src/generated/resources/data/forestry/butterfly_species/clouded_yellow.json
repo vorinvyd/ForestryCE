@@ -1,0 +1,13 @@
+{
+  "dominant": true,
+  "genome": {
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.8
+    }
+  },
+  "genus": "colias",
+  "rarity": 0.5,
+  "serum_color": 14122500,
+  "species": "croceus"
+}

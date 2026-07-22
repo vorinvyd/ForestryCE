@@ -1,0 +1,30 @@
+{
+  "authority": "Spear",
+  "dominant": true,
+  "escritoire_color": 12040082,
+  "genome": {
+    "forestry:fruits": {
+      "value": "forestry:fruit_olive"
+    },
+    "forestry:height": {
+      "value": 0.5
+    },
+    "forestry:maturation": {
+      "value": 3
+    },
+    "forestry:saplings": {
+      "dominant": true,
+      "value": 0.025
+    },
+    "forestry:sappiness": {
+      "dominant": true,
+      "value": 0.3
+    },
+    "forestry:yield": {
+      "dominant": true,
+      "value": 0.2
+    }
+  },
+  "genus": "olea",
+  "species": "europaea"
+}

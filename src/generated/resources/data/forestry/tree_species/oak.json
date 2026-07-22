@@ -1,0 +1,17 @@
+{
+  "escritoire_color": 4764952,
+  "genome": {
+    "forestry:fruits": {
+      "value": "forestry:fruit_apple"
+    },
+    "forestry:maturation": {
+      "value": 2
+    },
+    "forestry:saplings": {
+      "dominant": true,
+      "value": 0.05
+    }
+  },
+  "genus": "quercus",
+  "species": "robur"
+}

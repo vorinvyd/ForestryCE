@@ -34,13 +34,6 @@ public interface IHive {
 	boolean canReplace(WorldGenLevel world, BlockPos pos);
 
 	/**
-	 * @deprecated Use {@link #getPosForHive(WorldGenLevel, RandomSource, int, int)} that accepts a world gen random.
-	 */
-	@Deprecated
-	@Nullable
-	BlockPos getPosForHive(WorldGenLevel level, int posX, int posZ);
-
-	/**
 	 * Determines the position of a hive.
 	 *
 	 * @param level The level to generate the hive in.
@@ -50,9 +43,7 @@ public interface IHive {
 	 * @return The adjusted position where the hive should be generated or {@code null} if no hive should be generated.
 	 */
 	@Nullable
-	default BlockPos getPosForHive(WorldGenLevel level, RandomSource rand, int posX, int posZ) {
-		return getPosForHive(level, posX, posZ);
-	}
+	BlockPos getPosForHive(WorldGenLevel level, RandomSource rand, int posX, int posZ);
 
 	@Override
 	String toString();

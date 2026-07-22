@@ -4,55 +4,55 @@
       "conditions": {
         "items": [
           {
-            "items": "forestry:bee_comb_honey"
+            "items": "forestry:honey_comb"
           },
           {
-            "items": "forestry:bee_comb_cocoa"
+            "items": "forestry:cocoa_comb"
           },
           {
-            "items": "forestry:bee_comb_simmering"
+            "items": "forestry:simmering_comb"
           },
           {
-            "items": "forestry:bee_comb_stringy"
+            "items": "forestry:stringy_comb"
           },
           {
-            "items": "forestry:bee_comb_frozen"
+            "items": "forestry:frozen_comb"
           },
           {
-            "items": "forestry:bee_comb_dripping"
+            "items": "forestry:dripping_comb"
           },
           {
-            "items": "forestry:bee_comb_silky"
+            "items": "forestry:silky_comb"
           },
           {
-            "items": "forestry:bee_comb_parched"
+            "items": "forestry:parched_comb"
           },
           {
-            "items": "forestry:bee_comb_mysterious"
+            "items": "forestry:mysterious_comb"
           },
           {
-            "items": "forestry:bee_comb_powdery"
+            "items": "forestry:powdery_comb"
           },
           {
-            "items": "forestry:bee_comb_wheaten"
+            "items": "forestry:wheaten_comb"
           },
           {
-            "items": "forestry:bee_comb_mossy"
+            "items": "forestry:mossy_comb"
           },
           {
-            "items": "forestry:bee_comb_mellow"
+            "items": "forestry:mellow_comb"
           },
           {
-            "items": "forestry:bee_comb_kaolin"
+            "items": "forestry:kaolin_comb"
           },
           {
-            "items": "forestry:bee_comb_vintage"
+            "items": "forestry:vintage_comb"
           },
           {
-            "items": "forestry:bee_comb_sponge"
+            "items": "forestry:spongy_comb"
           },
           {
-            "items": "forestry:bee_comb_sculken"
+            "items": "forestry:sculken_comb"
           }
         ]
       },
@@ -72,56 +72,130 @@
         "forestry:genome": {
           "genome": {
             "forestry:activity": {
-              "active": "forestry:activity_diurnal",
-              "inactive": "forestry:activity_diurnal"
+              "active": {
+                "dominant": true,
+                "value": "forestry:activity_diurnal"
+              },
+              "inactive": {
+                "dominant": true,
+                "value": "forestry:activity_diurnal"
+              }
             },
             "forestry:bee_effect": {
-              "active": "forestry:bee_effect_none",
-              "inactive": "forestry:bee_effect_none"
+              "active": {
+                "dominant": true,
+                "value": "forestry:bee_effect_none"
+              },
+              "inactive": {
+                "dominant": true,
+                "value": "forestry:bee_effect_none"
+              }
             },
             "forestry:bee_species": {
-              "active": "forestry:bee_industrious",
-              "inactive": "forestry:bee_industrious"
+              "active": {
+                "value": "forestry:industrious"
+              },
+              "inactive": {
+                "value": "forestry:industrious"
+              }
             },
             "forestry:cave_dwelling": {
-              "active": "forestry:falsed",
-              "inactive": "forestry:falsed"
+              "active": {
+                "dominant": true,
+                "value": false
+              },
+              "inactive": {
+                "dominant": true,
+                "value": false
+              }
             },
             "forestry:fertility": {
-              "active": "forestry:2id",
-              "inactive": "forestry:2id"
+              "active": {
+                "dominant": true,
+                "value": 2
+              },
+              "inactive": {
+                "dominant": true,
+                "value": 2
+              }
             },
             "forestry:flower_type": {
-              "active": "forestry:flower_type_vanilla",
-              "inactive": "forestry:flower_type_vanilla"
+              "active": {
+                "dominant": true,
+                "value": "forestry:flower_type_vanilla"
+              },
+              "inactive": {
+                "dominant": true,
+                "value": "forestry:flower_type_vanilla"
+              }
             },
             "forestry:humidity_tolerance": {
-              "active": "forestry:tolerance_none",
-              "inactive": "forestry:tolerance_none"
+              "active": {
+                "value": "NONE"
+              },
+              "inactive": {
+                "value": "NONE"
+              }
             },
             "forestry:lifespan": {
-              "active": "forestry:40i",
-              "inactive": "forestry:40i"
+              "active": {
+                "value": 40
+              },
+              "inactive": {
+                "value": 40
+              }
             },
             "forestry:pollination": {
-              "active": "forestry:25i",
-              "inactive": "forestry:25i"
+              "active": {
+                "value": 25
+              },
+              "inactive": {
+                "value": 25
+              }
             },
             "forestry:speed": {
-              "active": "forestry:0.6fd",
-              "inactive": "forestry:0.6fd"
+              "active": {
+                "dominant": true,
+                "value": 0.6
+              },
+              "inactive": {
+                "dominant": true,
+                "value": 0.6
+              }
             },
             "forestry:temperature_tolerance": {
-              "active": "forestry:tolerance_none",
-              "inactive": "forestry:tolerance_none"
+              "active": {
+                "value": "NONE"
+              },
+              "inactive": {
+                "value": "NONE"
+              }
             },
             "forestry:territory": {
-              "active": "forestry:9_6_9",
-              "inactive": "forestry:9_6_9"
+              "active": {
+                "value": [
+                  9,
+                  6,
+                  9
+                ]
+              },
+              "inactive": {
+                "value": [
+                  9,
+                  6,
+                  9
+                ]
+              }
             },
             "forestry:tolerates_rain": {
-              "active": "forestry:falsed",
-              "inactive": "forestry:falsed"
+              "active": {
+                "dominant": true,
+                "value": false
+              },
+              "inactive": {
+                "dominant": true,
+                "value": false
+              }
             }
           },
           "karyotype": "forestry:bee_species"
@@ -130,7 +204,7 @@
         "forestry:max_health": 40
       },
       "count": 1,
-      "id": "forestry:bee_queen_ge"
+      "id": "forestry:queen_bee"
     },
     "show_toast": false,
     "title": {

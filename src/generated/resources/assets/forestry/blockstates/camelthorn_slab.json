@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "forestry:block/camelthorn_slab"
+    },
+    "type=double": {
+      "model": "forestry:block/camelthorn_planks"
+    },
+    "type=top": {
+      "model": "forestry:block/camelthorn_slab_top"
+    }
+  }
+}

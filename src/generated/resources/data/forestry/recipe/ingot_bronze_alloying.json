@@ -3,7 +3,7 @@
   "category": "misc",
   "ingredients": [
     {
-      "tag": "forge:ingots/tin"
+      "tag": "c:ingots/tin"
     },
     {
       "item": "minecraft:copper_ingot"
@@ -17,6 +17,6 @@
   ],
   "result": {
     "count": 4,
-    "id": "forestry:ingot_bronze"
+    "id": "forestry:bronze_ingot"
   }
 }

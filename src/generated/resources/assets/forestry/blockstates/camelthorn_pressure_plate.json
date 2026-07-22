@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "forestry:block/camelthorn_pressure_plate"
+    },
+    "powered=true": {
+      "model": "forestry:block/camelthorn_pressure_plate_down"
+    }
+  }
+}

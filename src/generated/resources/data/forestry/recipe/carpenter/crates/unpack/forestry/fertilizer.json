@@ -1,0 +1,18 @@
+{
+  "type": "forestry:carpenter",
+  "box": [],
+  "id": "forestry:carpenter/crates/unpack/forestry/fertilizer",
+  "recipe": {
+    "category": "misc",
+    "ingredients": [
+      {
+        "item": "forestry:crated_fertilizer_compound"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "forestry:fertilizer"
+    }
+  },
+  "time": 5
+}

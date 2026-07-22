@@ -7,10 +7,7 @@ import forestry.api.core.IProduct;
 import forestry.api.core.ToleranceType;
 import forestry.api.genetics.IIndividual;
 import forestry.api.genetics.ISpecies;
-import forestry.api.genetics.alleles.IAllele;
 import forestry.api.genetics.alleles.IChromosome;
-import forestry.api.genetics.alleles.IIntegerChromosome;
-import forestry.api.genetics.alleles.IValueChromosome;
 import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -22,7 +19,7 @@ import java.util.List;
 import java.util.function.Function;
 
 public interface IAnalyzerGraphics<S extends ISpecies<I>, I extends IIndividual> {
-	default <C extends IChromosome<A>, A extends IAllele> void drawChromosomeRow(C chromosome) {
+	default <V> void drawChromosomeRow(IChromosome<V> chromosome) {
 		drawChromosomeRow(chromosome, null);
 	}
 
@@ -32,7 +29,7 @@ public interface IAnalyzerGraphics<S extends ISpecies<I>, I extends IIndividual>
 	 * @param chromosome The chromosome to display.
 	 * @param options    Further configuration of how the row is drawn and/or interacted with.
 	 */
-	<C extends IChromosome<A>, A extends IAllele> void drawChromosomeRow(C chromosome, @Nullable IChromosomeRowOptions<C, A> options);
+	<V> void drawChromosomeRow(IChromosome<V> chromosome, @Nullable IChromosomeRowOptions<V> options);
 
 	/**
 	 * Displays a table of the specimen's chromosomes. Automatically adds a species header with or without species icons.
@@ -49,7 +46,7 @@ public interface IAnalyzerGraphics<S extends ISpecies<I>, I extends IIndividual>
 	 * @param chromosome      The fertility chromosome to display, containing alleles representing fertility values.
 	 * @param offspringSprite The visual representation of the offspring associated with the chromosome.
 	 */
-	void drawFertilityRow(IIntegerChromosome chromosome, ResourceLocation offspringSprite);
+	void drawFertilityRow(IChromosome<Integer> chromosome, ResourceLocation offspringSprite);
 
 	/**
 	 * Draws temperature preference & tolerance in two rows, then humidity preference and tolerance in two more rows.
@@ -58,7 +55,7 @@ public interface IAnalyzerGraphics<S extends ISpecies<I>, I extends IIndividual>
 	 * @param humidityTolerance    The chromosome to use for humidity tolerance.
 	 * @throws IllegalArgumentException If the table's genome is not for a {@link IClimateSensitive} species.
 	 */
-	void drawClimatePreferences(IValueChromosome<ToleranceType> temperatureTolerance, IValueChromosome<ToleranceType> humidityTolerance);
+	void drawClimatePreferences(IChromosome<ToleranceType> temperatureTolerance, IChromosome<ToleranceType> humidityTolerance);
 
 	/**
 	 * Draws a list of active and inactive products for display in the analyzer graphics interface.
@@ -191,8 +188,8 @@ public interface IAnalyzerGraphics<S extends ISpecies<I>, I extends IIndividual>
 	 */
 	void drawTaxonomyPage();
 
-	interface IChromosomeRowOptions<C extends IChromosome<A>, A extends IAllele> {
-		Component apply(boolean active, C chromosome, A allele, InteractableTextOptions existing, Component text);
+	interface IChromosomeRowOptions<V> {
+		Component apply(boolean active, IChromosome<V> chromosome, V value, InteractableTextOptions existing, Component text);
 	}
 
 	interface ISplitLineOptions {

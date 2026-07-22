@@ -1,5 +1,5 @@
 {
-  "icon": "forestry:farm_plain_brick",
+  "icon": "forestry:brick_farm_plain",
   "name": "for.gui.book.patchouli.entry.farming.structure.farm_structure",
   "category": "forestry:structure",
   "pages": [
@@ -9,7 +9,7 @@
     },
     {
       "type": "crafting",
-      "recipe": "forestry:farm_plain_brick",
+      "recipe": "forestry:brick_farm_plain",
       "text": "for.gui.book.patchouli.entry.farming.structure.farm_structure2"
     }
   ]

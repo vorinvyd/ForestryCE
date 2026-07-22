@@ -1,0 +1,48 @@
+{
+  "body": 16738816,
+  "genome": {
+    "forestry:activity": {
+      "value": "forestry:activity_metaturnal"
+    },
+    "forestry:flower_type": {
+      "value": "forestry:flower_type_gourd"
+    },
+    "forestry:tolerates_rain": {
+      "dominant": true,
+      "value": true
+    }
+  },
+  "genus": "festapis",
+  "glint": true,
+  "outline": 4800827,
+  "products": [
+    {
+      "chance": 0.4,
+      "item": "forestry:honey_comb"
+    },
+    {
+      "chance": 0.15,
+      "item": "minecraft:cookie"
+    }
+  ],
+  "secret": true,
+  "specialties": [
+    {
+      "chance": 0.02,
+      "item": "minecraft:skeleton_skull"
+    },
+    {
+      "chance": 0.02,
+      "item": "minecraft:zombie_head"
+    },
+    {
+      "chance": 0.02,
+      "item": "minecraft:creeper_head"
+    },
+    {
+      "chance": 0.02,
+      "item": "minecraft:player_head"
+    }
+  ],
+  "species": "libita"
+}

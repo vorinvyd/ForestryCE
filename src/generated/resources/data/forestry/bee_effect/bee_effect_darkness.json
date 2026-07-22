@@ -1,0 +1,6 @@
+{
+  "type": "forestry:apply_potion",
+  "dominant": false,
+  "duration": 150,
+  "effect": "minecraft:darkness"
+}

@@ -1,0 +1,17 @@
+{
+  "dominant": true,
+  "genome": {
+    "forestry:humidity_tolerance": {
+      "dominant": true,
+      "value": "UP_1"
+    },
+    "forestry:temperature_tolerance": {
+      "dominant": true,
+      "value": "UP_1"
+    }
+  },
+  "genus": "cethosia",
+  "rarity": 0.7,
+  "serum_color": 16484870,
+  "species": "cyane"
+}

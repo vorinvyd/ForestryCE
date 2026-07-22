@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "forestry:block/stone_brick_farm_control"
+    }
+  }
+}

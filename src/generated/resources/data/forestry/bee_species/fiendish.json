@@ -1,0 +1,30 @@
+{
+  "body": 10101539,
+  "dominant": true,
+  "genome": {
+    "forestry:bee_effect": {
+      "value": "forestry:bee_effect_aggressive"
+    },
+    "forestry:lifespan": {
+      "value": 50
+    },
+    "forestry:speed": {
+      "value": 1.0
+    }
+  },
+  "genus": "diapis",
+  "humidity": "arid",
+  "outline": 14139109,
+  "products": [
+    {
+      "chance": 0.55,
+      "item": "forestry:simmering_comb"
+    },
+    {
+      "chance": 0.15,
+      "item": "forestry:ash"
+    }
+  ],
+  "species": "diabolus",
+  "temperature": "hellish"
+}

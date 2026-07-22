@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "forestry:block/apiary.0",
+    "east": "forestry:block/apiary.4",
+    "north": "forestry:block/apiary.2",
+    "particle": "forestry:block/apiary.4",
+    "south": "forestry:block/apiary.4",
+    "up": "forestry:block/apiary.1",
+    "west": "forestry:block/apiary.4"
+  }
+}

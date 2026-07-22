@@ -1,7 +1,7 @@
 package forestry.factory.recipes.jei.centrifuge;
 
 import forestry.api.ForestryConstants;
-import forestry.api.core.Product;
+import forestry.api.core.IProduct;
 import forestry.api.recipes.ICentrifugeRecipe;
 import forestry.core.config.Constants;
 import forestry.core.recipes.jei.ChanceTooltipCallback;
@@ -60,11 +60,11 @@ public class CentrifugeRecipeCategory extends ForestryRecipeCategory<ICentrifuge
 
 		List<IRecipeSlotBuilder> outputSlots = JeiUtil.layoutSlotGrid(builder, RecipeIngredientRole.OUTPUT, 3, 3, 101, 1, 18);
 
-		List<Product> sortedProducts = recipe.getAllProducts().stream()
-			.sorted(Comparator.comparing(Product::chance).reversed())
+		List<IProduct> sortedProducts = recipe.getAllProducts().stream()
+			.sorted(Comparator.comparing(IProduct::chance).reversed())
 			.toList();
 		for (int i = 0; i < sortedProducts.size() && i < outputSlots.size(); i++) {
-			Product product = sortedProducts.get(i);
+			IProduct product = sortedProducts.get(i);
 			outputSlots.get(i)
 				.addItemStack(product.createStack())
 				.addRichTooltipCallback(new ChanceTooltipCallback(product.chance()));
@@ -73,6 +73,7 @@ public class CentrifugeRecipeCategory extends ForestryRecipeCategory<ICentrifuge
 
 	@Override
 	public void draw(ICentrifugeRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double mouseX, double mouseY) {
+		super.draw(recipe, recipeSlotsView, graphics, mouseX, mouseY);
 		this.arrow.draw(graphics, 32, 18);
 		this.arrow.draw(graphics, 56, 18);
 	}

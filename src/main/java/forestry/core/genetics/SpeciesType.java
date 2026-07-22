@@ -29,12 +29,12 @@ public abstract class SpeciesType<S extends ISpecies<I>, I extends IIndividual> 
 	private final ImmutableMap<Item, ILifeStage> stages;
 	protected final Reference2FloatOpenHashMap<Item> researchMaterials;
 
-	// Initialized in onSpeciesRegistered
-	private int speciesCount = -1;
-	@Nullable
-	private ImmutableMap<ResourceLocation, S> allSpecies;
-	@Nullable
-	protected IMutationManager<S> mutations;
+	// Empty until species are loaded (datapack on the server, sync packet on the client). Never null. Volatile:
+	// swapped by setSpecies from the reload/sync path, read by gameplay/JEI/GUI on many threads.
+	private volatile ImmutableMap<ResourceLocation, S> allSpecies = ImmutableMap.of();
+	// Empty until the mutation recipes are loaded by the reload handler. Never null. Volatile: rebuilt from the server
+	// game executor (AddReloadListenerEvent) and the client thread (RecipesUpdatedEvent), read by gameplay/JEI/GUI.
+	private volatile IMutationManager<S> mutations = new MutationManager<>(com.google.common.collect.ImmutableList.of());
 
 	public SpeciesType(ResourceLocation id, IKaryotype karyotype, ISpeciesTypeBuilder builder) {
 		this.id = id;
@@ -58,9 +58,8 @@ public abstract class SpeciesType<S extends ISpecies<I>, I extends IIndividual> 
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public S getDefaultSpecies() {
-		return (S) this.karyotype.getDefaultAllele(this.karyotype.getSpeciesChromosome()).value();
+		return getSpecies(this.karyotype.getDefaultSpecies());
 	}
 
 	@Override
@@ -91,34 +90,32 @@ public abstract class SpeciesType<S extends ISpecies<I>, I extends IIndividual> 
 
 	@OverridingMethodsMustInvokeSuper
 	@Override
-	public void onSpeciesRegistered(ImmutableMap<ResourceLocation, S> allSpecies, IMutationManager<S> mutations) {
-		this.speciesCount = allSpecies.size();
+	public void onSpeciesRegistered(ImmutableMap<ResourceLocation, S> allSpecies) {
+		setSpecies(allSpecies);
+	}
 
-		// Note for subclasses: you must call this super method or set the allSpecies yourself. same goes for mutations
+	@org.jetbrains.annotations.ApiStatus.Internal
+	public void setSpecies(ImmutableMap<ResourceLocation, S> allSpecies) {
 		this.allSpecies = allSpecies;
+	}
+
+	@org.jetbrains.annotations.ApiStatus.Internal
+	public void setMutations(IMutationManager<S> mutations) {
 		this.mutations = mutations;
 	}
 
 	@Override
 	public IMutationManager<S> getMutations() {
-		var manager = this.mutations;
-		if (manager == null) {
-			throw new IllegalStateException("Mutations have not been registered yet.");
-		}
-		return manager;
+		return this.mutations;
 	}
 
 	@Override
 	public List<S> getAllSpecies() {
-		checkSpecies();
-
 		return this.allSpecies.values().asList();
 	}
 
 	@Override
 	public S getSpecies(ResourceLocation id) {
-		checkSpecies();
-
 		S species = this.allSpecies.get(id);
 		if (species == null) {
 			throw new RuntimeException("No species was found with that ID: " + id);
@@ -128,8 +125,6 @@ public abstract class SpeciesType<S extends ISpecies<I>, I extends IIndividual> 
 
 	@Override
 	public S getSpeciesSafe(ResourceLocation id) {
-		checkSpecies();
-
 		return this.allSpecies.get(id);
 	}
 
@@ -141,22 +136,41 @@ public abstract class SpeciesType<S extends ISpecies<I>, I extends IIndividual> 
 
 	@Override
 	public ImmutableSet<ResourceLocation> getAllSpeciesIds() {
-		checkSpecies();
-
 		return this.allSpecies.keySet();
 	}
 
 	@Override
 	public int getSpeciesCount() {
-		checkSpecies();
-
-		return this.speciesCount;
+		// Derived from the volatile map rather than a separate counter field, so a reader that observes a freshly
+		// swapped species map can never see a stale count from a non-atomic pair of writes.
+		return this.allSpecies.size();
 	}
 
-	private void checkSpecies() {
-		if (this.allSpecies == null) {
-			throw new IllegalStateException("Not all species have been registered for type: " + this.id);
+	/**
+	 * Looks up a reference value (flower type, effect, cocoon, ...) registered for this species type. These maps back
+	 * the reference chromosomes; resolution happens on demand once registration is complete.
+	 *
+	 * @throws IllegalStateException    If the values have not been registered yet.
+	 * @throws IllegalArgumentException If no value was registered with the given ID.
+	 */
+	protected static <V> V requireValue(@Nullable ImmutableMap<ResourceLocation, V> map, ResourceLocation id, String what) {
+		if (map == null) {
+			throw new IllegalStateException(what + " have not been registered yet (looking up " + id + ").");
 		}
+		V value = map.get(id);
+		if (value == null) {
+			throw new IllegalArgumentException("No " + what + " was registered with the ID: " + id);
+		}
+		return value;
+	}
+
+	/**
+	 * Nullable variant of {@link #requireValue}: returns {@code null} for an unregistered id (or before registration),
+	 * for callers that gracefully fall back instead of failing (e.g. stale saved data, UI tooltips).
+	 */
+	@Nullable
+	protected static <V> V valueSafe(@Nullable ImmutableMap<ResourceLocation, V> map, ResourceLocation id) {
+		return map == null ? null : map.get(id);
 	}
 
 	@Override

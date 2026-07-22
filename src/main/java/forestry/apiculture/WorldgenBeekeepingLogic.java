@@ -89,7 +89,7 @@ public class WorldgenBeekeepingLogic implements IBeekeepingLogic {
             this.hasFlowersCache.update(queen, this.housing);
 			Level level = this.housing.getWorldObj();
 			IGenome genome = queen.getGenome();
-			boolean canWork = genome.getActiveValue(BeeChromosomes.ACTIVITY).isActive(level.getGameTime(), IActivityType.getBeeDayTime(level), this.housing.getBlockPos()) &&
+			boolean canWork = genome.<IActivityType>resolveActive(BeeChromosomes.ACTIVITY).isActive(level.getGameTime(), IActivityType.getBeeDayTime(level), this.housing.getBlockPos()) &&
 				(!this.housing.isRaining() || genome.getActiveValue(BeeChromosomes.TOLERATES_RAIN));
 			boolean flowerCacheNeedsSync = this.hasFlowersCache.needsSync();
 

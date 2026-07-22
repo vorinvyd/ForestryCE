@@ -34,7 +34,7 @@ import java.util.List;
  * Genetic leaves with no tile entity, used for worldgen trees.
  * Similar to decorative leaves, but these will drop saplings and can be used for pollination.
  */
-public class BlockDefaultLeavesFruit extends BlockAbstractLeaves {
+public class BlockDefaultLeavesFruit extends BlockAbstractLeaves implements ILeafTypeBlock {
 	private final ForestryLeafType type;
 
 	public BlockDefaultLeavesFruit(Block.Properties properties, ForestryLeafType type) {
@@ -55,7 +55,7 @@ public class BlockDefaultLeavesFruit extends BlockAbstractLeaves {
 				return ItemInteractionResult.SUCCESS;
 			}
 			BlockUtil.sendDestroyEffects(level, pos, state);
-			IFruit fruitProvider = tree.getGenome().getActiveValue(TreeChromosomes.FRUIT);
+			IFruit fruitProvider = tree.getGenome().resolveActive(TreeChromosomes.FRUIT);
 			List<ItemStack> products = tree.produceStacks(level, pos, fruitProvider.getRipeningPeriod());
 			level.setBlock(pos, ArboricultureBlocks.LEAVES_DEFAULT.get(this.type).defaultState()
 				.setValue(LeavesBlock.PERSISTENT, state.getValue(LeavesBlock.PERSISTENT))
@@ -83,7 +83,7 @@ public class BlockDefaultLeavesFruit extends BlockAbstractLeaves {
 
 		// Add fruits
 		IGenome genome = tree.getGenome();
-		IFruit fruitProvider = genome.getActiveValue(TreeChromosomes.FRUIT);
+		IFruit fruitProvider = genome.resolveActive(TreeChromosomes.FRUIT);
 		if (fruitProvider.isFruitLeaf()) {
 			List<ItemStack> produceStacks = tree.produceStacks(level, pos, Integer.MAX_VALUE);
 			drops.addAll(produceStacks);

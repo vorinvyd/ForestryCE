@@ -1,0 +1,27 @@
+{
+  "complexity": 10,
+  "dominant": true,
+  "escritoire_color": 7570484,
+  "genome": {
+    "forestry:fireproof": {
+      "dominant": true,
+      "value": true
+    },
+    "forestry:girth": {
+      "value": 4
+    },
+    "forestry:height": {
+      "value": 2.0
+    },
+    "forestry:maturation": {
+      "dominant": true,
+      "value": 10
+    },
+    "forestry:sappiness": {
+      "dominant": true,
+      "value": 0.1
+    }
+  },
+  "genus": "sequoiadendron",
+  "species": "giganteum"
+}

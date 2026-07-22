@@ -10,7 +10,7 @@
     "category": "misc",
     "key": {
       "#": {
-        "tag": "forge:ingots/bronze"
+        "tag": "c:ingots/bronze"
       },
       "R": {
         "tag": "c:dusts/redstone"
@@ -23,7 +23,7 @@
     ],
     "result": {
       "count": 1,
-      "id": "forestry:circuit_board_enhanced"
+      "id": "forestry:enhanced_circuit_board"
     }
   },
   "result": {
@@ -33,7 +33,7 @@
       }
     },
     "count": 1,
-    "id": "forestry:circuit_board_enhanced"
+    "id": "forestry:enhanced_circuit_board"
   },
   "time": 40
 }

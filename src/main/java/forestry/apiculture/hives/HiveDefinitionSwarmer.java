@@ -2,7 +2,7 @@ package forestry.apiculture.hives;
 
 import forestry.api.ForestryTags;
 import forestry.api.apiculture.hives.IHiveDefinition;
-import forestry.api.apiculture.hives.IHiveGen;
+import forestry.api.apiculture.hives.IHivePlacement;
 import forestry.api.core.HumidityType;
 import forestry.api.core.TemperatureType;
 import forestry.apiculture.blocks.BlockHiveType;
@@ -31,8 +31,8 @@ public class HiveDefinitionSwarmer implements IHiveDefinition {
 	}
 
 	@Override
-	public IHiveGen getHiveGen() {
-		return new HiveGenGround(ForestryTags.Blocks.SWARM_BEE_GROUND);
+	public IHivePlacement getHiveGen() {
+		return new GroundHivePlacement(ForestryTags.Blocks.SWARM_BEE_GROUND);
 	}
 
 	@Override

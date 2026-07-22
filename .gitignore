@@ -24,3 +24,5 @@ run
 runs
 libs
 /.vscode
+
+**/src/generated/**/.cache/

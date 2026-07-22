@@ -1,16 +1,44 @@
 package forestry.api.apiculture.genetics;
 
+import java.util.List;
+import java.util.function.Function;
+
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+
+import forestry.api.ForestryRegistries;
 import forestry.api.apiculture.IBeeHousing;
 import forestry.api.apiculture.IBeekeepingLogic;
 import forestry.api.genetics.IEffectData;
 import forestry.api.genetics.IGenome;
-import forestry.api.genetics.alleles.IRegistryAlleleValue;
 import forestry.core.render.ParticleRender;
 import net.minecraft.core.BlockPos;
 
-import java.util.List;
+public interface IBeeEffect extends IEffect {
+	/**
+	 * Dispatch codec for datapack effect definitions ({@code data/<namespace>/forestry/bee_effect/<name>.json}).
+	 * The {@code "type"} field is resolved against {@link ForestryRegistries#BEE_EFFECT_TYPE} to a parameterized
+	 * primitive (apply_potion, transform_block, …). Effects are always type-keyed, so there is no plain fallback
+	 * (mirrors {@code MutationConditionTypes#CODEC}). The reloadable {@code BeeEffectManager} decodes each entry
+	 * with this codec and, via {@code GeneticsReloadHandler}, feeds the results into the bee species type's effect
+	 * map before species are (re)built, so a species genome can reference a datapack effect allele by its entry key.
+	 */
+	Codec<IBeeEffect> CODEC = ForestryRegistries.BEE_EFFECT_TYPE.byNameCodec().dispatch("type", IBeeEffect::codec, Function.identity());
 
-public interface IBeeEffect extends IEffect, IRegistryAlleleValue {
+	/**
+	 * @return The serializer used to (de)serialize this effect in a datapack effect definition. Only primitives
+	 * that are meant to be datapack-configurable override this; code-only base effects never pass through the
+	 * datapack registry, so they inherit the throwing default.
+	 */
+	default MapCodec<? extends IBeeEffect> codec() {
+		throw new UnsupportedOperationException(getClass().getName() + " is not a datapack-serializable bee effect (no codec())");
+	}
+
+	/**
+	 * @return Whether the allele for this value is dominant or recessive.
+	 */
+	boolean isDominant();
+
 	@Override
 	default IEffectData validateStorage(IEffectData storedData) {
 		return storedData;

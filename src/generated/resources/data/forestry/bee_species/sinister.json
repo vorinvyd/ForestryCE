@@ -1,0 +1,31 @@
+{
+  "body": 10101539,
+  "genome": {
+    "forestry:bee_effect": {
+      "value": "forestry:bee_effect_aggressive"
+    },
+    "forestry:lifespan": {
+      "value": 40
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.6
+    }
+  },
+  "genus": "diapis",
+  "humidity": "arid",
+  "outline": 11785700,
+  "products": [
+    {
+      "chance": 0.45,
+      "item": "forestry:simmering_comb"
+    },
+    {
+      "chance": 0.3,
+      "count": 2,
+      "item": "forestry:phosphor"
+    }
+  ],
+  "species": "caecus",
+  "temperature": "hellish"
+}

@@ -15,31 +15,28 @@ import forestry.api.farming.IFarmLogic;
 import forestry.api.farming.IFarmable;
 import forestry.api.multiblock.IFarmComponent;
 import forestry.api.multiblock.IMultiblockComponent;
+import forestry.api.multiblock.IMultiblockInventoryProbe;
 import forestry.core.config.ForestryConfig;
 import forestry.core.fluids.TankManager;
 import forestry.core.inventory.FakeInventoryAdapter;
 import forestry.core.inventory.IInventoryAdapter;
 import forestry.core.inventory.InventoryAdapter;
-import forestry.core.multiblock.IMultiblockControllerInternal;
-import forestry.core.multiblock.MultiblockValidationException;
-import forestry.core.multiblock.RectangularMultiblockControllerBase;
+import forestry.core.multiblock.MultiblockController;
 import forestry.core.tiles.ILiquidTankTile;
+import forestry.core.tiles.TileUtil;
 import forestry.core.utils.PlayerUtil;
 import forestry.farming.FarmHelper;
 import forestry.farming.FarmManager;
 import forestry.farming.FarmTarget;
 import forestry.farming.gui.IFarmLedgerDelegate;
 import forestry.farming.tiles.TileFarmGearbox;
-import forestry.farming.tiles.TileFarmPlain;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Containers;
 import net.minecraft.world.entity.player.Player;
@@ -55,7 +52,7 @@ import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import javax.annotation.Nullable;
 import java.util.*;
 
-public class FarmController extends RectangularMultiblockControllerBase implements IFarmControllerInternal, ILiquidTankTile {
+public class FarmController extends MultiblockController implements IFarmControllerInternal, ILiquidTankTile, IMultiblockInventoryProbe {
 	private int allowedExtent = 0;
 
 	// active components are stored with a tick offset so they do not all tick together
@@ -76,7 +73,7 @@ public class FarmController extends RectangularMultiblockControllerBase implemen
 	private Vec3i area;
 
 	public FarmController(Level world) {
-		super(world, FarmMultiblockSizeLimits.INSTANCE);
+		super(world);
 
 		this.inventory = new InventoryFarm(this);
 		this.manager = new FarmManager(this);
@@ -100,58 +97,34 @@ public class FarmController extends RectangularMultiblockControllerBase implemen
 	}
 
 	@Override
+	public List<ItemStack> snapshotSharedInventory() {
+		return IMultiblockInventoryProbe.snapshotContainer(this.inventory);
+	}
+
+	@Override
 	public TankManager getTankManager() {
 		return this.manager.getTankManager();
 	}
 
+	/**
+	 * Rebuilds the active/listener buckets from the validated member set (spec §8.2; ports the old
+	 * {@code onBlockAdded} logic). Per-{@code Active} tick offsets are re-randomized on every re-bucket and
+	 * not persisted (spec §8.2).
+	 */
 	@Override
-	public void onAttachedPartWithMultiblockData(IMultiblockComponent part, CompoundTag data) {
-		this.read(data, this.level.registryAccess());
-	}
+	protected void bucketComponents() {
+		this.farmActiveComponents.clear();
+		this.manager.clearListeners();
 
-	@Override
-	protected void onBlockAdded(IMultiblockComponent newPart) {
-		if (newPart instanceof IFarmComponent.Listener listenerPart) {
-            this.manager.addListener(listenerPart.getFarmListener());
-		}
-
-		if (newPart instanceof IFarmComponent.Active) {
-            this.farmActiveComponents.put((IFarmComponent.Active) newPart, this.level.random.nextInt(256));
-		}
-	}
-
-	@Override
-	protected void onBlockRemoved(IMultiblockComponent oldPart) {
-		if (oldPart instanceof IFarmComponent.Listener listenerPart) {
-            this.manager.removeListener(listenerPart.getFarmListener());
-		}
-
-		if (oldPart instanceof IFarmComponent.Active) {
-            this.farmActiveComponents.remove(oldPart);
-		}
-	}
-
-	@Override
-	protected void isMachineWhole() throws MultiblockValidationException {
-		super.isMachineWhole();
-
-		boolean hasGearbox = false;
-		for (IMultiblockComponent part : this.connectedParts) {
-			if (part instanceof TileFarmGearbox) {
-				hasGearbox = true;
-				break;
+		for (BlockPos pos : getMembers()) {
+			IMultiblockComponent part = TileUtil.getTile(this.level, pos, IMultiblockComponent.class);
+			if (part instanceof IFarmComponent.Listener listenerPart) {
+				this.manager.addListener(listenerPart.getFarmListener());
+			}
+			if (part instanceof IFarmComponent.Active active) {
+				this.farmActiveComponents.put(active, this.level.random.nextInt(256));
 			}
 		}
-
-		if (!hasGearbox) {
-			throw new MultiblockValidationException(Component.translatable("for.multiblock.farm.error.needGearbox").getString());
-		}
-	}
-
-	@Override
-	protected void onMachineDisassembled() {
-		super.onMachineDisassembled();
-        this.manager.clearTargets();
 	}
 
 	@Override
@@ -161,34 +134,19 @@ public class FarmController extends RectangularMultiblockControllerBase implemen
 	}
 
 	@Override
-	public void isGoodForExteriorLevel(IMultiblockComponent part, int level) throws MultiblockValidationException {
-		if (level == 2 && !(part instanceof TileFarmPlain)) {
-			throw new MultiblockValidationException(Component.translatable("for.multiblock.farm.error.needPlainBand").getString());
-		}
+	public void onAssembled() {
 	}
 
 	@Override
-	public void isGoodForInterior(IMultiblockComponent part) throws MultiblockValidationException {
-		if (!(part instanceof TileFarmPlain)) {
-			throw new MultiblockValidationException(Component.translatable("for.multiblock.farm.error.needPlainInterior").getString());
-		}
+	public void onBroken() {
+        this.manager.clearTargets();
 	}
 
 	@Override
-	public void onAssimilate(IMultiblockControllerInternal assimilated) {
-
-	}
-
-	@Override
-	public void onAssimilated(IMultiblockControllerInternal assimilator) {
-
-	}
-
-	@Override
-	protected boolean serverTick(int tickCount) {
+	public boolean serverTick(int tickCount) {
         this.manager.getHydrationManager().updateServer();
 
-		if (updateOnInterval(20)) {
+		if (updateOnInterval(20, tickCount)) {
             this.inventory.drainCan(this.manager.getTankManager());
 		}
 
@@ -219,7 +177,7 @@ public class FarmController extends RectangularMultiblockControllerBase implemen
 	}
 
 	@Override
-	protected void clientTick(int tickCount) {
+	public void clientTick(int tickCount) {
 		for (Map.Entry<IFarmComponent.Active, Integer> entry : this.farmActiveComponents.entrySet()) {
 			IFarmComponent.Active farmComponent = entry.getKey();
 			int tickOffset = entry.getValue();
@@ -228,36 +186,34 @@ public class FarmController extends RectangularMultiblockControllerBase implemen
 	}
 
 	@Override
-	public CompoundTag write(CompoundTag data, HolderLookup.Provider registries) {
-		data = super.write(data, registries);
-        this.sockets.write(data, registries);
-        this.manager.write(data, registries);
-        this.inventory.write(data, registries);
+	public CompoundTag writePayload(CompoundTag data) {
+		writeOwner(data);
+        this.sockets.write(data, this.level.registryAccess());
+        this.manager.write(data, this.level.registryAccess());
+        this.inventory.write(data, this.level.registryAccess());
 		return data;
 	}
 
 	@Override
-	public void read(CompoundTag data, HolderLookup.Provider registries) {
-		super.read(data, registries);
-        this.sockets.read(data, registries);
-        this.manager.read(data, registries);
-        this.inventory.read(data, registries);
+	public void readPayload(CompoundTag data) {
+		readOwner(data);
+        this.sockets.read(data, this.level.registryAccess());
+        this.manager.read(data, this.level.registryAccess());
+        this.inventory.read(data, this.level.registryAccess());
 
 		refreshFarmLogics();
 	}
 
 	@Override
-	public void formatDescriptionPacket(CompoundTag data) {
-		HolderLookup.Provider registries = this.level.registryAccess();
-        this.sockets.write(data, registries);
-        this.manager.write(data, registries);
+	public void writeDescriptionPayload(CompoundTag data) {
+        this.sockets.write(data, this.level.registryAccess());
+        this.manager.write(data, this.level.registryAccess());
 	}
 
 	@Override
-	public void decodeDescriptionPacket(CompoundTag data) {
-		HolderLookup.Provider registries = this.level.registryAccess();
-        this.sockets.read(data, registries);
-        this.manager.read(data, registries);
+	public void readDescriptionPayload(CompoundTag data) {
+        this.sockets.read(data, this.level.registryAccess());
+        this.manager.read(data, this.level.registryAccess());
 
 		refreshFarmLogics();
 	}

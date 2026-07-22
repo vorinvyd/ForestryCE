@@ -1,0 +1,23 @@
+{
+  "authority": "EnderiumSmith",
+  "body": 6613382,
+  "dominant": true,
+  "genome": {
+    "forestry:lifespan": {
+      "value": 60
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 1.2
+    }
+  },
+  "genus": "phytapis",
+  "outline": 11979263,
+  "products": [
+    {
+      "chance": 0.4,
+      "item": "forestry:honey_comb"
+    }
+  ],
+  "species": "phytomimus"
+}

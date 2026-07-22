@@ -2,7 +2,7 @@
   "values": [
     "forestry:larch_hanging_sign",
     "forestry:teak_hanging_sign",
-    "forestry:acacia_desert_hanging_sign",
+    "forestry:camelthorn_hanging_sign",
     "forestry:lime_hanging_sign",
     "forestry:chestnut_hanging_sign",
     "forestry:wenge_hanging_sign",
@@ -16,7 +16,7 @@
     "forestry:willow_hanging_sign",
     "forestry:walnut_hanging_sign",
     "forestry:greenheart_hanging_sign",
-    "forestry:hill_cherry_hanging_sign",
+    "forestry:sour_cherry_hanging_sign",
     "forestry:mahoe_hanging_sign",
     "forestry:poplar_hanging_sign",
     "forestry:palm_hanging_sign",
@@ -24,8 +24,8 @@
     "forestry:pine_hanging_sign",
     "forestry:plum_hanging_sign",
     "forestry:maple_hanging_sign",
-    "forestry:citrus_hanging_sign",
-    "forestry:giganteum_hanging_sign",
+    "forestry:lemon_hanging_sign",
+    "forestry:giant_sequoia_hanging_sign",
     "forestry:ipe_hanging_sign",
     "forestry:padauk_hanging_sign",
     "forestry:cocobolo_hanging_sign",
@@ -42,6 +42,6 @@
     "forestry:orange_hanging_sign",
     "forestry:pear_hanging_sign",
     "forestry:kauri_hanging_sign",
-    "forestry:zebrawood_hanging_sign"
+    "forestry:zebrano_hanging_sign"
   ]
 }

@@ -1,0 +1,23 @@
+{
+  "body": 3987287,
+  "genome": {
+    "forestry:bee_effect": {
+      "value": "forestry:bee_effect_easter"
+    }
+  },
+  "genus": "festapis",
+  "glint": true,
+  "outline": 16711567,
+  "products": [
+    {
+      "chance": 0.3,
+      "item": "forestry:silky_comb"
+    },
+    {
+      "chance": 0.1,
+      "item": "minecraft:egg"
+    }
+  ],
+  "secret": true,
+  "species": "lepus"
+}

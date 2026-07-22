@@ -41,7 +41,7 @@ public class PodFruit extends Fruit {
 		if (this.type == ForestryPodType.COCOA) {
 			return BlockUtil.tryPlantCocoaPod(world, pos);
 		} else {
-			IFruit activeAllele = genome.getActiveValue(TreeChromosomes.FRUIT);
+			IFruit activeAllele = genome.resolveActive(TreeChromosomes.FRUIT);
 			return SpeciesUtil.TREE_TYPE.get().setFruitBlock(world, genome, activeAllele, genome.getActiveValue(TreeChromosomes.YIELD), pos);
 		}
 	}

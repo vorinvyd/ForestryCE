@@ -1,17 +1,26 @@
 package forestry.farming.multiblock;
 
+import forestry.api.IForestryApi;
+import forestry.api.core.HumidityType;
+import forestry.api.core.IErrorLogic;
+import forestry.api.core.TemperatureType;
+import forestry.api.farming.ForestryFarmTypes;
 import forestry.api.farming.IFarmLogic;
 import forestry.api.farming.IFarmable;
+import forestry.api.multiblock.IMultiblockComponent;
+import forestry.core.errors.FakeErrorLogic;
 import forestry.core.fluids.FakeTankManager;
 import forestry.core.fluids.ITankManager;
 import forestry.core.inventory.FakeInventoryAdapter;
 import forestry.core.inventory.IInventoryAdapter;
-import forestry.core.multiblock.FakeMultiblockController;
+import forestry.core.owner.FakeOwnerHandler;
+import forestry.core.owner.IOwnerHandler;
 import forestry.farming.FarmTarget;
 import forestry.farming.gui.IFarmLedgerDelegate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
@@ -24,7 +33,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-public enum FakeFarmController implements FakeMultiblockController, IFarmControllerInternal {
+/**
+ * The "no controller" stand-in resolved by {@code MultiblockLogicFarm.getController()} when a block is not
+ * part of an assembled farm (spec §7.2, §9). Reshaped onto the trimmed public
+ * {@link IFarmControllerInternal} after the engine rewrite (no engine-internal surface).
+ */
+public enum FakeFarmController implements IFarmControllerInternal {
 	INSTANCE;
 
 	@Override
@@ -90,7 +104,11 @@ public enum FakeFarmController implements FakeMultiblockController, IFarmControl
 
 	@Override
 	public IFarmLogic getFarmLogic(Direction direction) {
-		throw new IllegalStateException();
+		// BUG 2 (defensive): never throw from a render-reachable method. A transient Fake controller can be
+		// resolved by the GUI during a client reload (e.g. before the holder's description packet reconstructs
+		// the real controller). Return the default arboreal logic — the same default FarmController.resetFarmLogic
+		// installs — so GuiFarm/FarmLogicSlot draw a sane icon instead of crashing with IllegalStateException.
+		return IForestryApi.INSTANCE.getFarmingManager().getFarmType(ForestryFarmTypes.ARBOREAL).getLogic(false);
 	}
 
 	@Override
@@ -133,7 +151,10 @@ public enum FakeFarmController implements FakeMultiblockController, IFarmControl
 
 	@Override
 	public IFarmLedgerDelegate getFarmLedgerDelegate() {
-		throw new IllegalStateException("Invalid farm");
+		// BUG 2 (defensive): never throw from a render-reachable method. GuiFarm.addLedgers and
+		// FarmLogicSlot's tooltip both call this on the resolved controller, which may transiently be the Fake
+		// during a client reload. Return a no-op delegate (zeros / NORMAL climate) instead of crashing.
+		return FakeFarmLedgerDelegate.INSTANCE;
 	}
 
 	@Override
@@ -146,15 +167,67 @@ public enum FakeFarmController implements FakeMultiblockController, IFarmControl
 		return FakeTankManager.instance;
 	}
 
-	@Nullable
+	public String getUnlocalizedType() {
+		return "for.multiblock.farm.type";
+	}
+
 	@Override
-	public BlockPos getDestroyedCoord() {
+	@Nullable
+	public Level getWorldObj() {
+		return null;
+	}
+
+	/* IClimateProvider */
+	@Override
+	public TemperatureType temperature() {
+		return TemperatureType.NORMAL;
+	}
+
+	@Override
+	public HumidityType humidity() {
+		return HumidityType.NORMAL;
+	}
+
+	/* IErrorLogicSource */
+	@Override
+	public IErrorLogic getErrorLogic() {
+		return FakeErrorLogic.INSTANCE;
+	}
+
+	/* IOwnedTile */
+	@Override
+	public IOwnerHandler getOwnerHandler() {
+		return FakeOwnerHandler.INSTANCE;
+	}
+
+	/* IStreamableGui */
+	@Override
+	public void writeGuiData(FriendlyByteBuf data) {
+	}
+
+	@Override
+	public void readGuiData(FriendlyByteBuf data) {
+	}
+
+	/* IMultiblockController */
+	@Override
+	public boolean isAssembled() {
+		return false;
+	}
+
+	@Override
+	public void reassemble() {
+	}
+
+	@Override
+	@Nullable
+	public String getLastValidationError() {
 		return null;
 	}
 
 	@Override
-	public String getUnlocalizedType() {
-		return "for.multiblock.farm.type";
+	public Collection<IMultiblockComponent> getComponents() {
+		return List.of();
 	}
 
 	@Override
@@ -173,6 +246,46 @@ public enum FakeFarmController implements FakeMultiblockController, IFarmControl
 
 	@Override
 	public void cleanExtents(Direction direction) {
+	}
+
+	/** No-op ledger delegate so the farm GUI ledgers/tooltips never crash on a transient Fake (BUG 2 defensive). */
+	private enum FakeFarmLedgerDelegate implements IFarmLedgerDelegate {
+		INSTANCE;
+
+		@Override
+		public float getHydrationModifier() {
+			return 0;
+		}
+
+		@Override
+		public float getHydrationTempModifier() {
+			return 0;
+		}
+
+		@Override
+		public float getHydrationHumidModifier() {
+			return 0;
+		}
+
+		@Override
+		public float getHydrationRainfallModifier() {
+			return 0;
+		}
+
+		@Override
+		public double getDrought() {
+			return 0;
+		}
+
+		@Override
+		public TemperatureType temperature() {
+			return TemperatureType.NORMAL;
+		}
+
+		@Override
+		public HumidityType humidity() {
+			return HumidityType.NORMAL;
+		}
 	}
 
 	private enum FakeFarmInventory implements IFarmInventoryInternal {

@@ -8,7 +8,6 @@ import forestry.api.climate.IClimateManager;
 import forestry.api.core.IErrorManager;
 import forestry.api.farming.IFarmingManager;
 import forestry.api.genetics.IGeneticManager;
-import forestry.api.genetics.alleles.IAlleleManager;
 import forestry.api.genetics.filter.IFilterManager;
 import forestry.api.genetics.pollen.IPollenManager;
 import forestry.api.modules.IModuleManager;
@@ -17,7 +16,6 @@ import forestry.arboriculture.TreeManager;
 import forestry.core.circuits.CircuitManager;
 import forestry.core.climate.ForestryClimateManager;
 import forestry.core.errors.ErrorManager;
-import forestry.core.genetics.alleles.AlleleManager;
 import forestry.farming.FarmingManager;
 import forestry.modules.ForestryModuleManager;
 import forestry.sorting.FilterManager;
@@ -33,7 +31,6 @@ public class ForestryApiImpl implements IForestryApi {
 	private IHiveManager hiveManager;
 	@Nullable
 	private ITreeManager treeManager;
-	private final IAlleleManager alleleRegistry = new AlleleManager();
 	@Nullable
 	private IGeneticManager geneticManager;
 	@Nullable
@@ -89,11 +86,6 @@ public class ForestryApiImpl implements IForestryApi {
 			throw new IllegalStateException("ITreeManager not initialized yet");
 		}
 		return manager;
-	}
-
-	@Override
-	public IAlleleManager getAlleleManager() {
-		return this.alleleRegistry;
 	}
 
 	@Override

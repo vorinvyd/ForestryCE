@@ -1,0 +1,15 @@
+{
+  "type": "forestry:transform_block",
+  "chance": 1.0,
+  "combinable": true,
+  "requires_working": true,
+  "throttle": 550,
+  "transforms": [
+    {
+      "from": "#minecraft:dirt",
+      "to": {
+        "Name": "minecraft:coarse_dirt"
+      }
+    }
+  ]
+}

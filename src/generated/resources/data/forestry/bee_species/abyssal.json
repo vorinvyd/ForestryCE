@@ -1,0 +1,46 @@
+{
+  "authority": "EnderiumSmith",
+  "genome": {
+    "forestry:activity": {
+      "value": "forestry:activity_nocturnal"
+    },
+    "forestry:bee_effect": {
+      "value": "forestry:bee_effect_darkness"
+    },
+    "forestry:cave_dwelling": {
+      "dominant": true,
+      "value": true
+    },
+    "forestry:fertility": {
+      "dominant": true,
+      "value": 1
+    },
+    "forestry:flower_type": {
+      "value": "forestry:flower_type_sea"
+    },
+    "forestry:lifespan": {
+      "value": 60
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.3
+    }
+  },
+  "genus": "spongiforma",
+  "glint": true,
+  "outline": 329011,
+  "products": [
+    {
+      "chance": 0.2,
+      "item": "forestry:spongy_comb"
+    }
+  ],
+  "specialties": [
+    {
+      "chance": 0.15,
+      "item": "minecraft:glow_ink_sac"
+    }
+  ],
+  "species": "stygii",
+  "temperature": "cold"
+}

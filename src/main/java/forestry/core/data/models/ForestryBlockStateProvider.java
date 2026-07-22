@@ -2,14 +2,21 @@ package forestry.core.data.models;
 
 import forestry.api.ForestryConstants;
 import forestry.api.client.IForestryClientApi;
+import forestry.apiculture.blocks.BlockAlveary;
 import forestry.apiculture.blocks.BlockBeeHive;
 import forestry.apiculture.blocks.BlockHiveType;
+import forestry.apiculture.blocks.BlockTypeApiculture;
 import forestry.apiculture.features.ApicultureBlocks;
-import forestry.arboriculture.blocks.ForestryLeafType;
 import forestry.arboriculture.features.ArboricultureBlocks;
+import forestry.arboriculture.blocks.ForestryLeafType;
+import forestry.arboriculture.features.CharcoalBlocks;
+import forestry.core.blocks.EnumResourceType;
 import forestry.core.features.CoreBlocks;
 import forestry.core.features.CoreItems;
 import forestry.core.fluids.ForestryFluids;
+import forestry.energy.features.EnergyBlocks;
+import forestry.factory.blocks.BlockTypeFactoryPlain;
+import forestry.factory.features.FactoryBlocks;
 import forestry.core.utils.ModUtil;
 import forestry.cultivation.blocks.BlockTypePlanter;
 import forestry.cultivation.features.CultivationBlocks;
@@ -17,6 +24,9 @@ import forestry.farming.blocks.EnumFarmBlockType;
 import forestry.farming.blocks.EnumFarmMaterial;
 import forestry.farming.blocks.FarmBlock;
 import forestry.farming.features.FarmingBlocks;
+import forestry.mail.blocks.BlockTypeMail;
+import forestry.mail.features.MailBlocks;
+import forestry.worktable.features.WorktableBlocks;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ItemLike;
@@ -113,6 +123,69 @@ public class ForestryBlockStateProvider extends BlockStateProvider {
 			singleModelBlock(this, feature, models().cubeBottomTop(path, side, bottom, top));
 			generic3d(feature);
 		}
+
+		// Single-variant blocks migrated from hand-authored blockstates. Each renders one existing
+		// (hand-authored) model for all states, mirroring the old {"variants":{"":{"model":...}}}.
+		// Item models for these blocks stay hand-authored (custom display transforms), so no generic3d here.
+		for (Block block : CoreBlocks.BASE.blockArray()) existingModelBlock(block);            // analyzer, escritoire
+		for (Block block : FactoryBlocks.TESR.blockArray()) existingModelBlock(block);          // bottler, carpenter, centrifuge, ...
+		for (Block block : EnergyBlocks.ENGINES.blockArray()) existingModelBlock(block);        // biogas/clockwork/peat engine
+		for (Block block : CoreBlocks.NATURALIST_CHEST.blockArray()) existingModelBlock(block); // apiarist/arborist/lepidopterist chest
+		existingModelBlock(CharcoalBlocks.ASH.block());
+		existingModelBlock(CharcoalBlocks.CHARCOAL.block());
+		existingModelBlock(CharcoalBlocks.LOG_PILE.block());
+		existingModelBlock(ArboricultureBlocks.SAPLING_GE.block());
+		existingModelBlock(CoreBlocks.PEAT.block());
+
+		// Comb blocks all share the block_bee_combs model.
+		ModelFile combModel = models().getExistingFile(modBlock("block_bee_combs"));
+		for (Block block : ApicultureBlocks.BEE_COMB.blockArray()) singleModelBlock(this, block, combModel);
+
+		// Resource storage blocks use block/storage/<type>.
+		for (EnumResourceType type : EnumResourceType.values()) {
+			existingModelBlock(CoreBlocks.RESOURCE_STORAGE.get(type).block(), "storage/" + type.getSerializedName());
+		}
+
+		// Alveary components (the single-variant subset of the alveary block group).
+		existingModelBlock(ApicultureBlocks.ALVEARY.get(BlockAlveary.Type.HYGRO).block(), "apiculture/alveary_hygroregulator");
+		existingModelBlock(ApicultureBlocks.ALVEARY.get(BlockAlveary.Type.STABILISER).block(), "apiculture/alveary_stabilizer");
+		existingModelBlock(ApicultureBlocks.ALVEARY.get(BlockAlveary.Type.SIEVE).block(), "apiculture/alveary_sieve");
+
+		// Horizontal-facing machines migrated from hand-authored blockstates + models. Each is a
+		// block/cube with per-face textures <prefix>.<n>, rotated by BlockBase.FACING. Item models
+		// stay hand-authored (custom display transforms), so no generic3d here.
+		horizontalMachine(ApicultureBlocks.BASE.get(BlockTypeApiculture.APIARY).block(), "apiary", 0, 1, 2, 4, 4, 4, 4);
+		horizontalMachine(ApicultureBlocks.BASE.get(BlockTypeApiculture.BEE_HOUSE).block(), "beehouse", 0, 1, 2, 4, 4, 4, 4);
+		horizontalMachine(MailBlocks.BASE.get(BlockTypeMail.MAILBOX).block(), "mailbox", 0, 1, 2, 2, 2, 2, 2);
+		horizontalMachine(MailBlocks.BASE.get(BlockTypeMail.STAMP_COLLETOR).block(), "philatelist", 0, 1, 3, 2, 2, 2, 2);
+		horizontalMachine(MailBlocks.BASE.get(BlockTypeMail.TRADE_STATION).block(), "tradestation", 0, 1, 3, 2, 4, 4, 4);
+		horizontalMachine(FactoryBlocks.PLAIN.get(BlockTypeFactoryPlain.FABRICATOR).block(), "thermionic_fabricator", 0, 1, 3, 2, 4, 4, 4);
+		horizontalMachine(WorktableBlocks.WORKTABLE.block(), "worktable", 0, 1, 3, 2, 4, 4, 4);
+	}
+
+	// Builds a block/cube model whose faces map to textures block/<prefix>.<n>, then emits a
+	// horizontal-facing blockstate for it. Face suffixes are given in JSON order:
+	// down, up, north, south, east, west, particle.
+	private void horizontalMachine(Block block, String prefix, int down, int up, int north, int south, int east, int west, int particle) {
+		ModelFile model = models().withExistingParent(path(block), mcBlock("cube"))
+			.texture("particle", modBlock(prefix + "." + particle))
+			.texture("down", modBlock(prefix + "." + down))
+			.texture("up", modBlock(prefix + "." + up))
+			.texture("north", modBlock(prefix + "." + north))
+			.texture("east", modBlock(prefix + "." + east))
+			.texture("south", modBlock(prefix + "." + south))
+			.texture("west", modBlock(prefix + "." + west));
+		horizontalForestryBlock(block, model);
+	}
+
+	// Emits a single "" variant pointing at an existing hand-authored model named after the block.
+	private void existingModelBlock(Block block) {
+		existingModelBlock(block, path(block));
+	}
+
+	// Emits a single "" variant pointing at the existing hand-authored model at block/<modelPath>.
+	private void existingModelBlock(Block block, String modelPath) {
+		singleModelBlock(this, block, models().getExistingFile(modBlock(modelPath)));
 	}
 
 	public static void singleModelBlock(ForestryBlockStateProvider states, Block defaultBlock, ModelFile file) {

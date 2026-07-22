@@ -116,7 +116,7 @@ public class ForestryCreativeTabs {
 		items.accept(ApicultureItems.SCOOP);
 		items.accept(ApicultureItems.SMOKER);
 		items.accept(ArboricultureItems.GRAFTER);
-		items.accept(ArboricultureItems.GRAFTER_PROVEN);
+		items.accept(ArboricultureItems.PROVEN_GRAFTER);
 		items.accept(CoreItems.SPECTACLES);
 		items.accept(SortingBlocks.FILTER);
 
@@ -150,7 +150,7 @@ public class ForestryCreativeTabs {
 		items.accept(CoreItems.RAW_TIN);
 		items.accept(CoreItems.AMBER);
 		items.accept(ApicultureItems.AMBER_DRONE);
-		items.accept(ArboricultureItems.AMBER_SAPLING);
+		items.accept(ArboricultureItems.AMBER_SAPLING_FOSSIL);
 		// Processed ores
 		items.accept(CoreItems.FERTILIZER_COMPOUND);
 		items.accept(CoreItems.INGOT_TIN);
@@ -261,7 +261,7 @@ public class ForestryCreativeTabs {
 		// Gear
 		items.accept(CoreItems.SPECTACLES);
 		items.accept(ArboricultureItems.GRAFTER);
-		items.accept(ArboricultureItems.GRAFTER_PROVEN);
+		items.accept(ArboricultureItems.PROVEN_GRAFTER);
 
 		// Fruits
 		CoreItems.FRUITS.getItems().forEach(items::accept);
@@ -287,7 +287,7 @@ public class ForestryCreativeTabs {
 
 		// Specimens
 		SpeciesUtil.addTypeToCreativeTab(items, ForestrySpeciesTypes.TREE);
-		items.accept(ArboricultureItems.AMBER_SAPLING);
+		items.accept(ArboricultureItems.AMBER_SAPLING_FOSSIL);
 		ArboricultureBlocks.LEAVES_DECORATIVE.getItems().forEach(items::accept);
 		// Default species leaf blocks (and the fruit-bearing variants) are spawned by
 		// genetic trees but were missing from any creative tab — surface them next to

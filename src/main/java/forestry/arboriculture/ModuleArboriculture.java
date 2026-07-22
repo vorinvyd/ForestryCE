@@ -77,7 +77,7 @@ public class ModuleArboriculture extends BlankForestryModule {
 
 			if (main != null) {
 				List<LootPoolEntryContainer> entries = new ArrayList<>(main.entries);
-				entries.add(LootItem.lootTableItem(ArboricultureItems.AMBER_SAPLING).build());
+				entries.add(LootItem.lootTableItem(ArboricultureItems.AMBER_SAPLING_FOSSIL).build());
 				main.entries = entries;
 			}
 		}

@@ -15,7 +15,7 @@ import forestry.api.climate.ClimateState;
 import forestry.api.genetics.ClimateHelper;
 import forestry.api.genetics.IGenome;
 import forestry.api.genetics.alleles.BeeChromosomes;
-import forestry.api.genetics.alleles.IAllele;
+import forestry.api.genetics.alleles.Allele;
 import forestry.api.genetics.alleles.IChromosome;
 import forestry.apiculture.InventoryBeeHousing;
 import forestry.apiculture.VillageHive;
@@ -111,7 +111,7 @@ public class ApiaristPoolElement extends SinglePoolElement {
 		List<VillageHive> pool = rarePool ? manager.getRareVillageHives() : manager.getCommonVillageHives();
 		IBeeSpeciesType type = SpeciesUtil.BEE_TYPE.get();
 		ClimateState biomeState = IForestryApi.INSTANCE.getClimateManager().getBiomeState(level, markerPos);
-		ArrayList<Pair<IBeeSpecies, Map<IChromosome<?>, IAllele>>> candidates = getCandidates(type, pool, biomeState);
+		ArrayList<Pair<IBeeSpecies, Map<IChromosome<?>, Allele<?>>>> candidates = getCandidates(type, pool, biomeState);
 		// if no rare bees match, get common candidates
 		if (rarePool && candidates.isEmpty()) {
 			candidates = getCandidates(type, manager.getCommonVillageHives(), biomeState);
@@ -125,14 +125,14 @@ public class ApiaristPoolElement extends SinglePoolElement {
 			return createQueen(species, hive.alleles());
 		} else {
 			// pick random candidate
-			Pair<IBeeSpecies, Map<IChromosome<?>, IAllele>> candidate = candidates.get(random.nextInt(candidates.size()));
+			Pair<IBeeSpecies, Map<IChromosome<?>, Allele<?>>> candidate = candidates.get(random.nextInt(candidates.size()));
 			return createQueen(candidate.getFirst(), candidate.getSecond());
 		}
 	}
 
-	private static ArrayList<Pair<IBeeSpecies, Map<IChromosome<?>, IAllele>>> getCandidates(IBeeSpeciesType type, List<VillageHive> pool, ClimateState biomeState) {
+	private static ArrayList<Pair<IBeeSpecies, Map<IChromosome<?>, Allele<?>>>> getCandidates(IBeeSpeciesType type, List<VillageHive> pool, ClimateState biomeState) {
 		// collect list of candidates that can work in this climate
-		ArrayList<Pair<IBeeSpecies, Map<IChromosome<?>, IAllele>>> candidates = new ArrayList<>();
+		ArrayList<Pair<IBeeSpecies, Map<IChromosome<?>, Allele<?>>>> candidates = new ArrayList<>();
 		for (VillageHive hive : pool) {
 			IBeeSpecies species = type.getSpecies(hive.speciesId());
 			IGenome defaultGenome = species.getDefaultGenome();
@@ -146,7 +146,7 @@ public class ApiaristPoolElement extends SinglePoolElement {
 		return candidates;
 	}
 
-	private static ItemStack createQueen(IBeeSpecies species, Map<IChromosome<?>, IAllele> extraAlleles) {
+	private static ItemStack createQueen(IBeeSpecies species, Map<IChromosome<?>, Allele<?>> extraAlleles) {
 		IBee bee = species.createIndividual(extraAlleles);
 		// purebred
 		bee.setMate(bee.getGenome());

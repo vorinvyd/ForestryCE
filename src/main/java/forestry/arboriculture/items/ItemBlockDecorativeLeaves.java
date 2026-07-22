@@ -38,7 +38,7 @@ public class ItemBlockDecorativeLeaves extends ItemBlockForestry<BlockDecorative
 		IGenome genome = individual.getGenome();
 
 		if (renderPass == BlockAbstractLeaves.FRUIT_COLOR_INDEX) {
-			IFruit fruitProvider = genome.getActiveValue(TreeChromosomes.FRUIT);
+			IFruit fruitProvider = genome.resolveActive(TreeChromosomes.FRUIT);
 			return fruitProvider.getDecorativeColor();
 		}
 		return IForestryClientApi.INSTANCE.getTreeManager().getTint(individual.getSpecies()).get(null, null);

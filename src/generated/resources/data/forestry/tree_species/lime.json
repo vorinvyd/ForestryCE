@@ -1,0 +1,21 @@
+{
+  "dominant": true,
+  "escritoire_color": 6201607,
+  "genome": {
+    "forestry:saplings": {
+      "dominant": true,
+      "value": 0.035
+    },
+    "forestry:sappiness": {
+      "dominant": true,
+      "value": 0.2
+    },
+    "forestry:yield": {
+      "dominant": true,
+      "value": 0.05
+    }
+  },
+  "genus": "tilia",
+  "rarity": 0.005,
+  "species": "tomentosa"
+}

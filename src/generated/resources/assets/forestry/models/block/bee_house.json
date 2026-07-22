@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "forestry:block/beehouse.0",
+    "east": "forestry:block/beehouse.4",
+    "north": "forestry:block/beehouse.2",
+    "particle": "forestry:block/beehouse.4",
+    "south": "forestry:block/beehouse.4",
+    "up": "forestry:block/beehouse.1",
+    "west": "forestry:block/beehouse.4"
+  }
+}

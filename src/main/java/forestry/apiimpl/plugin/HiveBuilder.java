@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import forestry.api.apiculture.hives.IHive;
 import forestry.api.apiculture.hives.IHiveDefinition;
 import forestry.api.apiculture.hives.IHiveDrop;
-import forestry.api.genetics.alleles.IAllele;
+import forestry.api.genetics.alleles.Allele;
 import forestry.api.genetics.alleles.IChromosome;
 import forestry.api.plugin.IHiveBuilder;
 import forestry.apiculture.genetics.HiveDrop;
@@ -30,7 +30,7 @@ public class HiveBuilder implements IHiveBuilder {
 	}
 
 	@Override
-	public IHiveBuilder addDrop(double chance, ResourceLocation speciesId, Supplier<List<ItemStack>> extraItems, float ignobleChance, Map<IChromosome<?>, IAllele> alleles) {
+	public IHiveBuilder addDrop(double chance, ResourceLocation speciesId, Supplier<List<ItemStack>> extraItems, float ignobleChance, Map<IChromosome<?>, Allele<?>> alleles) {
 		this.drops.add(new HiveDrop(chance, speciesId, extraItems.get(), ignobleChance, alleles));
 		return this;
 	}

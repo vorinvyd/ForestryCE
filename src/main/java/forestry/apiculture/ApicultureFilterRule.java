@@ -5,7 +5,6 @@ import forestry.api.apiculture.genetics.IBee;
 import forestry.api.genetics.ForestrySpeciesTypes;
 import forestry.api.genetics.IIndividual;
 import forestry.api.genetics.alleles.BeeChromosomes;
-import forestry.api.genetics.alleles.ForestryAlleles;
 import forestry.api.genetics.filter.FilterData;
 import forestry.api.genetics.filter.IFilterRule;
 import forestry.api.genetics.filter.IFilterRuleType;
@@ -13,24 +12,26 @@ import forestry.sorting.DefaultFilterRuleType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import forestry.api.apiculture.ForestryActivityTypes;
 
 public enum ApicultureFilterRule implements IFilterRule {
 	PURE_BREED(DefaultFilterRuleType.PURE_BREED) {
 		@Override
 		protected boolean isValid(IBee bee) {
-			return bee.getGenome().getActiveAllele(BeeChromosomes.SPECIES) == bee.getGenome().getInactiveAllele(BeeChromosomes.SPECIES);
+			// Alleles are value records (not interned), so compare by value, not reference.
+			return bee.getGenome().getAllelePair(BeeChromosomes.SPECIES).isSameAlleles();
 		}
 	},
 	NOCTURNAL(DefaultFilterRuleType.NOCTURNAL) {
 		@Override
 		protected boolean isValid(IBee bee) {
-			return bee.getGenome().getActiveAllele(BeeChromosomes.ACTIVITY) == ForestryAlleles.ACTIVITY_METATURNAL;
+			return bee.getGenome().getActiveValue(BeeChromosomes.ACTIVITY).equals(ForestryActivityTypes.METATURNAL);
 		}
 	},
 	PURE_NOCTURNAL(DefaultFilterRuleType.PURE_NOCTURNAL) {
 		@Override
 		protected boolean isValid(IBee bee) {
-			return bee.getGenome().getActiveValue(BeeChromosomes.ACTIVITY).isActive(0, IActivityType.NIGHT_TIME, BlockPos.ZERO);
+			return bee.getGenome().<IActivityType>resolveActive(BeeChromosomes.ACTIVITY).isActive(0, IActivityType.NIGHT_TIME, BlockPos.ZERO);
 		}
 	},
 	FLYER(DefaultFilterRuleType.FLYER) {

@@ -3,7 +3,7 @@ package forestry.apiculture.genetics;
 import forestry.api.apiculture.genetics.IBee;
 import forestry.api.apiculture.genetics.IBeeSpecies;
 import forestry.api.apiculture.hives.IHiveDrop;
-import forestry.api.genetics.alleles.IAllele;
+import forestry.api.genetics.alleles.Allele;
 import forestry.api.genetics.alleles.IChromosome;
 import forestry.core.utils.SpeciesUtil;
 import net.minecraft.core.BlockPos;
@@ -21,12 +21,12 @@ public class HiveDrop implements IHiveDrop {
 	private final double chance;
 	private final List<ItemStack> bonus;
 	private final double ignobleChance;
-	private final Map<IChromosome<?>, IAllele> alleles;
+	private final Map<IChromosome<?>, Allele<?>> alleles;
 
 	@Nullable
 	private IBeeSpecies species;
 
-	public HiveDrop(double chance, ResourceLocation speciesId, List<ItemStack> bonus, float ignobleChance, Map<IChromosome<?>, IAllele> alleles) {
+	public HiveDrop(double chance, ResourceLocation speciesId, List<ItemStack> bonus, float ignobleChance, Map<IChromosome<?>, Allele<?>> alleles) {
 		this.speciesId = speciesId;
 		this.chance = chance;
 		this.bonus = bonus;

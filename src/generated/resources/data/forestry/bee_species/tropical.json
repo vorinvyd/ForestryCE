@@ -1,0 +1,23 @@
+{
+  "genome": {
+    "forestry:lifespan": {
+      "dominant": true,
+      "value": 30
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.6
+    }
+  },
+  "genus": "caldapis",
+  "humidity": "damp",
+  "outline": 3637280,
+  "products": [
+    {
+      "chance": 0.2,
+      "item": "forestry:silky_comb"
+    }
+  ],
+  "species": "mendelia",
+  "temperature": "warm"
+}

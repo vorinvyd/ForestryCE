@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "band=false": {
+      "model": "forestry:block/quartz_pillar_farm_plain"
+    },
+    "band=true": {
+      "model": "forestry:block/quartz_pillar_farm_plain_band"
+    }
+  }
+}

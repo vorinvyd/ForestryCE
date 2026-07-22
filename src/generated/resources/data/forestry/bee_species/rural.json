@@ -1,0 +1,11 @@
+{
+  "genus": "rustapis",
+  "outline": 16711567,
+  "products": [
+    {
+      "chance": 0.2,
+      "item": "forestry:wheaten_comb"
+    }
+  ],
+  "species": "rustico"
+}

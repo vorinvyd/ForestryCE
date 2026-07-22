@@ -36,7 +36,7 @@ public class ForestryBoat extends Boat {
 	@Override
 	protected void defineSynchedData(SynchedEntityData.Builder builder) {
 		super.defineSynchedData(builder);
-		builder.define(DATA_ID_WOOD_TYPE, ForestryWoodType.ACACIA_DESERT.ordinal());
+		builder.define(DATA_ID_WOOD_TYPE, ForestryWoodType.CAMELTHORN.ordinal());
 	}
 
 	@Override
@@ -91,7 +91,7 @@ public class ForestryBoat extends Boat {
 			try {
 				setWoodType(ForestryWoodType.valueOf(nbt.getString("type")));
 			} catch (IllegalArgumentException e) {
-				setWoodType(ForestryWoodType.ACACIA_DESERT);
+				setWoodType(ForestryWoodType.CAMELTHORN);
 			}
 		}
 	}

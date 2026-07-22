@@ -1,8 +1,7 @@
 package forestry.apiculture.network.packets;
 
-import forestry.api.multiblock.IMultiblockComponent;
+import forestry.core.multiblock.MultiblockValidation;
 import forestry.core.network.PacketIdClient;
-import forestry.core.tiles.TileUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -23,6 +22,7 @@ public record PacketAlvearyChange(BlockPos pos) implements CustomPacketPayload {
 	}
 
 	public static void handle(PacketAlvearyChange msg, Player player) {
-		TileUtil.actOnTile(player.level(), msg.pos, IMultiblockComponent.class, tile -> tile.getMultiblockLogic().getController().reassemble());
+		// Client-side re-validation (spec §5.3, §9): refresh the client's assembled state + entrance textures.
+		MultiblockValidation.validateAt(player.level(), msg.pos);
 	}
 }

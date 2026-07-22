@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableMap;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -40,6 +41,15 @@ public class Registrar<K, I, V extends I> {
 
 	public ImmutableMap<K, V> build() {
 		return ImmutableMap.copyOf(this.values);
+	}
+
+	/**
+	 * Iterates the registered values in registration order, without constructing anything. Unlike {@link #build},
+	 * this does not require a {@link BiFunction} to turn each value into a built product - useful for datagen, which
+	 * needs to read builder state without ever calling the code-registration build path.
+	 */
+	public void forEach(BiConsumer<K, V> consumer) {
+		getValues().forEach(consumer);
 	}
 
 	public <T> ImmutableMap<K, T> build(Function<V, T> build) {

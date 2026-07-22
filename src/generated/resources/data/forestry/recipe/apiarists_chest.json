@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "tag": "c:glass_blocks/colorless"
+    },
+    "X": {
+      "tag": "forestry:combs"
+    },
+    "Y": {
+      "tag": "c:chests/wooden"
+    }
+  },
+  "pattern": [
+    " G ",
+    "XYX",
+    "XXX"
+  ],
+  "result": {
+    "count": 1,
+    "id": "forestry:apiarists_chest"
+  }
+}

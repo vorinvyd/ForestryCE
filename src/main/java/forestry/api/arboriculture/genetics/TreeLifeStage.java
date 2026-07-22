@@ -8,8 +8,8 @@ import net.minecraft.world.level.ItemLike;
 import java.util.Locale;
 
 public enum TreeLifeStage implements ILifeStage {
-	SAPLING(ArboricultureItems.SAPLING),
-	POLLEN(ArboricultureItems.POLLEN_FERTILE);
+	SAPLING(ArboricultureItems.TREE_SAPLING),
+	POLLEN(ArboricultureItems.TREE_POLLEN);
 
 	private final String name;
 	private final ItemLike itemForm;

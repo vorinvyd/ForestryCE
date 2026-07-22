@@ -1,0 +1,8 @@
+{
+  "type": "forestry:apply_potion",
+  "chance": 0.1,
+  "dominant": false,
+  "duration": 600,
+  "effect": "minecraft:poison",
+  "throttle": 100
+}

@@ -36,7 +36,7 @@ public class ForestryLootModifierProvider extends GlobalLootModifierProvider {
 			add(mapEntry.getKey().location().getPath(), new ConditionLootModifier(mapEntry.getKey().location(), extensions));
 		}
 		add("grafter", new GrafterLootModifier(new LootItemCondition[]{
-			toolMatches(item().of(ArboricultureItems.GRAFTER.item())).or(toolMatches(item().of(ArboricultureItems.GRAFTER_PROVEN.item()))).build()
+			toolMatches(item().of(ArboricultureItems.GRAFTER.item())).or(toolMatches(item().of(ArboricultureItems.PROVEN_GRAFTER.item()))).build()
 		}));
 	}
 }

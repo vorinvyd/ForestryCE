@@ -1,16 +1,13 @@
 package forestry.api.plugin;
 
-import com.google.common.collect.ImmutableMap;
 import forestry.api.core.HumidityType;
 import forestry.api.core.TemperatureType;
 import forestry.api.genetics.IGenome;
-import forestry.api.genetics.IMutation;
 import forestry.api.genetics.ISpecies;
 import forestry.api.genetics.ISpeciesType;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceLocation;
 
-import java.util.List;
 import java.util.function.Consumer;
 
 /**
@@ -27,11 +24,6 @@ public interface ISpeciesBuilder<T extends ISpeciesType<S, ?>, S extends ISpecie
 	 * Called after {@link ITaxonBuilder#setDefaultChromosome} which in turn is called after {@link ISpeciesTypeBuilder#setKaryotype}.
 	 */
 	B setGenome(Consumer<IGenomeBuilder> genome);
-
-	/**
-	 * Define mutations that mutate into this species.
-	 */
-	B addMutations(Consumer<IMutationsRegistration> mutations);
 
 	/**
 	 * Specify whether item forms of this species will have an enchantment glint.
@@ -145,8 +137,6 @@ public interface ISpeciesBuilder<T extends ISpeciesType<S, ?>, S extends ISpecie
 	String getAuthority();
 
 	ISpeciesFactory<T, S, B> createSpeciesFactory();
-
-	List<IMutation<S>> buildMutations(ISpeciesType<S, ?> speciesType, ImmutableMap<ResourceLocation, S> speciesLookup);
 
 	@FunctionalInterface
 	interface ISpeciesFactory<T extends ISpeciesType<S, ?>, S extends ISpecies<?>, B extends ISpeciesBuilder<T, S, B>> {

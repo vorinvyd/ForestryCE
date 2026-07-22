@@ -1,35 +1,27 @@
 package forestry.api.plugin;
 
-import forestry.api.genetics.alleles.IAllele;
-
-import java.util.List;
+import forestry.api.genetics.alleles.Allele;
 
 /**
  * Interface for customizing a default chromosome in a karyotype.
  *
- * @param <A> The type of alleles that represent this chromosome.
+ * @param <V> The value type stored by this chromosome.
  */
-public interface IChromosomeBuilder<A extends IAllele> {
+public interface IChromosomeBuilder<V> {
 	/**
-	 * Add alleles as valid values for this chromosome.
+	 * Override the default allele of this chromosome that was previously set in {@link IKaryotypeBuilder#set}.
 	 */
-	IChromosomeBuilder<A> addAlleles(List<A> alleles);
+	IChromosomeBuilder<V> setDefault(Allele<V> allele);
 
 	/**
-	 * Override the default value of this chromosome that was previously set in {@link IKaryotypeBuilder#set}.
-	 */
-	IChromosomeBuilder<A> setDefault(A allele);
-
-	/**
-	 * Sets whether this chromosome "weakly inherited."
+	 * Sets whether this chromosome is "weakly inherited."
 	 * <p>
-	 * If a chromosome is weakly inherited, then its default allele will always be overridden by
-	 * a non-default allele during inheritance or mutations. An example in Forestry is the temperature and humidity
-	 * tolerance chromosomes, which are weakly inherited. This ensures that breeding a Common bee using a Modest
-	 * princess and Savanna drone will produce a Common bee that can survive either in the Savanna or in the Desert,
-	 * instead of a Common bee that can only survive in the plains biome like in older versions of Forestry.
+	 * If a chromosome is weakly inherited, then its default allele will always be overridden by a non-default allele
+	 * during inheritance or mutations. An example in Forestry is the temperature and humidity tolerance chromosomes.
+	 * This ensures that breeding a Common bee using a Modest princess and Savanna drone will produce a Common bee that
+	 * can survive either in the Savanna or in the Desert, instead of one that can only survive in the plains.
 	 *
 	 * @param weaklyInherited Whether this chromosome should be weakly inherited.
 	 */
-	IChromosomeBuilder<A> setWeaklyInherited(boolean weaklyInherited);
+	IChromosomeBuilder<V> setWeaklyInherited(boolean weaklyInherited);
 }

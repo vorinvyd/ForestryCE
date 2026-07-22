@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "forestry:portable_alyzer"
+            "items": "forestry:portable_analyzer"
           }
         ]
       },

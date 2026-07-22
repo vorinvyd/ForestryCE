@@ -1,0 +1,24 @@
+{
+  "dominant": true,
+  "genome": {
+    "forestry:fertility": {
+      "value": 4
+    },
+    "forestry:lifespan": {
+      "dominant": true,
+      "value": 35
+    },
+    "forestry:speed": {
+      "value": 1.0
+    }
+  },
+  "genus": "probapis",
+  "outline": 8323072,
+  "products": [
+    {
+      "chance": 0.3,
+      "item": "forestry:dripping_comb"
+    }
+  ],
+  "species": "regalis"
+}

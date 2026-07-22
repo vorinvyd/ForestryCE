@@ -1,0 +1,22 @@
+{
+  "dominant": true,
+  "genome": {
+    "forestry:lifespan": {
+      "value": 50
+    },
+    "forestry:speed": {
+      "value": 1.0
+    }
+  },
+  "genus": "modapis",
+  "humidity": "arid",
+  "outline": 15260849,
+  "products": [
+    {
+      "chance": 0.3,
+      "item": "forestry:parched_comb"
+    }
+  ],
+  "species": "permodestus",
+  "temperature": "hot"
+}

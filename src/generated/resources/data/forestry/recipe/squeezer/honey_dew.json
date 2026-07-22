@@ -3,8 +3,10 @@
   "chance": 0.0,
   "id": "forestry:squeezer/honey_dew",
   "output": {
-    "amount": 100,
-    "id": "forestry:honey"
+    "stack": {
+      "amount": 100,
+      "id": "forestry:honey"
+    }
   },
   "resources": [
     {

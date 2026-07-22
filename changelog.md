@@ -1,3 +1,7 @@
+## Forestry 3.0.0
+- Haploid Drones option now enabled by default (drones no longer have Inactive alleles, simplifying breeding)
+- Bees are now data-driven (trees and butterflies are too, to a lesser extent)
+
 ## Forestry 2.10.0
 - More Bee Tweaks, thanks to EnderiumSmith (#291)
   - Changed "0" fertility to display as "Infertile"

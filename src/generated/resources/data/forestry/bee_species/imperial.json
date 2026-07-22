@@ -1,0 +1,28 @@
+{
+  "genome": {
+    "forestry:bee_effect": {
+      "value": "forestry:bee_effect_beatific"
+    },
+    "forestry:lifespan": {
+      "value": 40
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.6
+    }
+  },
+  "genus": "probapis",
+  "glint": true,
+  "outline": 10739759,
+  "products": [
+    {
+      "chance": 0.2,
+      "item": "forestry:dripping_comb"
+    },
+    {
+      "chance": 0.15,
+      "item": "forestry:royal_jelly"
+    }
+  ],
+  "species": "imperatorius"
+}

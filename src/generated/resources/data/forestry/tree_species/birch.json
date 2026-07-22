@@ -1,0 +1,14 @@
+{
+  "escritoire_color": 8431445,
+  "genome": {
+    "forestry:maturation": {
+      "value": 2
+    },
+    "forestry:saplings": {
+      "dominant": true,
+      "value": 0.05
+    }
+  },
+  "genus": "betula",
+  "species": "pendula"
+}

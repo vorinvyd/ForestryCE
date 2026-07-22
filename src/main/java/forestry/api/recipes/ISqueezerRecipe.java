@@ -2,9 +2,10 @@ package forestry.api.recipes;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.neoforged.neoforge.fluids.FluidStack;
 
 import java.util.List;
+
+import forestry.api.core.IFluidProduct;
 
 public interface ISqueezerRecipe extends IForestryRecipe {
 	/**
@@ -28,7 +29,9 @@ public interface ISqueezerRecipe extends IForestryRecipe {
 	float getRemnantsChance();
 
 	/**
-	 * @return {@link FluidStack} representing the output of this recipe.
+	 * @return the {@link IFluidProduct} describing this recipe's fluid output. Call
+	 * {@link IFluidProduct#createFluidStack()} for the representative/max stack (display + buffer reservation) or
+	 * {@link IFluidProduct#createRandomFluidStack} for a single cycle's actual output.
 	 */
-	FluidStack getFluidOutput();
+	IFluidProduct getFluidOutput();
 }

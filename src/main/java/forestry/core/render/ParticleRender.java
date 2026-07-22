@@ -1,6 +1,7 @@
 package forestry.core.render;
 
 import forestry.api.apiculture.IBeeHousing;
+import forestry.api.apiculture.genetics.IBeeSpecies;
 import forestry.api.apiculture.hives.IHiveTile;
 import forestry.api.genetics.IGenome;
 import forestry.api.genetics.alleles.BeeChromosomes;
@@ -71,7 +72,8 @@ public class ParticleRender {
 			return;
 		}
 
-		int color = genome.getActiveValue(BeeChromosomes.SPECIES).getOutline();
+		IBeeSpecies species = genome.resolveActive(BeeChromosomes.SPECIES);
+		int color = species.getOutline();
 
 		int randomInt = world.random.nextInt(100);
 

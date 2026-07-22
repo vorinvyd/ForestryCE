@@ -8,7 +8,7 @@
     "category": "equipment",
     "key": {
       "#": {
-        "tag": "forge:ingots/bronze"
+        "tag": "c:ingots/bronze"
       },
       "X": {
         "item": "minecraft:stick"

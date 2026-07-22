@@ -6,7 +6,6 @@ import forestry.api.arboriculture.genetics.TreeLifeStage;
 import forestry.api.core.IProduct;
 import forestry.api.farming.ForestryFarmTypes;
 import forestry.api.genetics.alleles.ForestryAlleles;
-import forestry.api.genetics.alleles.IValueAllele;
 import forestry.api.genetics.alleles.TreeChromosomes;
 import forestry.api.plugin.IFarmTypeBuilder;
 import forestry.api.plugin.IFarmingRegistration;
@@ -16,6 +15,7 @@ import forestry.core.items.ItemFruit;
 import forestry.core.utils.SpeciesUtil;
 import forestry.farming.logic.*;
 import forestry.farming.logic.farmables.*;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.BeetrootBlock;
@@ -24,6 +24,7 @@ import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.NetherWartBlock;
 
 import java.util.List;
+import forestry.api.arboriculture.ForestryFruits;
 
 public class DefaultFarms {
 	public static void registerFarmTypes(IFarmingRegistration farming) {
@@ -100,10 +101,11 @@ public class DefaultFarms {
 			.setFertilizerConsumption(10)
 			.setWaterConsumption(hydrationModifier -> (int) (40 * hydrationModifier));
 		for (ITreeSpecies species : SpeciesUtil.TREE_TYPE.get().getAllSpecies()) {
-			IValueAllele<IFruit> fruitAllele = species.getDefaultGenome().getActiveAllele(TreeChromosomes.FRUIT);
+			var genome = species.getDefaultGenome();
+			ResourceLocation fruitId = genome.getActiveValue(TreeChromosomes.FRUIT);
 
-			if (fruitAllele != ForestryAlleles.FRUIT_NONE) {
-				IFruit fruit = fruitAllele.value();
+			if (!fruitId.equals(ForestryFruits.NONE)) {
+				IFruit fruit = genome.resolveActive(TreeChromosomes.FRUIT);
 				orchard.addGermling(species.createStack(TreeLifeStage.SAPLING))
 					.addProducts(fruit.getProducts().stream().map(IProduct::createStack).toList())
 					.addProducts(fruit.getSpecialty().stream().map(IProduct::createStack).toList());

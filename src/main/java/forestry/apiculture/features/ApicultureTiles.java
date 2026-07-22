@@ -24,7 +24,7 @@ public class ApicultureTiles {
 	public static final FeatureTileType<TileAlvearySieve> ALVEARY_SIEVE = REGISTRY.tile(TileAlvearySieve::new, "alveary_sieve", () -> ApicultureBlocks.ALVEARY.get(BlockAlveary.Type.SIEVE).collect());
 	public static final FeatureTileType<TileAlvearySwarmer> ALVEARY_SWARMER = REGISTRY.tile(TileAlvearySwarmer::new, "alveary_swarmer", () -> ApicultureBlocks.ALVEARY.get(BlockAlveary.Type.SWARMER).collect());
 	public static final FeatureTileType<TileAlvearyHygroregulator> ALVEARY_HYGROREGULATOR = REGISTRY.tile(TileAlvearyHygroregulator::new, "alveary_hygroregulator", () -> ApicultureBlocks.ALVEARY.get(BlockAlveary.Type.HYGRO).collect());
-	public static final FeatureTileType<TileAlvearyStabiliser> ALVEARY_STABILISER = REGISTRY.tile(TileAlvearyStabiliser::new, "alveary_stabiliser", () -> ApicultureBlocks.ALVEARY.get(BlockAlveary.Type.STABILISER).collect());
+	public static final FeatureTileType<TileAlvearyStabiliser> ALVEARY_STABILISER = REGISTRY.tile(TileAlvearyStabiliser::new, "alveary_stabilizer", () -> ApicultureBlocks.ALVEARY.get(BlockAlveary.Type.STABILISER).collect());
 	public static final FeatureTileType<TileAlvearyFan> ALVEARY_FAN = REGISTRY.tile(TileAlvearyFan::new, "alveary_fan", () -> ApicultureBlocks.ALVEARY.get(BlockAlveary.Type.FAN).collect());
 	public static final FeatureTileType<TileAlvearyHeater> ALVEARY_HEATER = REGISTRY.tile(TileAlvearyHeater::new, "alveary_heater", () -> ApicultureBlocks.ALVEARY.get(BlockAlveary.Type.HEATER).collect());
 

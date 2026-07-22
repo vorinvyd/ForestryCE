@@ -2,7 +2,7 @@
   "values": [
     "forestry:larch_door",
     "forestry:teak_door",
-    "forestry:acacia_desert_door",
+    "forestry:camelthorn_door",
     "forestry:lime_door",
     "forestry:chestnut_door",
     "forestry:wenge_door",
@@ -16,7 +16,7 @@
     "forestry:willow_door",
     "forestry:walnut_door",
     "forestry:greenheart_door",
-    "forestry:hill_cherry_door",
+    "forestry:sour_cherry_door",
     "forestry:mahoe_door",
     "forestry:poplar_door",
     "forestry:palm_door",
@@ -24,8 +24,8 @@
     "forestry:pine_door",
     "forestry:plum_door",
     "forestry:maple_door",
-    "forestry:citrus_door",
-    "forestry:giganteum_door",
+    "forestry:lemon_door",
+    "forestry:giant_sequoia_door",
     "forestry:ipe_door",
     "forestry:padauk_door",
     "forestry:cocobolo_door",
@@ -42,6 +42,6 @@
     "forestry:orange_door",
     "forestry:pear_door",
     "forestry:kauri_door",
-    "forestry:zebrawood_door"
+    "forestry:zebrano_door"
   ]
 }

@@ -146,6 +146,10 @@ public class ForestryRecipeProvider {
 		registerSqueezerContainer(output);
 		registerSqueezer(output);
 		registerStill(output);
+
+		// Built-in genetic mutations (bee/tree/butterfly) are generated as datapack recipes by the standalone
+		// MutationProvider (registered in Data), which owns its own HashCache slice so removed mutation JSONs
+		// are deleted rather than left orphaned.
 	}
 
 	private static void registerApicultureRecipes(MKRecipeProvider recipes) {
@@ -1755,7 +1759,7 @@ public class ForestryRecipeProvider {
 
 		new CentrifugeRecipeBuilder()
 			.setProcessingTime(180)
-			.setInput(Ingredient.of(ArboricultureItems.AMBER_SAPLING))
+			.setInput(Ingredient.of(ArboricultureItems.AMBER_SAPLING_FOSSIL))
 			.product(0.25f, SpeciesUtil.TREE_TYPE.get().createStack(ForestryTreeSpecies.GINKGO, TreeLifeStage.SAPLING))
 			.product(0.8f, CoreItems.AMBER.stack())
 			.build(consumer, id("centrifuge", "amber_sapling"));

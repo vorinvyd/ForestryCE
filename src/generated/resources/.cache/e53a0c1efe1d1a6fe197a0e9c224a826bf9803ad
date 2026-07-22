@@ -1,4 +1,4 @@
-// 1.21.1	2026-05-05T12:47:22.396917659	Global Loot Modifiers : forestry
+// 1.21.1	2026-07-11T08:58:31.794180799	Global Loot Modifiers : forestry
 feebe2ba495ebb01aca6a544050cb6192d6348ad data/forestry/loot_modifiers/chests/abandoned_mineshaft.json
 4858cf3781ad27c894455e71f1fc6a40c33e79cd data/forestry/loot_modifiers/chests/desert_pyramid.json
 de4500d5f173641e8c5619c7f6519169d9b0d8e3 data/forestry/loot_modifiers/chests/end_city_treasure.json
@@ -14,5 +14,5 @@ c07450009f834a8ad11e80b19f8aea185605a611 data/forestry/loot_modifiers/chests/str
 6bcb64dc13d3c31c69162fedac9a37c9cf1b4350 data/forestry/loot_modifiers/chests/stronghold_crossing.json
 976476489409c3cc1e1037a1366bc7aa7ef98909 data/forestry/loot_modifiers/chests/stronghold_library.json
 39512852238dcc50f1dd7944359cc95fecb617b9 data/forestry/loot_modifiers/chests/village_naturalist.json
-12f16fc69b8641bc6d828063452a54ad38adec6b data/forestry/loot_modifiers/grafter.json
+69f3a3bde68b92830325a3de9e48522f1b57d6af data/forestry/loot_modifiers/grafter.json
 292f784d67b5785c61511b058438c0543e3c8420 data/neoforge/loot_modifiers/global_loot_modifiers.json

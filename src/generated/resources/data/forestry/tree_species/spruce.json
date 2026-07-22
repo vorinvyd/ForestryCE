@@ -1,0 +1,17 @@
+{
+  "escritoire_color": 6396257,
+  "genome": {
+    "forestry:height": {
+      "value": 1.0
+    },
+    "forestry:maturation": {
+      "value": 2
+    },
+    "forestry:saplings": {
+      "dominant": true,
+      "value": 0.05
+    }
+  },
+  "genus": "picea",
+  "species": "mariana"
+}

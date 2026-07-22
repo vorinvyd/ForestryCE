@@ -1,11 +1,16 @@
 package forestry.apiculture.genetics.effects;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+
 import forestry.api.apiculture.BeeManager;
 import forestry.api.apiculture.IBeeHousing;
 import forestry.api.genetics.IEffectData;
 import forestry.api.genetics.IGenome;
 import forestry.core.render.ParticleRender;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -23,6 +28,17 @@ import java.util.Collections;
 import java.util.List;
 
 public class PotionBeeEffect extends ThrottledBeeEffect {
+	/**
+	 * The {@code forestry:apply_potion} primitive: applies a mob effect to entities in range, with the
+	 * usual apiarist-armor damage scaling for harmful effects.
+	 */
+	public static final MapCodec<PotionBeeEffect> MAP_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+		ThrottleSettings.codec(200, true, false).forGetter(ThrottledBeeEffect::settings),
+		BuiltInRegistries.MOB_EFFECT.holderByNameCodec().fieldOf("effect").forGetter(effect -> effect.potion),
+		Codec.INT.fieldOf("duration").forGetter(effect -> effect.duration),
+		Codec.floatRange(0f, 1f).optionalFieldOf("chance", 1.0f).forGetter(effect -> effect.chance)
+	).apply(instance, PotionBeeEffect::new));
+
 	private final Holder<MobEffect> potion;
 	private final int potionFXColor;
 	private final int duration;
@@ -32,14 +48,24 @@ public class PotionBeeEffect extends ThrottledBeeEffect {
 		this(dominant, potion, duration, 200, 1.0f);
 	}
 
+	/** Kept for {@code AscensionBeeEffect} and {@code PotionBeeEffectExclusive}, which are code-only. */
 	public PotionBeeEffect(boolean dominant, Holder<MobEffect> potion, int duration, int throttle, float chance) {
-		super(dominant, throttle, true, false);
+		this(new ThrottleSettings(dominant, throttle, true, false), potion, duration, chance);
+	}
+
+	public PotionBeeEffect(ThrottleSettings settings, Holder<MobEffect> potion, int duration, float chance) {
+		super(settings);
 		this.potion = potion;
 		this.duration = duration;
 		this.chance = chance;
 
 		Collection<MobEffectInstance> potionEffects = Collections.singleton(new MobEffectInstance(potion, 1, 0));
 		this.potionFXColor = PotionContents.getColor(potionEffects);
+	}
+
+	@Override
+	public MapCodec<PotionBeeEffect> codec() {
+		return MAP_CODEC;
 	}
 
 	@Override

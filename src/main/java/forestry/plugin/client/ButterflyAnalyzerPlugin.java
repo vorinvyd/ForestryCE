@@ -6,6 +6,7 @@ import forestry.api.client.genetics.IAnalyzerPlugin;
 import forestry.api.genetics.ILifeStage;
 import forestry.api.genetics.ISpecies;
 import forestry.api.genetics.alleles.ButterflyChromosomes;
+import forestry.api.lepidopterology.IButterflyCocoon;
 import forestry.api.lepidopterology.genetics.ButterflyLifeStage;
 import forestry.api.lepidopterology.genetics.IButterfly;
 import forestry.api.lepidopterology.genetics.IButterflySpecies;
@@ -61,7 +62,7 @@ public class ButterflyAnalyzerPlugin implements IAnalyzerPlugin<IButterflySpecie
 		graphics.drawText(Component.translatable("for.gui.loot.cocoon").append(":"));
 		graphics.addLineSpacing(1);
 		// since we're haploid, we can just return a list and it will only be used once
-		graphics.drawProductList(s -> individual.getGenome().getActiveValue(ButterflyChromosomes.COCOON).getProducts());
+		graphics.drawProductList(s -> individual.getGenome().<IButterflyCocoon>resolveActive(ButterflyChromosomes.COCOON).getProducts());
 	}
 
 	@Override

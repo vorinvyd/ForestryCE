@@ -1,0 +1,18 @@
+{
+  "dominant": true,
+  "escritoire_color": 16634375,
+  "genome": {
+    "forestry:girth": {
+      "value": 2
+    },
+    "forestry:height": {
+      "value": 1.25
+    },
+    "forestry:sappiness": {
+      "dominant": true,
+      "value": 0.2
+    }
+  },
+  "genus": "handroanthus",
+  "species": "serratifolius"
+}

@@ -1,0 +1,27 @@
+{
+  "authority": "Spear",
+  "dominant": true,
+  "escritoire_color": 6123809,
+  "genome": {
+    "forestry:girth": {
+      "value": 2
+    },
+    "forestry:height": {
+      "value": 1.25
+    },
+    "forestry:maturation": {
+      "dominant": true,
+      "value": 5
+    },
+    "forestry:saplings": {
+      "dominant": true,
+      "value": 0.035
+    },
+    "forestry:sappiness": {
+      "dominant": true,
+      "value": 0.4
+    }
+  },
+  "genus": "hesperocyparis",
+  "species": "macrocarpa"
+}

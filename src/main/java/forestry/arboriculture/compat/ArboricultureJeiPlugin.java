@@ -25,6 +25,6 @@ public class ArboricultureJeiPlugin implements IModPlugin {
 
 	@Override
 	public void registerRecipes(IRecipeRegistration registration) {
-		JeiUtil.addDescription(registration, ArboricultureItems.GRAFTER.item(), ArboricultureItems.GRAFTER_PROVEN.item());
+		JeiUtil.addDescription(registration, ArboricultureItems.GRAFTER.item(), ArboricultureItems.PROVEN_GRAFTER.item());
 	}
 }

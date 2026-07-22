@@ -1,0 +1,33 @@
+{
+  "authority": "EnderiumSmith",
+  "dominant": true,
+  "genome": {
+    "forestry:lifespan": {
+      "value": 50
+    },
+    "forestry:pollination": {
+      "value": 10
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.8
+    }
+  },
+  "genus": "troglobites",
+  "humidity": "damp",
+  "outline": 1858362,
+  "products": [
+    {
+      "chance": 0.45,
+      "item": "forestry:honey_comb"
+    }
+  ],
+  "specialties": [
+    {
+      "chance": 0.15,
+      "item": "minecraft:small_dripleaf"
+    }
+  ],
+  "species": "lidenbrocki",
+  "temperature": "warm"
+}

@@ -2,6 +2,7 @@ package forestry.arboriculture.models;
 
 import com.google.common.base.Preconditions;
 import forestry.api.arboriculture.ITreeSpecies;
+import forestry.api.arboriculture.genetics.IFruit;
 import forestry.api.client.IForestryClientApi;
 import forestry.api.client.arboriculture.ILeafSprite;
 import forestry.api.genetics.alleles.TreeChromosomes;
@@ -46,8 +47,19 @@ public class ModelDecorativeLeaves<B extends Block> extends ModelBlockCached<B, 
 	protected void bakeBlock(B block, ModelData extraData, ModelDefaultLeaves.Key key, ModelBaker baker, boolean inventory) {
 		ResourceLocation speciesId = key.speciesId;
 
-		ITreeSpecies species = SpeciesUtil.getTreeSpecies(speciesId);
+		// Resolve fail-soft: a datapack may have removed this species while its leaf block is still placed, so use
+		// getSpeciesSafe (not the throwing getTreeSpecies) and fall the species itself back to default - it's reused
+		// for the fruit-overlay lookup below, so it must be non-null.
+		ITreeSpecies species = SpeciesUtil.TREE_TYPE.get().getSpeciesSafe(speciesId);
+		if (species == null) {
+			species = SpeciesUtil.TREE_TYPE.get().getDefaultSpecies();
+		}
 		ILeafSprite sprite = IForestryClientApi.INSTANCE.getTreeManager().getLeafSprite(species);
+		if (sprite == null) {
+			// species exists but registered no client sprite: keep it as-is (used below for the fruit overlay
+			// lookup); only the sprite falls back, so an unregistered-client species doesn't NPE the leaf render.
+			sprite = IForestryClientApi.INSTANCE.getTreeManager().getLeafSprite(SpeciesUtil.TREE_TYPE.get().getDefaultSpecies());
+		}
 
 		ResourceLocation textureLocation = sprite.get(false, key.fancy);
 		TextureAtlasSprite textureSprite = ResourceUtil.getBlockSprite(textureLocation);
@@ -55,7 +67,8 @@ public class ModelDecorativeLeaves<B extends Block> extends ModelBlockCached<B, 
 		baker.addBlockModel(textureSprite, BlockAbstractLeaves.FOLIAGE_COLOR_INDEX);
 
 		// Render overlay for fruit leaves.
-		ResourceLocation fruitSpriteLocation = species.getDefaultGenome().getActiveValue(TreeChromosomes.FRUIT).getDecorativeSprite();
+		IFruit fruit = species.getDefaultGenome().resolveActive(TreeChromosomes.FRUIT);
+		ResourceLocation fruitSpriteLocation = fruit.getDecorativeSprite();
 		if (fruitSpriteLocation != null) {
 			TextureAtlasSprite fruitSprite = ResourceUtil.getBlockSprite(fruitSpriteLocation);
 			baker.addBlockModel(fruitSprite, BlockAbstractLeaves.FRUIT_COLOR_INDEX);

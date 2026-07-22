@@ -1,0 +1,24 @@
+{
+  "genome": {
+    "forestry:lifespan": {
+      "dominant": true,
+      "value": 30
+    },
+    "forestry:pollination": {
+      "value": 15
+    },
+    "forestry:speed": {
+      "dominant": true,
+      "value": 0.6
+    }
+  },
+  "genus": "industrapis",
+  "outline": 12720620,
+  "products": [
+    {
+      "chance": 0.2,
+      "item": "forestry:stringy_comb"
+    }
+  ],
+  "species": "sedulus"
+}

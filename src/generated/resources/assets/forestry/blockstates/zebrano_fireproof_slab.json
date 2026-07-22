@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "forestry:block/zebrano_slab"
+    },
+    "type=double": {
+      "model": "forestry:block/zebrano_planks"
+    },
+    "type=top": {
+      "model": "forestry:block/zebrano_slab_top"
+    }
+  }
+}
